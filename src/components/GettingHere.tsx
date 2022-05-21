@@ -31,6 +31,10 @@ export const GettingHere = () => {
             area or a conference room. There will be a sign directing you to the
             correct location.
           </p>
+
+          <p className="font-bold border-l-4 pl-4 border-yellow-500 bg-gray-500/10 p-2">
+            Can&apos;t get in? Call or text 631-403-0362.
+          </p>
         </div>
         <div className="w-full space-y-6">
           <iframe
