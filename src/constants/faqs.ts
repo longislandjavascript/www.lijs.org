@@ -31,7 +31,7 @@ export const faqs: FAQ[] = [
   {
     question: "Can I bring alcoholic beverages?",
     answer:
-      "Maybe. Due to insurance requirements at launchPad, we cannot allow alcoholic beverages at our events without prior approval of LaunchPad Management. Please feel free to reach out to us to discuss.",
+      "Maybe. Due to insurance regulations, we cannot allow alcoholic beverages at our events without prior approval of LaunchPad Management. Please feel free to reach out to us to discuss.",
   },
   {
     question: "Can I bring food?",
