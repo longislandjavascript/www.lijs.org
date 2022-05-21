@@ -25,7 +25,7 @@ export const MobileNavigation = () => {
           type="button"
           onClick={openModal}
           aria-label="Site Navigation"
-          className="p-2 rounded-full hover:bg-gray-500/10 transition-colors ease-in-out absolute right-2"
+          className="p-2 rounded-full hover:bg-gray-500/10 transition-colors ease-in-out absolute right-4 top-4"
         >
           <FaBars className="text-3xl text-primary" />
         </button>
@@ -45,7 +45,7 @@ export const MobileNavigation = () => {
             <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto w-screen h-screen">
+          <div className="fixed inset-0 overflow-y-scroll w-screen h-screen">
             <div className="flex min-h-full items-center justify-center text-center">
               <Transition.Child
                 as={Fragment}
@@ -56,7 +56,7 @@ export const MobileNavigation = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-screen h-screen transform overflow-hidden surface text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-screen h-screen transform overflow-scroll surface text-left align-middle shadow-xl transition-all p-2">
                   <section className="w-full text-right">
                     <button
                       onClick={closeModal}

@@ -6,7 +6,7 @@ import { navLinks } from "constants/nav-links";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 const navLinkClassNames =
-  "flex items-center gap-4 w-full text-primary  font-medium mx-1  transition-colors duration-200 ease-in-out p-2 rounded-md hover:bg-gray-500/10 focus-visible:bg-gray-500/10";
+  "flex items-center gap-4 w-full text-primary  font-medium mx-2  transition-colors duration-200 ease-in-out p-2 rounded-md hover:bg-gray-500/10 focus-visible:bg-gray-500/10";
 
 const NavLink = (props: {
   icon: any;
@@ -44,7 +44,7 @@ export const NavigationMenu = () => {
   const router = useRouter();
   return (
     <nav className="flex-1">
-      <ul className="flex-col gap-6 flex items-start">
+      <ul className="flex-col gap-6 flex items-start px-4">
         <li>
           <Link href="/">
             <a className={navLinkClassNames}>
