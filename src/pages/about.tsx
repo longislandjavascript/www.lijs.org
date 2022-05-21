@@ -14,11 +14,7 @@ import { MeetupGroup } from "types";
 export default function AboutUsPage(props: { group: MeetupGroup }) {
   return (
     <Layout pageTitle="About Our Group">
-      <SEO
-        title="About Our Group | LIJS"
-        description="Long Island JavaScript is a Meetup group in the Long Island, NY area. We meet on the last Wednesday of each month, where we discuss a range of topics around the JavaScript ecosystem."
-      />
-
+      <SEO title="About Our Group | LIJS" />
       <p className="my-8 rounded-xl text-xl p-2">
         <span className="text-primary font-medium">Long Island JavaScript</span>{" "}
         is a group of{" "}

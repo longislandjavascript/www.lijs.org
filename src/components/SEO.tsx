@@ -15,7 +15,7 @@ export const SEO = (props: SEOProps) => {
       : "http://localhost:3000";
   const {
     title = "Long Island JavaScript",
-    description = "Long Island JavaScript is a Meetup group in the Long Island, NY area. We meet on the last Wednesday of each month, where we discuss a range of topics around the JavaScript ecosystem.",
+    description = "Welcome to Long Island JavaScript! Our monthly Meetup covers all things JavaScript, from frontend to backend, libraries to frameworks, Node to Deno, React to Svelte, and everything in between. We meet on the last Wednesday of each month at LaunchPad Huntington.",
     path = "/",
     icon = "longislandjavascript.png",
   } = props;
