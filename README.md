@@ -1,6 +1,6 @@
 www.lijs.org
 
-The official website of Long Island JavaScript.
+The official website of Long Island JavaScript. Hosted on Vercel.
 
 ## Getting Started
 
