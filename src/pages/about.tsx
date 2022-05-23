@@ -40,7 +40,7 @@ export default function AboutUsPage(props: { group: MeetupGroup }) {
               <a
                 href={sponsor.href}
                 key={sponsor.href}
-                className="hover:bg-gray-500/10 focus:bg-gray-500/10 rounded-xl p-2 transition-colors ease-in-out"
+                className="hover:bg-gray-500/10 focus:bg-gray-500/10 rounded-xl p-2 transition-colors ease-in-out text-center mx-auto"
               >
                 <img src={sponsor.logo} alt={sponsor.name} className="w-64" />
               </a>
