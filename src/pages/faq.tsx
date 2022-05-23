@@ -3,7 +3,7 @@ import { SEO } from "components/SEO";
 import { SectionTitle } from "components/PageTitle";
 import { faqs } from "constants/faqs";
 
-export default function CodeOfConductPage() {
+export default function FAQPage() {
   const questionClassNames = "text-2xl font-medium text-primary py-2";
   const answerClassNames = "";
   return (

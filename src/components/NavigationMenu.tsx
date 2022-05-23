@@ -6,7 +6,7 @@ import { navLinks } from "constants/nav-links";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 const navLinkClassNames =
-  "flex items-center gap-4 w-full text-primary  font-medium mx-2  transition-colors duration-200 ease-in-out p-2 rounded-md hover:bg-gray-500/10 focus-visible:bg-gray-500/10";
+  "flex items-center gap-4 w-full text-primary  font-semibold mx-2  transition-colors duration-200 ease-in-out p-2 rounded-md hover:bg-gray-500/10 focus-visible:bg-gray-500/10";
 
 const NavLink = (props: {
   icon: any;

@@ -1,7 +1,7 @@
 import { Layout } from "components/Layout";
 import { SEO } from "components/SEO";
 
-export default function CodeOfConductPage() {
+export default function DonationPage() {
   return (
     <Layout pageTitle="Thanks for the donation!">
       <SEO title="Thanks for the donation!" />

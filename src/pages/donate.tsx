@@ -5,7 +5,7 @@ import { Section } from "components/Section";
 import { wallets } from "constants/wallets";
 import { CryptoWallet } from "components/CryptoWallet";
 
-export default function CodeOfConductPage() {
+export default function DonatePage() {
   return (
     <Layout pageTitle="Donate">
       <SEO

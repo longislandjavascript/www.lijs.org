@@ -17,7 +17,7 @@ export const PayPalDonateButton = () => {
           alt="Donate with PayPal button"
         />
         <img
-          alt="PayPal Donation"
+          alt=""
           src="https://www.paypal.com/en_US/i/scr/pixel.gif"
           width="1"
           height="1"

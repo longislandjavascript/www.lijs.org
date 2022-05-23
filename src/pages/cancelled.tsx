@@ -3,7 +3,7 @@ import { SEO } from "components/SEO";
 import { ExternalLink } from "components/ExternalLink";
 import { meetupReviewLink } from "constants/links";
 
-export default function CodeOfConductPage() {
+export default function CancelledPage() {
   const questionClassNames = "text-lg font-display text-3xl text-primary py-2";
   const answerClassNames = "";
   return (
