@@ -1,6 +1,7 @@
 import { Layout } from "components/Layout";
 import { SEO } from "components/SEO";
 import { Section } from "components/Section";
+import Link from "next/link";
 
 export default function CodeOfConductPage() {
   return (
@@ -97,6 +98,20 @@ export default function CodeOfConductPage() {
             People violating these rules may be asked to leave the Meetup and/or
             any future events, including group forums such as Slack. Thanks for
             helping to keep this a safe and fun space for everyone!{" "}
+          </p>
+          <p>
+            Please report any misconduct to{" "}
+            <a
+              href="mailto:justin@lijs.org?subject=Reporting misconduct!"
+              className="anchor"
+            >
+              justin@lijs.org
+            </a>{" "}
+            or{" "}
+            <Link href="/contact">
+              <a className="anchor">our contact form</a>
+            </Link>
+            .{" "}
           </p>
         </Section>
       </div>
