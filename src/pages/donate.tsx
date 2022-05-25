@@ -14,14 +14,14 @@ export default function DonatePage() {
       />
 
       <section className="p-2 space-y-6">
-        <p className="text-primary text-2xl font-semibold">
-          Long Island JavaScript will always be free to attend and the operating
-          costs will always be covered.
+        <p className="border-l-4 border-blue-500 text-primary text-2xl font-semibold surface-alt p-2">
+          Long Island JavaScript will always be <b>free to attend</b> and the
+          operating costs will <b>always be covered</b>.
         </p>
         <p>
-          If you would like to chip in for operation costs or just to say
-          thanks, this is the place to do it! Also, here is some information
-          that you might find relevant:
+          If you would like to chip in to cover some of the operation costs, or
+          just to say thanks, this is the place to do it! Also, here is some
+          information that you might find relevant:
         </p>
         <ul className="list-disc ml-8">
           <li>
