@@ -35,7 +35,7 @@ export default function PastEventsPage(
         type="Search"
         placeholder="Search"
         aria-label="Search for a past event"
-        className="py-3 px-8 surface-alt text-alt block w-full md:w-96 rounded-full  my-6"
+        className="py-3 px-8 surface-alt text-alt block w-full md:w-96 rounded-full my-6 border-2 border-color"
       />
 
       <div className="space-y-8">
