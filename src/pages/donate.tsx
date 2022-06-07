@@ -17,9 +17,8 @@ export default function DonatePage() {
 
       <section className="p-2 space-y-6">
         <p className="border-l-4 border-blue-500 text-primary text-2xl font-semibold surface-alt p-2">
-          Long Island JavaScript will always be{" "}
-          <b className="bg-yellow-200">free to attend</b> and the operating
-          costs will <b className="bg-yellow-200">always be covered</b>.
+          Long Island JavaScript will always be <b>free to attend</b> and the
+          operating costs will <b>always be covered</b>.
         </p>
         <p>
           If you would like to chip in to cover some of the operation costs, or
