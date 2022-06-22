@@ -45,8 +45,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const eventsRes = await fetch(
     "https://api.meetup.com/long-island-javascript/events?status=upcoming"
   );
+
   const group = (await groupRes.json()) as MeetupGroup;
   const events = (await eventsRes.json()) as MeetupEvent[];
+
   return {
     props: {
       group,

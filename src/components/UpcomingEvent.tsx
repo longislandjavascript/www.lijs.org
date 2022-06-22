@@ -15,13 +15,13 @@ export const UpcomingEvent = (props: Props) => {
   return (
     <Section title="Upcoming Event">
       <div>
-        <h2 className="font-display mb-4 text-3xl  gap-2 text-primary">
+        <h2 className="mb-4 text-3xl font-bold gap-2 text-primary">
           {event.name}
         </h2>
       </div>
 
       <div className="mb-4">
-        <p className="inline-block !text-xs  font-medium rounded-full px-2 py-1 bg-blue-500 !text-white">
+        <p className="inline-block !text-xs  font-medium rounded-full px-2 py-1 bg-blue-600 !text-white">
           {event.yes_rsvp_count} people going
         </p>
       </div>
@@ -37,7 +37,7 @@ export const UpcomingEvent = (props: Props) => {
         </p>
       </div>
 
-      <div className=" my-4">
+      <div className="my-4">
         <Raw>{event.description}</Raw>
       </div>
       <div className=" mt-4">

@@ -17,6 +17,7 @@ export default function ContactPage() {
       </p>
 
       <iframe
+        name="Contact Form"
         src="https://docs.google.com/forms/d/e/1FAIpQLSdeJpTdrpel5qHag3VDAJFPbszU3wDx5w3CWIGPtGgNePrpCQ/viewform?embedded=true"
         width="680"
         height="750"

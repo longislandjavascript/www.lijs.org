@@ -20,12 +20,14 @@ const NavLink = (props: {
 
   if (isExternalLink) {
     return (
-      <ExternalLink
-        className={`${navLinkClassNames} ${selectedClassNames}`}
-        href={href}
-      >
-        <Icon /> {label} <FaExternalLinkAlt className="text-sm" />
-      </ExternalLink>
+      <li className="w-full">
+        <ExternalLink
+          className={`${navLinkClassNames} ${selectedClassNames}`}
+          href={href}
+        >
+          <Icon /> {label} <FaExternalLinkAlt className="text-sm" />
+        </ExternalLink>
+      </li>
     );
   } else {
     return (
@@ -56,12 +58,10 @@ export const NavigationMenu = () => {
                 aria-hidden={true}
               />
               <div>
-                <p className="text-[26px] font-black text-primary">
+                <p className="text-[26px] font-bold text-primary">
                   Long Island
                 </p>
-                <p className="text-3xl font-extrabold text-blue-500">
-                  JavaScript
-                </p>
+                <p className="text-3xl font-bold text-blue-500">JavaScript</p>
               </div>
             </a>
           </Link>
