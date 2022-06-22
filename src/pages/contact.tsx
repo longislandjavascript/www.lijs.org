@@ -9,7 +9,7 @@ export default function ContactPage() {
         description="Have a question or suggestion? Interested in sponsoring our group? Just want to say hi? What ever it is, we'd love to hear from you!"
       />
       <p className="mx-8 my-4">
-        Hey! Please fill out the form below or email me at{" "}
+        Please fill out the form below or email me at{" "}
         <a href="mailto:justin@lijs.org?subject=Hello LIJS!" className="anchor">
           justin@lijs.org
         </a>

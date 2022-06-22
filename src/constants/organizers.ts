@@ -7,6 +7,9 @@ export const organizers = [
     status: "active",
     borderColorClassName: "border-blue-500",
   },
+] as const;
+
+export const pastOrganizers = [
   {
     name: "Scott",
     link: "https://www.meetup.com/long-island-javascript-group/members/201990609/",

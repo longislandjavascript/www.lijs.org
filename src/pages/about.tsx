@@ -8,7 +8,7 @@ import { OrganizerCard } from "components/OrganizerCard";
 import { GettingHere } from "components/GettingHere";
 import { reviews } from "constants/reviews";
 import { sponsors } from "constants/sponsors";
-import { organizers } from "constants/organizers";
+import { organizers, pastOrganizers } from "constants/organizers";
 import { MeetupGroup } from "types";
 
 export default function AboutUsPage(props: { group: MeetupGroup }) {
@@ -28,6 +28,14 @@ export default function AboutUsPage(props: { group: MeetupGroup }) {
       <Section title="Organizers">
         <div className="flex flex-col md:flex-row items-center gap-4 justify-around w-full">
           {organizers.map((organizer) => {
+            return <OrganizerCard key={organizer.id} organizer={organizer} />;
+          })}
+        </div>
+      </Section>
+
+      <Section title="Past Organizers">
+        <div className="flex flex-col md:flex-row items-center gap-4 justify-around w-full">
+          {pastOrganizers.map((organizer) => {
             return <OrganizerCard key={organizer.id} organizer={organizer} />;
           })}
         </div>
