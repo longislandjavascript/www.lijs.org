@@ -1,4 +1,4 @@
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { Layout } from "components/Layout";
 import { SEO } from "components/SEO";
 import { MeetupGroup, MeetupEvent } from "types";
@@ -40,7 +40,7 @@ export default function IndexPage(props: {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const groupRes = await fetch("https://api.meetup.com/long-island-javascript");
   const eventsRes = await fetch(
     "https://api.meetup.com/long-island-javascript/events?status=upcoming"
