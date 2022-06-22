@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/overlock": "^4.5.7",
     "@headlessui/react": "^1.6.5",
     "autosize": "^5.0.1",
     "date-fns": "^2.28.0",
