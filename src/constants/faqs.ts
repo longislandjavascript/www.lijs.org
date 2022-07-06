@@ -13,6 +13,11 @@ export const faqs: FAQ[] = [
     answer: "Nope. All of our events are completely free.",
   },
   {
+    question: "Are your events streamed or recorded?",
+    answer:
+      "Yup! Our events are viewable on Zoom. A link can be found in the event description.",
+  },
+  {
     question: "Do I need to know JavaScript?",
     answer:
       "Not necessarily. We strive to make our events as accessible to all skill levels, however, this can depend on the subject matter.",
