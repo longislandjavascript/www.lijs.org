@@ -46,7 +46,7 @@ export const NavigationMenu = () => {
   const router = useRouter();
   return (
     <nav className="flex-1">
-      <ul className="flex-col gap-6 flex items-start px-4">
+      <ul className="flex-col gap-2 flex items-start px-4">
         <li>
           <Link href="/">
             <a className={navLinkClassNames}>
@@ -61,7 +61,7 @@ export const NavigationMenu = () => {
                 <p className="text-[26px] font-bold text-primary">
                   Long Island
                 </p>
-                <p className="text-3xl font-bold text-blue-500">JavaScript</p>
+                <p className="text-3xl font-bold">JavaScript</p>
               </div>
             </a>
           </Link>
