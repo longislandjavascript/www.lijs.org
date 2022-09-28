@@ -3,7 +3,6 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { Layout } from "components/Layout";
 import { SEO } from "components/SEO";
 import { MeetupGroup, MeetupEvent } from "types";
-import { SectionTitle } from "components/PageTitle";
 import { FaMeetup } from "react-icons/fa";
 import { PastEvent } from "components/PastEvent";
 import { ExternalLink } from "components/ExternalLink";
