@@ -1,6 +1,5 @@
 import * as React from "react";
 import { mergeRefs } from "utils/mergeRefs";
-import { formClassNames } from "constants/classNames";
 
 import { BaseComponent } from "types";
 
@@ -43,7 +42,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       <textarea
         ref={mergeRefs([ref, localRef])}
         rows={rows}
-        className={`appearance-none text-base px-3 ${formClassNames} ${className}`}
+        className={`appearance-none text-base px-3 form ${className}`}
         {...restProps}
       />
     );

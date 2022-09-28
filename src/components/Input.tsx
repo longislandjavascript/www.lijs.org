@@ -2,7 +2,6 @@ import React from "react";
 import { IconButton } from "./IconButton";
 import { BiCopy } from "react-icons/bi";
 import { FaCheck, FaTimes } from "react-icons/fa";
-import { formClassNames } from "constants/classNames";
 import { useCopy } from "hooks/useCopy";
 import { mergeRefs } from "utils/mergeRefs";
 
@@ -41,9 +40,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <div className="w-full flex items-center">
         <input
           ref={mergeRefs([inputRef, ref])}
-          className={`${
-            canCopy || canClear ? "pr-10" : ""
-          } ${formClassNames} ${className}`}
+          className={`${canCopy || canClear ? "pr-10" : ""} form ${className}`}
           {...rest}
         />
         {canClear && !!inputRef?.current?.value.length && (
