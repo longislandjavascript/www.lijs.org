@@ -9,26 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fontsource/overlock": "^4.5.8",
-    "@headlessui/react": "^1.7.2",
-    "autosize": "^5.0.1",
+    "@fontsource/overlock": "^4.5.9",
+    "@headlessui/react": "^1.7.13",
+    "autosize": "^6.0.1",
     "date-fns": "^2.29.3",
-    "next": "12.3.1",
+    "next": "13.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.4.0",
+    "react-icons": "^4.8.0",
     "react-responsive-carousel": "^3.2.23",
-    "react-use-clipboard": "^1.0.8",
-    "zustand": "^4.1.1"
+    "react-use-clipboard": "^1.0.9",
+    "zustand": "^4.3.6"
   },
   "devDependencies": {
     "@types/date-fns": "^2.6.0",
-    "@types/node": "^18.7.23",
-    "@types/react": "^18.0.21",
-    "autoprefixer": "^10.4.12",
-    "eslint": "8.24.0",
-    "eslint-config-next": "12.3.1",
-    "postcss": "^8.4.16",
-    "tailwindcss": "^3.1.8"
+    "@types/node": "^18.14.6",
+    "@types/react": "^18.0.28",
+    "autoprefixer": "^10.4.13",
+    "eslint": "8.35.0",
+    "eslint-config-next": "13.2.3",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.7"
   }
 }
