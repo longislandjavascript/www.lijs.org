@@ -108,8 +108,8 @@ export default function CodeOfConductPage() {
               justin@lijs.org
             </a>{" "}
             or{" "}
-            <Link href="/contact">
-              <a className="anchor">our contact form</a>
+            <Link href="/contact" className="anchor">
+              our contact form
             </Link>
             .{" "}
           </p>

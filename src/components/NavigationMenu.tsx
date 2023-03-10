@@ -32,10 +32,11 @@ const NavLink = (props: {
   } else {
     return (
       <li className="w-full">
-        <Link href={href}>
-          <a className={`${navLinkClassNames} ${selectedClassNames}`}>
-            <Icon /> {label}
-          </a>
+        <Link
+          href={href}
+          className={`${navLinkClassNames} ${selectedClassNames}`}
+        >
+          <Icon /> {label}
         </Link>
       </li>
     );
@@ -48,22 +49,18 @@ export const NavigationMenu = () => {
     <nav className="flex-1">
       <ul className="flex-col gap-2 flex items-start px-4">
         <li>
-          <Link href="/">
-            <a className={navLinkClassNames}>
-              <Image
-                src="/icon.svg"
-                alt="Long Island JavaScript"
-                height={60}
-                width={60}
-                aria-hidden={true}
-              />
-              <div>
-                <p className="text-[26px] font-bold text-primary">
-                  Long Island
-                </p>
-                <p className="text-3xl font-bold">JavaScript</p>
-              </div>
-            </a>
+          <Link href="/" className={navLinkClassNames}>
+            <Image
+              src="/icon.svg"
+              alt="Long Island JavaScript"
+              height={60}
+              width={60}
+              aria-hidden={true}
+            />
+            <div>
+              <p className="text-[26px] font-bold text-primary">Long Island</p>
+              <p className="text-3xl font-bold">JavaScript</p>
+            </div>
           </Link>
         </li>
         {navLinks.map((link) => {

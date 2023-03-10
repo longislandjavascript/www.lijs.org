@@ -32,16 +32,14 @@ export const ShowcaseCard = (props: Props) => {
     );
   } else {
     return (
-      <Link href={href}>
-        <a className={classNames}>
-          <section className="mx-auto my-8">
-            <Icon className="text-7xl text-current" />
-          </section>
+      <Link href={href} className={classNames}>
+        <section className="mx-auto my-8">
+          <Icon className="text-7xl text-current" />
+        </section>
 
-          <p className="text-xl text-center font-medium group-hover:underline group-focus-within:underline underline-offset-2">
-            {children}
-          </p>
-        </a>
+        <p className="text-xl text-center font-medium group-hover:underline group-focus-within:underline underline-offset-2">
+          {children}
+        </p>
       </Link>
     );
   }
