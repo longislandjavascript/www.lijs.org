@@ -38,7 +38,7 @@
   /* STYLES */
 
   .btn {
-    @apply rounded-md font-medium disabled:opacity-75 disabled:cursor-not-allowed flex w-full justify-center items-center gap-2 transition-all duration-300 !disabled:hover:opacity-95 !disabled:focus:opacity-95 hover:opacity-90 focus:opacity-90 ring-0 outline-2 outline-offset-2 outline-blue-500;
+    @apply rounded-md font-medium disabled:opacity-75 disabled:cursor-not-allowed flex w-full justify-center items-center gap-2 transition-all duration-300  hover:opacity-90 focus:opacity-90 ring-0 outline-2 outline-offset-2 outline-blue-500;
   }
 
   .form {
@@ -97,5 +97,9 @@
 
   .card {
     @apply texture flex-1 p-4 mb-12 surface-alt rounded-xl;
+  }
+
+  .link {
+    @apply text-blue-500 hover:underline focus:underline;
   }
 }
