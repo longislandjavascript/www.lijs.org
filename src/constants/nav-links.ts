@@ -9,6 +9,7 @@ import {
   FaRegQuestionCircle,
   FaBalanceScale,
   FaPiggyBank,
+  FaGift,
 } from "react-icons/fa";
 import { githubLink, meetupLink, slackLink } from "constants/links";
 
@@ -18,6 +19,7 @@ export const navLinks = [
   { label: "Contact Us", icon: FaRegEnvelope, href: "/contact" },
   { label: "FAQ", icon: FaRegQuestionCircle, href: "/faq" },
   { label: "Code of Conduct", icon: FaBalanceScale, href: "/code-of-conduct" },
+  { label: "Redeem", icon: FaGift, href: "/redeem" },
   { label: "Donate", icon: FaPiggyBank, href: "/donate" },
   { label: "Meetup", icon: FaMeetup, href: meetupLink },
   { label: "Slack", icon: FaSlack, href: slackLink },
