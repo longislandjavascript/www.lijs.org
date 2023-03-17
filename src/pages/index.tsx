@@ -17,6 +17,7 @@ export default function IndexPage(props: {
     <Layout>
       <SEO />
       <div className="w-full overflow-hidden">
+        <UpcomingEvent event={nextEvent} />
         <div className="w-full mb-12 flex items-center gap-4 overflow-scroll snap-x snap-mandatory md:snap-none md:flex-wrap md:justify-between">
           {showcaseItems.map((item) => {
             return (
@@ -31,8 +32,6 @@ export default function IndexPage(props: {
             );
           })}
         </div>
-
-        <UpcomingEvent event={nextEvent} />
 
         <GettingHere />
       </div>

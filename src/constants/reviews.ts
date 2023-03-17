@@ -9,7 +9,7 @@ export const reviews = [
   ["Anthony Alvarez", "Great!"],
   ["John Rattinger", "So far, so good... My first meeting but i will be back!"],
   [
-    "Scott DeVito (future organizer)",
+    "Scott DeVito",
     "Informative and welcoming. Will definitely be back next month.",
   ],
-];
+] as const;
