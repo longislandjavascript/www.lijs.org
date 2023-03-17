@@ -28,7 +28,7 @@ export const OrganizerCard = (props: OrganizerCardProps) => {
           src={organizer.imgSrc}
           height={140}
           width={140}
-          objectFit="fill"
+          className="object-fill"
         />
       </div>
 

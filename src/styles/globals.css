@@ -54,7 +54,7 @@
   }
 
   .ghost-button {
-    @apply p-2 border-2 rounded-lg border-blue-500 text-blue-600 box-border w-full md:w-48 transition-colors ease-in-out;
+    @apply p-2 border-2 rounded-lg border-blue-500 text-blue-600 box-border w-full md:w-48 transition-colors ease-in-out hover:bg-blue-500/10 focus:bg-blue-500/10;
   }
 
   .surface {

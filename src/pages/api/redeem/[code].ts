@@ -20,7 +20,6 @@ export default function handler(req, res) {
       }
 
       if (records[0]) {
-        console.log(records[0]);
         res.status(200).json(
           JSON.stringify({
             success: true,
@@ -29,7 +28,6 @@ export default function handler(req, res) {
           })
         );
       } else {
-        console.log("no records");
         return res.status(500).json(JSON.stringify({ success: false }));
       }
     });

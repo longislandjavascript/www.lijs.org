@@ -10,7 +10,6 @@ export function AirtableEmbedForm(props: Props) {
   const src = props.code
     ? `${props.src}?prefill_Code=${props.code}`
     : props.src;
-  console.log(src);
   return (
     <>
       <Script src="https://static.airtable.com/js/embed/embed_snippet_v1.js" />

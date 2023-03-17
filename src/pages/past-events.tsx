@@ -2,7 +2,7 @@ import { useState } from "react";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { Layout } from "components/Layout";
 import { SEO } from "components/SEO";
-import { MeetupGroup, MeetupEvent } from "types";
+import { MeetupEvent } from "types";
 import { FaMeetup } from "react-icons/fa";
 import { PastEvent } from "components/PastEvent";
 import { ExternalLink } from "components/ExternalLink";
@@ -32,9 +32,9 @@ export default function PastEventsPage(
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         type="Search"
-        placeholder="Search"
+        placeholder="🔍 Search"
         aria-label="Search for a past event"
-        className="py-3 px-8 surface-alt text-alt block w-full md:w-96 rounded-full my-6 border-2 border-color"
+        className="py-3 px-8 surface-alt text-alt block w-full rounded-full my-6 border-2 border-color"
       />
 
       <div className="space-y-8">

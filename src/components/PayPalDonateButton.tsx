@@ -4,7 +4,7 @@ import { FaPaypal } from "react-icons/fa";
 export const PayPalDonateButton = () => {
   return (
     <div className="text-center mb-12 p-2 inline-block border-2 border-yellow-500 rounded-lg border-dashed px-12">
-      <div className="flex items-center justify-center my-2 gap-2 text-xl font-medium">
+      <div className="flex items-center justify-center my-2 gap-2  font-medium text-4xl mb-6">
         <FaPaypal /> <p>PayPal</p>
       </div>
       <form action="https://www.paypal.com/donate" method="post" target="_top">

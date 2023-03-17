@@ -24,7 +24,6 @@ export default function ClaimPassPage() {
         method: "POST",
       });
       const values = await response.json();
-      console.log(values, values.success);
       const parsed = JSON.parse(values);
       if (parsed.success) {
         router.replace(
