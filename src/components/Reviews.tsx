@@ -1,6 +1,7 @@
 import { reviews } from "constants/reviews";
 import { Section } from "./Section";
 import { useState, useEffect } from "react";
+import Marquee from "react-fast-marquee";
 
 export const Reviews = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -20,12 +21,19 @@ export const Reviews = () => {
 
   return (
     <Section title="Reviews">
-      <figure className="space-y-4 my-8 border-l-4 border-yellow-500 px-4 bg-gray-500/10 p-2 surface-alt">
-        <blockquote>
-          <p className="text-2xl text-primary font-display">{name}</p>
-        </blockquote>
-        <figcaption className="text-md italic">- {title}</figcaption>
-      </figure>
+      <Marquee speed={40} gradient={false} pauseOnHover={true}>
+        {reviews.map((review) => {
+          const [name, title] = review;
+          return (
+            <figure key={name + title} className="space-y-4  px-4 p-2 mx-12">
+              <blockquote>
+                <p className="text-2xl text-primary font-display">{name}</p>
+              </blockquote>
+              <figcaption className="text-md italic">- {title}</figcaption>
+            </figure>
+          );
+        })}
+      </Marquee>
     </Section>
   );
 };
