@@ -2,7 +2,7 @@ import { GetStaticProps } from "next";
 import { Layout } from "components/Layout";
 import { SEO } from "components/SEO";
 import { MeetupGroup, MeetupEvent } from "types";
-import { UpcomingEvent } from "components/UpcomingEvent";
+import { NextEvent } from "components/NextEvent";
 import { ShowcaseCard } from "components/ShowcaseCard";
 import { GettingHere } from "components/GettingHere";
 import { showcaseItems } from "constants/showcase";
@@ -17,7 +17,7 @@ export default function IndexPage(props: {
     <Layout>
       <SEO />
       <div className="w-full overflow-hidden">
-        <UpcomingEvent event={nextEvent} />
+        <NextEvent event={nextEvent} />
         <div className="w-full mb-12 flex items-center gap-4 overflow-scroll snap-x snap-mandatory md:snap-none md:flex-wrap md:justify-between">
           {showcaseItems.map((item) => {
             return (
@@ -39,7 +39,7 @@ export default function IndexPage(props: {
   );
 }
 
-export const getServerSideProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const groupRes = await fetch("https://api.meetup.com/long-island-javascript");
   const eventsRes = await fetch(
     "https://api.meetup.com/long-island-javascript/events?status=upcoming"

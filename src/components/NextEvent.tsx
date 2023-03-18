@@ -8,12 +8,12 @@ type Props = {
   event: MeetupEvent;
 };
 
-export const UpcomingEvent = (props: Props) => {
+export const NextEvent = (props: Props) => {
   const { event } = props;
   const startTime = event.time;
   const endTime = event.time + event.duration;
   return (
-    <Section title="Upcoming Event">
+    <Section title="Next Event">
       <div>
         <h2 className="mb-4 text-3xl font-bold gap-2 text-primary">
           {event.name}
