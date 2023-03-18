@@ -6,13 +6,13 @@ export const HeaderLogo = () => {
       <Image
         src="/icon.svg"
         alt="Long Island JavaScript"
-        height={60}
-        width={60}
+        height={55}
+        width={55}
         aria-hidden={true}
       />
-      <div>
-        <p className="text-[26px] font-bold text-primary">Long Island</p>
-        <p className="text-3xl font-bold">JavaScript</p>
+      <div className="font-display font-black text-primary">
+        <p className="text-[23px]">Long Island</p>
+        <p className="text-[26px]">JavaScript</p>
       </div>
     </div>
   );

@@ -4,6 +4,9 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { HeaderLogo } from "./HeaderLogo";
 import { NavigationMenu } from "components/NavigationMenu";
 
+const iconButtonClassNames =
+  "text-3xl text-primary p-2 rounded-full hover:bg-gray-500/10 transition-colors ease-in-out";
+
 export const MobileNavigation = () => {
   let [isOpen, setIsOpen] = useState(false);
 
@@ -17,15 +20,15 @@ export const MobileNavigation = () => {
 
   return (
     <>
-      <div className="block md:hidden relative p-2">
+      <div className="md:hidden p-3 sticky top-0 z-10 border-b-2 border-color flex items-center justify-between surface">
         <HeaderLogo />
         <button
           type="button"
           onClick={openModal}
           aria-label="Site Navigation"
-          className="p-2 rounded-full hover:bg-gray-500/10 transition-colors ease-in-out absolute right-4 top-4"
+          className={iconButtonClassNames}
         >
-          <FaBars className="text-3xl text-primary" />
+          <FaBars />
         </button>
       </div>
 
@@ -54,27 +57,18 @@ export const MobileNavigation = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-screen h-screen transform overflow-scroll surface text-left align-middle shadow-xl transition-all p-2">
+                <Dialog.Panel className="w-screen h-screen transform overflow-scroll surface text-left align-middle transition-all p-2">
                   <section className="w-full text-right flex items-center">
                     <HeaderLogo />
                     <button
                       onClick={closeModal}
-                      className="text-3xl text-sky-700 rounded-full p-2 hover:bg-gray-500/10 focus:bg-gray-500/10 m-2 ring-0 outline-0"
+                      className={iconButtonClassNames}
                     >
                       <FaTimes />
                     </button>
                   </section>
 
                   <NavigationMenu />
-
-                  <section className="w-full text-center mt-8">
-                    <button
-                      onClick={closeModal}
-                      className="m-4 p-2 border-2 border-blue-500 text-blue-500 font-medium rounded-lg w-44"
-                    >
-                      Close
-                    </button>
-                  </section>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
