@@ -8,7 +8,7 @@ const inter = Inter({
 
 const overlock = Overlock({
   subsets: ["latin"],
-  weight: "700",
+  weight: ["400", "700", "900"],
   variable: "--font-overlock",
 });
 
