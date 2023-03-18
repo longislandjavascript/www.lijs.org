@@ -4,9 +4,10 @@ import { useRouter } from "next/router";
 import { ExternalLink } from "./ExternalLink";
 import { navLinks } from "constants/nav-links";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { HeaderLogo } from "./HeaderLogo";
 
 const navLinkClassNames =
-  "flex items-center gap-4 w-full text-primary  font-semibold mx-2  transition-colors duration-200 ease-in-out p-2 rounded-md hover:bg-gray-500/10 focus-visible:bg-gray-500/10";
+  "flex items-center gap-4 w-full text-primary font-semibold mx-2  transition-colors duration-200 ease-in-out p-2 rounded-md hover:bg-gray-500/10 focus-visible:bg-gray-500/10";
 
 const NavLink = (props: {
   icon: any;
@@ -46,35 +47,26 @@ const NavLink = (props: {
 export const NavigationMenu = () => {
   const router = useRouter();
   return (
-    <nav className="flex-1">
-      <ul className="flex-col gap-2 flex items-start px-4">
-        <li>
-          <Link href="/" className={navLinkClassNames}>
-            <Image
-              src="/icon.svg"
-              alt="Long Island JavaScript"
-              height={60}
-              width={60}
-              aria-hidden={true}
-            />
-            <div>
-              <p className="text-[26px] font-bold text-primary">Long Island</p>
-              <p className="text-3xl font-bold">JavaScript</p>
-            </div>
-          </Link>
-        </li>
-        {navLinks.map((link) => {
-          return (
-            <NavLink
-              key={link.href}
-              href={link.href}
-              label={link.label}
-              icon={link.icon}
-              isActive={router.pathname === link.href}
-            />
-          );
-        })}
-      </ul>
-    </nav>
+    <div>
+      <div className="hidden md:block">
+        <HeaderLogo />
+      </div>
+
+      <nav className="flex-1 mt-8">
+        <ul className="flex-col gap-2 flex items-start px-4">
+          {navLinks.map((link) => {
+            return (
+              <NavLink
+                key={link.href}
+                href={link.href}
+                label={link.label}
+                icon={link.icon}
+                isActive={router.pathname === link.href}
+              />
+            );
+          })}
+        </ul>
+      </nav>
+    </div>
   );
 };

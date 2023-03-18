@@ -48,10 +48,10 @@ export default function PastEventsPage(
           No results matching <b>{query}</b>
         </p>
       )}
-      <div className="my-8">
+      <div className="my-8 mx-4 md:mx-0">
         <ExternalLink
           href="https://www.meetup.com/long-island-javascript-group/events/past/"
-          className="cta"
+          className="cta w-full md:w-auto"
         >
           <FaMeetup size={20} style={{ marginRight: "5px" }} />
           View past events on Meetup

@@ -1,14 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { FaBars, FaTimes } from "react-icons/fa";
-
+import { HeaderLogo } from "./HeaderLogo";
 import { NavigationMenu } from "components/NavigationMenu";
 
 export const MobileNavigation = () => {
   let [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
 
   function closeModal() {
     setIsOpen(false);
@@ -20,7 +17,8 @@ export const MobileNavigation = () => {
 
   return (
     <>
-      <div className="block md:hidden relative">
+      <div className="block md:hidden relative p-2">
+        <HeaderLogo />
         <button
           type="button"
           onClick={openModal}
@@ -31,8 +29,8 @@ export const MobileNavigation = () => {
         </button>
       </div>
 
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Transition appear={true} show={isOpen}>
+        <Dialog className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -57,7 +55,8 @@ export const MobileNavigation = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-screen h-screen transform overflow-scroll surface text-left align-middle shadow-xl transition-all p-2">
-                  <section className="w-full text-right">
+                  <section className="w-full text-right flex items-center">
+                    <HeaderLogo />
                     <button
                       onClick={closeModal}
                       className="text-3xl text-sky-700 rounded-full p-2 hover:bg-gray-500/10 focus:bg-gray-500/10 m-2 ring-0 outline-0"

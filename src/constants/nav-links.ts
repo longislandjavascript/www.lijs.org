@@ -10,10 +10,12 @@ import {
   FaBalanceScale,
   FaPiggyBank,
   FaGift,
+  FaHome,
 } from "react-icons/fa";
 import { githubLink, meetupLink, slackLink } from "constants/links";
 
 export const navLinks = [
+  { label: "Home", icon: FaHome, href: "/" },
   { label: "Past Events", icon: FaHistory, href: "/past-events" },
   { label: "About Us", icon: FaUsers, href: "/about" },
   { label: "Contact Us", icon: FaRegEnvelope, href: "/contact" },

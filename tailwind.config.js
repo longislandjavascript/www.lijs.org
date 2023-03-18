@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ["var(--font-overlock)", ...fontFamily.serif],
+        display: ["var(--font-overlock)", fontFamily.display],
         sans: ["var(--font-inter)", ...fontFamily.sans],
       },
       keyframes: {
