@@ -42,15 +42,15 @@
   }
 
   .highlight-card {
-    @apply flex-shrink-0 snap-center my-4 p-4  w-60 h-60 cursor-pointer rounded-xl flex flex-col items-center font-display font-bold justify-around;
+    @apply flex-shrink-0 snap-center my-4 p-4 w-60 h-60 cursor-pointer rounded-xl flex flex-col items-center font-display font-bold justify-around;
   }
 
   .section-title {
-    @apply stripes inline-block font-display text-2xl md:text-3xl my-2 mb-6 p-2 font-bold text-yellow-800 bg-yellow-300 items-center gap-2 -rotate-3 rounded-lg;
+    @apply stripes inline-block font-display font-bold text-2xl md:text-3xl my-2 mb-6 p-2 text-yellow-800 bg-yellow-300 items-center gap-2 -rotate-3 rounded-lg;
   }
 
   .page-title {
-    @apply stripes inline-block font-display font-bold text-3xl md:text-4xl my-2 mb-6 p-4  text-yellow-200 bg-blue-600 items-center gap-2 -rotate-3 rounded-lg;
+    @apply stripes inline-block font-display font-black text-3xl md:text-4xl my-2 mb-6 p-4  text-yellow-200 bg-blue-600 items-center gap-2 -rotate-3 rounded-lg;
   }
 
   .ghost-button {

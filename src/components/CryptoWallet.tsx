@@ -8,12 +8,14 @@ type Props = {
 
 export const CryptoWallet = (props: Props) => {
   const { wallet } = props;
-  const [isCopied, setCopied] = useClipboard(wallet.address);
+  const [isCopied, setCopied] = useClipboard(wallet.address, {
+    successDuration: 1000,
+  });
 
   return (
     <div
       key={wallet.address}
-      className="flex flex-col  items-center mb-12 snap-center flex-1"
+      className="flex flex-col items-center mb-12 snap-center flex-1"
     >
       <p className="text-2xl font-medium mb-2">{wallet.coin}</p>
       <Image
