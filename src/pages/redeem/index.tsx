@@ -1,7 +1,7 @@
 import { Layout } from "components/Layout";
 import { useRouter } from "next/router";
-import PinInput from "react-pin-input";
-import { useRef, useEffect, useState } from "react";
+import PinField from "react-pin-field";
+import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { FaExclamationTriangle, FaSpinner } from "react-icons/fa";
 
@@ -10,13 +10,36 @@ export default function ClaimPassPage() {
   const [error, setError] = useState(false);
   const ref = useRef(null);
   const router = useRouter();
-  useEffect(() => {
-    ref.current.focus();
+
+  const handleFocusPin = useCallback(() => {
+    ref.current[0].focus();
   }, []);
 
-  function handleClear() {
-    ref.current.clear();
+  const handleClearPin = useCallback(() => {
+    ref.current.forEach((input) => (input.value = ""));
+  }, []);
+
+  const handlePinReset = useCallback(() => {
+    handleClearPin();
+    handleFocusPin();
+  }, [handleClearPin, handleFocusPin]);
+
+  function resetError() {
+    if (error) {
+      setError(false);
+    }
   }
+
+  useEffect(() => {
+    handleFocusPin();
+  }, [handleFocusPin]);
+
+  useEffect(() => {
+    if (error) {
+      handlePinReset();
+    }
+  }, [error, handlePinReset]);
+
   async function handleCheckRedemptionCode(value) {
     setLoading(true);
     try {
@@ -30,7 +53,9 @@ export default function ClaimPassPage() {
           `/redeem/form?code=${parsed.code}&prize=${parsed.prize}`
         );
       } else {
-        setError(true);
+        setTimeout(() => {
+          setError(true);
+        }, 500);
       }
     } catch (error) {
       setTimeout(() => {
@@ -42,51 +67,27 @@ export default function ClaimPassPage() {
       }, 500);
     }
   }
-  useEffect(() => {
-    if (error) {
-      ref.current.clear();
-      ref.current.focus();
-    }
-  }, [error]);
 
   return (
     <Layout pageTitle="Redeem a Prize" className="texture">
       <div>
-        <section className="mt-8 inline-block border-2 border-color p-4 rounded-xl surface">
-          <p className="mb-4 font-[600]">Please enter your redemption code.</p>
-          <PinInput
+        <section className="mt-8 inline-block border-2 border-color p-4 rounded-xl surface text-center">
+          <p className="mb-4 font-medium">Please enter your redemption code.</p>
+          <PinField
             length={4}
-            initialValue=""
-            secret
-            secretDelay={100}
             ref={ref}
-            onChange={(value, index) => {
-              if (error) {
-                setError(false);
-              }
-            }}
-            type="numeric"
-            inputMode="number"
-            style={{ marginBottom: "4px" }}
-            inputStyle={{
-              border: "2px solid lightgray",
-              borderRadius: "10px",
-              height: "70px",
-              width: "70px",
-              fontSize: "30px",
-            }}
-            inputFocusStyle={{
-              border: "3px solid skyblue",
-            }}
+            onChange={resetError}
             onComplete={handleCheckRedemptionCode}
-            autoSelect={true}
-            regexCriteria={/^[ 0-9]*$/}
+            type="password"
+            pattern="[0-9]*"
+            inputMode="numeric"
+            className="mb-2 appearance-none caret-blue-500 h-16 w-16 border-2 border-gray-500 rounded-lg mx-1 focus:border-4 focus:border-blue-500 transition-all duration-100 outline-none text-center text-3xl"
           />
           <div className="text-center h-10 pt-2">
             {!loading && !error && (
               <button
                 className="text-blue-500 hover:underline focus:underline"
-                onClick={handleClear}
+                onClick={handlePinReset}
               >
                 Clear
               </button>
