@@ -27,7 +27,9 @@ export const Reviews = () => {
           return (
             <figure key={name + title} className="space-y-4  px-4 p-2 mx-12">
               <blockquote>
-                <p className="text-2xl text-primary font-display">{name}</p>
+                <p className="text-2xl text-primary font-display font-bold">
+                  {name}
+                </p>
               </blockquote>
               <figcaption className="text-md italic">- {title}</figcaption>
             </figure>

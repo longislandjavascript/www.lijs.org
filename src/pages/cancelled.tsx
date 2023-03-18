@@ -4,8 +4,6 @@ import { ExternalLink } from "components/ExternalLink";
 import { meetupReviewLink } from "constants/links";
 
 export default function CancelledPage() {
-  const questionClassNames = "text-lg font-display text-3xl text-primary py-2";
-  const answerClassNames = "";
   return (
     <Layout pageTitle="Thanks anyways :) ">
       <SEO title="Thanks anyways!" />

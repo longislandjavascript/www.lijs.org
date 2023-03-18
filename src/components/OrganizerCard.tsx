@@ -33,7 +33,7 @@ export const OrganizerCard = (props: OrganizerCardProps) => {
       </div>
 
       <div>
-        <p className="text-3xl my-2 font-display group-focus:underline group-hover:underline mt-2">
+        <p className="text-3xl my-2 font-display font-bold group-focus:underline group-hover:underline mt-2">
           {organizer.name}
         </p>
 

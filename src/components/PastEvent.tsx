@@ -24,7 +24,7 @@ export const PastEvent = ({ event }: { event: MeetupEvent }) => {
           {format(new Date(event.local_date), "PP")}
         </p>
       </div>
-      <h2 className="text-2xl md:text-3xl font-display font-thin text-blue-600 mt-4 rounded-lg mb-8">
+      <h2 className="text-2xl md:text-3xl font-display font-bold text-blue-600 mt-4 rounded-lg mb-8">
         {event.name}
       </h2>
       {showDescription && <Raw>{event.description}</Raw>}

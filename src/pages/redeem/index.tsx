@@ -76,7 +76,7 @@ export default function ClaimPassPage() {
               fontSize: "30px",
             }}
             inputFocusStyle={{
-              border: "2px solid gray",
+              border: "3px solid skyblue",
             }}
             onComplete={handleCheckRedemptionCode}
             autoSelect={true}
