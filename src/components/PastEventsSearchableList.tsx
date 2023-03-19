@@ -33,7 +33,7 @@ export const PastEventsSearchableList = ({ events }: Props) => {
       />
 
       {filteredEvents.length > 0 ? (
-        <p className="mb-2">
+        <p className="mb-2 text-sm">
           Showing {filteredEvents.length} event{maybeS}
         </p>
       ) : (

@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         display: ["var(--font-overlock)"],
-        serif: ["var(--font-overlock)", ...fontFamily.serif],
+        sans: ["var(--font-inter)", ...fontFamily.sans],
       },
     },
   },
