@@ -44,6 +44,7 @@ export const GettingHere = () => {
         <div className="w-full space-y-6">
           <iframe
             name="Google Map"
+            title="Google Map"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3017.0288495372492!2d-73.43112664821298!3d40.87124107921347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e8287816d84b91%3A0x9a83753169b72bea!2sLaunchPad%20Huntington!5e0!3m2!1sen!2sus!4v1652451169913!5m2!1sen!2sus"
             className="max-w-full w-full flex-1 rounded-xl "
             height={500}

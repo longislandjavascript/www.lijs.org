@@ -14,6 +14,7 @@ export function AirtableEmbedForm(props: Props) {
     <>
       <Script src="https://static.airtable.com/js/embed/embed_snippet_v1.js" />
       <iframe
+        title="Airtable Form"
         className="airtable-embed airtable-dynamic-height mt-8"
         src={src}
         width="100%"
