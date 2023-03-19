@@ -31,7 +31,7 @@ export const PastEvent = ({ event }: { event: MeetupEvent }) => {
       </h2>
       {showDescription && <Raw>{event.description}</Raw>}
 
-      <section className="flex flex-col md:flex-row items-center justify-start gap-2 mt-4">
+      <section className="flex flex-col md:flex-row items-center justify-start gap-4 mt-4">
         {!showDescription && (
           <button
             onClick={() => setShowDescription(true)}

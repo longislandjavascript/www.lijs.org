@@ -15,11 +15,10 @@ type NavLinkProps = {
   label: string;
   href: string;
   isActive?: boolean;
-  onClick?: () => void;
 };
 
 const NavLink = (props: NavLinkProps) => {
-  const { icon: Icon, label, href, isActive, onClick } = props;
+  const { icon: Icon, label, href, isActive } = props;
   const isExternalLink = href.startsWith("http");
   const selectedClassNames = isActive ? " bg-gray-500/10" : "";
 
@@ -29,7 +28,6 @@ const NavLink = (props: NavLinkProps) => {
         <ExternalLink
           className={`${navLinkClassNames} ${selectedClassNames}`}
           href={href}
-          onClick={onClick}
         >
           <Icon /> {label} <FaExternalLinkAlt className="text-sm" />
         </ExternalLink>
@@ -39,9 +37,9 @@ const NavLink = (props: NavLinkProps) => {
     return (
       <li className="w-full">
         <Link
+          scroll={true}
           href={href}
           className={`${navLinkClassNames} ${selectedClassNames}`}
-          onClick={onClick}
         >
           <Icon /> {label}
         </Link>
@@ -50,11 +48,7 @@ const NavLink = (props: NavLinkProps) => {
   }
 };
 
-type NavigationMenuProps = {
-  onSelection?: () => void;
-};
-
-export const NavigationMenu = (props: NavigationMenuProps) => {
+export const NavigationMenu = () => {
   const pathname = usePathname();
   return (
     <div>
@@ -62,7 +56,7 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
         <HeaderLogo />
       </div>
 
-      <nav className="flex-1 my-12 md:mt-6">
+      <nav className="flex-1 mt-12 md:mt-6">
         <ul className="flex-col gap-2 flex items-start px-4 font-display font-bold md:text-lg text-xl">
           {navLinks.map((link) => {
             return (
@@ -71,7 +65,6 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
                 href={link.href}
                 label={link.label}
                 icon={link.icon}
-                onClick={props.onSelection}
                 isActive={pathname === link.href}
               />
             );

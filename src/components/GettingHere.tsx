@@ -4,7 +4,7 @@ import { Section } from "components/Section";
 
 export const GettingHere = () => {
   return (
-    <Section title="Getting Here">
+    <Section title="Getting Here" id="getting-here">
       <div className="flex flex-wrap items-start gap-2">
         <div className="prose">
           <address className=" mt-4 inline-flex flex-col not-italic font-semibold border-2 border-dashed border-yellow-500 p-3 rounded-xl">

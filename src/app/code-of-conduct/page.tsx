@@ -13,29 +13,31 @@ export default function CodeOfConductPage() {
   return (
     <div>
       <PageTitle>Code of Conduct</PageTitle>
+
       <div className="prose">
-        <p>
-          Long Island JavaScript is dedicated to providing a 
-          <b className="text-primary">
-            harassment-free experience for everyone
-          </b>
-          .
-        </p>
+        <Section title="Please Read" className="mt-12">
+          <p>
+            Long Island JavaScript is dedicated to providing a 
+            <b className="text-primary">
+              harassment-free experience for everyone
+            </b>
+            .
+          </p>
 
-        <p>
-          We welcome and support people of all skill levels, backgrounds, and
-          identities. This includes, but is not limited to, members of any
-          sexual orientation, gender identity and expression, race, ethnicity,
-          culture, national origin, social and economic class, educational
-          level, color, immigration status, sex, age, size, family status,
-          political belief, religion, and mental and physical ability.
-        </p>
-        <p>
-          Discriminatory or harassing language and imagery are not appropriate
-          for any part of Long Island JavaScript Meetup events, including talks,
-          workshops, Slack and other online forums.
-        </p>
-
+          <p>
+            We welcome and support people of all skill levels, backgrounds, and
+            identities. This includes, but is not limited to, members of any
+            sexual orientation, gender identity and expression, race, ethnicity,
+            culture, national origin, social and economic class, educational
+            level, color, immigration status, sex, age, size, family status,
+            political belief, religion, and mental and physical ability.
+          </p>
+          <p>
+            Discriminatory or harassing language and imagery are not appropriate
+            for any part of Long Island JavaScript Meetup events, including
+            talks, workshops, Slack and other online forums.
+          </p>
+        </Section>
         <Section title="LaunchPad 🚀" className="mt-12">
           <p>
             LaunchPad generously allows us to use their Huntington, NY location

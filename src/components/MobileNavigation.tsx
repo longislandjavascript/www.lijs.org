@@ -1,15 +1,17 @@
 "use client";
 
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { HeaderLogo } from "./HeaderLogo";
 import { NavigationMenu } from "components/NavigationMenu";
+import { usePathname } from "next/navigation";
 
 const iconButtonClassNames =
   "text-3xl text-primary p-2 rounded-full hover:bg-gray-500/10 transition-colors ease-in-out";
 
 export const MobileNavigation = () => {
+  const pathname = usePathname();
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -20,11 +22,9 @@ export const MobileNavigation = () => {
     setIsOpen(true);
   }
 
-  function handleCloseModalAfterSelection() {
-    setTimeout(() => {
-      setIsOpen(false);
-    }, 250);
-  }
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   return (
     <>
@@ -75,10 +75,9 @@ export const MobileNavigation = () => {
                       <FaTimes />
                     </button>
                   </section>
-
-                  <NavigationMenu
-                    onSelection={handleCloseModalAfterSelection}
-                  />
+                  <div className="pb-[150px]">
+                    <NavigationMenu />
+                  </div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
