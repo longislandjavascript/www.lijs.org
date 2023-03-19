@@ -2,7 +2,7 @@
 
 const ContentSecurityPolicy = `
     script-src maps.googleapis.com;
-    img-src data: maps.gstatic.com *.googleapis.com *.ggpht.com;
+    img-src 'self' data: maps.gstatic.com *.googleapis.com *.ggpht.com;
 `;
 
 const gmapHeader = {
