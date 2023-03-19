@@ -12,7 +12,6 @@ import {
   FaGift,
   FaHome,
 } from "react-icons/fa";
-import { githubLink, meetupLink, slackLink } from "constants/links";
 
 export const navLinks = [
   { label: "Home", icon: FaHome, href: "/" },
@@ -23,7 +22,7 @@ export const navLinks = [
   { label: "Code of Conduct", icon: FaBalanceScale, href: "/code-of-conduct" },
   { label: "Redeem", icon: FaGift, href: "/redeem" },
   { label: "Donate", icon: FaPiggyBank, href: "/donate" },
-  { label: "Meetup", icon: FaMeetup, href: meetupLink },
-  { label: "Slack", icon: FaSlack, href: slackLink },
-  { label: "Github", icon: FaGithub, href: githubLink },
+  { label: "Meetup", icon: FaMeetup, href: "/meetup" },
+  { label: "Slack", icon: FaSlack, href: "/slack" },
+  { label: "Github", icon: FaGithub, href: "/github" },
 ];

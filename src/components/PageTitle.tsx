@@ -1,3 +1,3 @@
-export const SectionTitle = (props: { children: React.ReactNode }) => {
-  return <h2 className="section-title">{props.children}</h2>;
+export const PageTitle = (props: { children: React.ReactNode }) => {
+  return <h1 className="page-title">{props.children}</h1>;
 };

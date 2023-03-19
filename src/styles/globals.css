@@ -62,7 +62,7 @@
   }
 
   .cta {
-    @apply cursor-pointer transition-colors duration-1000 ease-in-out inline-flex items-center gap-2 text-white font-medium justify-center rounded-lg p-2 border-none  bg-gradient-to-br hover:bg-gradient-to-bl hover:bg-opacity-90 from-blue-500 to-blue-700;
+    @apply cursor-pointer transition-colors duration-1000 ease-in-out inline-flex items-center gap-2 text-white font-medium justify-center rounded-lg p-2 px-4 border-none  bg-gradient-to-br hover:bg-gradient-to-bl hover:bg-opacity-90 from-blue-500 to-blue-700;
   }
 
   .surface-alt {

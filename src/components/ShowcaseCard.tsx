@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { FaExternalLinkAlt } from "react-icons/fa";
-import { ExternalLink } from "components/ExternalLink";
 
 type Props = {
   icon: any;

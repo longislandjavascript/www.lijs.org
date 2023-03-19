@@ -15,18 +15,16 @@ export const NextEvent = (props: Props) => {
   return (
     <Section title="Next Event">
       <div>
-        <h2 className="mb-4 text-3xl font-display font-bold gap-2 text-primary">
+        <h2 className="mb-6 text-4xl font-display font-bold gap-2 text-primary p-2">
           {event.name}
         </h2>
       </div>
 
-      <div className="mb-4">
-        <p className="inline-block !text-xs font-medium rounded-full px-2 py-1 bg-blue-600 !text-white">
+      <div className="inline-block font-medium  text p-4 rounded-xl shadow-2xl">
+        <p className="inline-block !text-xs font-medium rounded-full px-2 py-1 bg-blue-600 !text-white mb-3">
           {event.yes_rsvp_count} people going
         </p>
-      </div>
 
-      <div className="inline-block font-medium  text p-2 rounded-xl">
         <p className="text-lg">{format(new Date(event.time), "PPPP")}</p>
         <p className="text-lg">
           {format(new Date(startTime), "h:mm")} -{" "}
@@ -37,7 +35,7 @@ export const NextEvent = (props: Props) => {
         </p>
       </div>
 
-      <div className="my-4">
+      <div className="my-8">
         <Raw>{event.description}</Raw>
       </div>
       <div className=" mt-4">

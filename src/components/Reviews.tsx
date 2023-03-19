@@ -1,3 +1,5 @@
+"use client";
+
 import { reviews } from "constants/reviews";
 import { Section } from "./Section";
 import Marquee from "react-fast-marquee";

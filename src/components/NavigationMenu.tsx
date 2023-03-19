@@ -1,6 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import { ExternalLink } from "./ExternalLink";
 import { navLinks } from "constants/nav-links";
 import { FaExternalLinkAlt } from "react-icons/fa";
@@ -9,13 +10,16 @@ import { HeaderLogo } from "./HeaderLogo";
 const navLinkClassNames =
   "flex items-center gap-4 w-full text-primary font-semibold mx-2  transition-colors duration-200 ease-in-out p-2 rounded-md hover:bg-gray-500/10 focus-visible:bg-gray-500/10";
 
-const NavLink = (props: {
+type NavLinkProps = {
   icon: any;
   label: string;
   href: string;
   isActive?: boolean;
-}) => {
-  const { icon: Icon, label, href, isActive } = props;
+  onClick?: () => void;
+};
+
+const NavLink = (props: NavLinkProps) => {
+  const { icon: Icon, label, href, isActive, onClick } = props;
   const isExternalLink = href.startsWith("http");
   const selectedClassNames = isActive ? " bg-gray-500/10" : "";
 
@@ -25,6 +29,7 @@ const NavLink = (props: {
         <ExternalLink
           className={`${navLinkClassNames} ${selectedClassNames}`}
           href={href}
+          onClick={onClick}
         >
           <Icon /> {label} <FaExternalLinkAlt className="text-sm" />
         </ExternalLink>
@@ -36,6 +41,7 @@ const NavLink = (props: {
         <Link
           href={href}
           className={`${navLinkClassNames} ${selectedClassNames}`}
+          onClick={onClick}
         >
           <Icon /> {label}
         </Link>
@@ -44,15 +50,19 @@ const NavLink = (props: {
   }
 };
 
-export const NavigationMenu = () => {
-  const router = useRouter();
+type NavigationMenuProps = {
+  onSelection?: () => void;
+};
+
+export const NavigationMenu = (props: NavigationMenuProps) => {
+  const pathname = usePathname();
   return (
     <div>
       <div className="hidden md:block">
         <HeaderLogo />
       </div>
 
-      <nav className="flex-1 mt-12">
+      <nav className="flex-1 mt-12 md:mt-6">
         <ul className="flex-col gap-2 flex items-start px-4">
           {navLinks.map((link) => {
             return (
@@ -61,7 +71,8 @@ export const NavigationMenu = () => {
                 href={link.href}
                 label={link.label}
                 icon={link.icon}
-                isActive={router.pathname === link.href}
+                onClick={props.onSelection}
+                isActive={pathname === link.href}
               />
             );
           })}

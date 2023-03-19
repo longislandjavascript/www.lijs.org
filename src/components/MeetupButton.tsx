@@ -9,7 +9,7 @@ type Props = {
 export const MeetupButton = (props: Props) => {
   const text = props.type === "rsvp" ? "RSVP" : "View";
   return (
-    <ExternalLink href={props.href} className="cta w-full md:w-48">
+    <ExternalLink href={props.href} className="cta w-full md:w-auto">
       <FaMeetup />
       {text} on Meetup
     </ExternalLink>

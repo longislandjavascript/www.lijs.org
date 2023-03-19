@@ -1,9 +1,14 @@
+"use client";
+
 import useClipboard from "react-use-clipboard";
 import Image from "next/image";
 import { FaCopy, FaCheck } from "react-icons/fa";
 
 type Props = {
-  wallet: any;
+  wallet: {
+    address: string;
+    coin: string;
+  };
 };
 
 export const CryptoWallet = (props: Props) => {

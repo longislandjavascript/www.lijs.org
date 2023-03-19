@@ -1,4 +1,3 @@
-import { Props } from "@headlessui/react/dist/types";
 import { forwardRef } from "react";
 
 export interface ExternalLinkProps
@@ -29,7 +28,7 @@ export const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
         href={href}
         rel="noopener noreferrer"
       >
-        {children || "ExternalLink Component"}
+        {children}
       </a>
     );
   }

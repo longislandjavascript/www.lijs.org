@@ -1,3 +1,5 @@
+"use client";
+
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -16,6 +18,12 @@ export const MobileNavigation = () => {
 
   function openModal() {
     setIsOpen(true);
+  }
+
+  function handleCloseModalAfterSelection() {
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 250);
   }
 
   return (
@@ -68,7 +76,9 @@ export const MobileNavigation = () => {
                     </button>
                   </section>
 
-                  <NavigationMenu />
+                  <NavigationMenu
+                    onSelection={handleCloseModalAfterSelection}
+                  />
                 </Dialog.Panel>
               </Transition.Child>
             </div>

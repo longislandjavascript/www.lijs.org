@@ -1,15 +1,15 @@
-type Props = {
+import { PropsWithChildren } from "react";
+
+type Props = PropsWithChildren<{
   title: string;
-  children: React.ReactNode;
   className?: string;
-};
+}>;
 
 export const Section = (props: Props) => {
   const { title, children, className = "" } = props;
   return (
-    <section className={className + " mb-18 card"}>
+    <section className={`mb-18 card ${className}`}>
       <h2 className="section-title">{title}</h2>
-
       <div>{children}</div>
     </section>
   );
