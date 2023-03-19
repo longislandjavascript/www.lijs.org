@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const ContentSecurityPolicy = `
+    default-src 'self';
     script-src maps.googleapis.com;
     img-src 'self' data: maps.gstatic.com *.googleapis.com *.ggpht.com;
 `;
