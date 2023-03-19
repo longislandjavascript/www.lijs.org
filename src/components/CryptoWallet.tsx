@@ -8,6 +8,7 @@ type Props = {
   wallet: {
     address: string;
     coin: string;
+    qr: string;
   };
 };
 
