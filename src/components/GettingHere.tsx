@@ -7,6 +7,11 @@ export const GettingHere = () => {
     <Section title="Getting Here">
       <div className="flex flex-wrap items-start gap-2">
         <div className="prose">
+          <address className=" mt-4 inline-flex flex-col not-italic font-semibold border-2 border-dashed border-yellow-500 p-3 rounded-xl">
+            <span>Launchpad Huntington</span>
+            <span>315 Main Street, 2nd Floor</span>
+            <span>Huntington, NY 11743.</span>
+          </address>
           <p>
             We meet at LaunchPad Huntington located in the heart of the
             beautiful{" "}
@@ -16,13 +21,9 @@ export const GettingHere = () => {
             >
               Village of Huntington, NY
             </ExternalLink>
-            . The address for LaunchPad Huntington is{" "}
+            .
           </p>
 
-          <div className="font-semibold">
-            <address className="not-italic">315 Main Street, 2nd Floor</address>
-            <address className="not-italic">Huntington, NY 11743.</address>
-          </div>
           <p>
             There is usually plenty of parking in the rear lot. There is also
             street parking and other nearby lots.
