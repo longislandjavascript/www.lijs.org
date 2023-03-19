@@ -1,5 +1,9 @@
-const ContentSecurityPolicy =
-  "script-src maps.googleapis.com;img-src data: maps.gstatic.com *.googleapis.com *.ggpht.com";
+/** @type {import('next').NextConfig} */
+
+const ContentSecurityPolicy = `
+    script-src maps.googleapis.com;
+    img-src data: maps.gstatic.com *.googleapis.com *.ggpht.com;
+`;
 
 module.exports = {
   experimental: {
