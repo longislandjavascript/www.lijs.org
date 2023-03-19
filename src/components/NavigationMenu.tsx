@@ -63,7 +63,7 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
       </div>
 
       <nav className="flex-1 mt-12 md:mt-6">
-        <ul className="flex-col gap-2 flex items-start px-4">
+        <ul className="flex-col gap-2 flex items-start px-4 font-display">
           {navLinks.map((link) => {
             return (
               <NavLink
