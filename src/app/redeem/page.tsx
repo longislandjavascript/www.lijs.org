@@ -7,6 +7,11 @@ import Link from "next/link";
 import { FaExclamationTriangle, FaSpinner } from "react-icons/fa";
 import { PageTitle } from "components/PageTitle";
 
+const basePath =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://www.lijs.org";
+
 // import { createMetadata } from "utils/createMetadata";
 
 // export const metadata = createMetadata({
@@ -18,15 +23,17 @@ import { PageTitle } from "components/PageTitle";
 export default function ClaimPassPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLInputElement[]>(null);
   const router = useRouter();
 
   const handleFocusPin = useCallback(() => {
-    ref.current[0].focus();
+    if (ref.current && ref.current.length > 0) {
+      ref.current[0]?.focus();
+    }
   }, []);
 
   const handleClearPin = useCallback(() => {
-    ref.current.forEach((input) => (input.value = ""));
+    ref.current?.forEach((input) => (input.value = ""));
   }, []);
 
   const handlePinReset = useCallback(() => {
@@ -53,7 +60,7 @@ export default function ClaimPassPage() {
   async function handleCheckRedemptionCode(value) {
     setLoading(true);
     try {
-      const response = await fetch("/redeem/check/" + value, {
+      const response = await fetch(basePath + "/api/redeem/" + value, {
         method: "GET",
       });
       const values = await response.json();
@@ -69,7 +76,6 @@ export default function ClaimPassPage() {
         }, 500);
       }
     } catch (error) {
-      console.error("ERRRRR", error);
       setTimeout(() => {
         setError(true);
       }, 500);

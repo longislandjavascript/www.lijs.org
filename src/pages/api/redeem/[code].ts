@@ -1,18 +1,13 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-
 import Airtable from "airtable";
 
 const base = new Airtable({ apiKey: process.env.AIRTABLE_TOKEN }).base(
-  process.env.AIRTABLE_BASE_ID
+  process.env.AIRTABLE_BASE_ID as string
 );
 
-export const runtime = "experimental-edge";
-
-export default async function GET(req: NextApiRequest, res: NextApiResponse) {
-  console.log("here");
+export default function handler(req, res) {
   const { code } = req.query;
 
-  await base("Redemption Codes")
+  base("Redemption Codes")
     .select({
       maxRecords: 1,
       view: "Grid view",
@@ -20,7 +15,7 @@ export default async function GET(req: NextApiRequest, res: NextApiResponse) {
     })
 
     .firstPage(function (err, records) {
-      if (err) {
+      if (err || !records) {
         res.status(500).json({ message: "An unknown error occurred" });
         return;
       }

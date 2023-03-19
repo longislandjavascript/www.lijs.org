@@ -1,3 +1,8 @@
+export type PageProps = {
+  params: Record<string, string>;
+  searchParams: Record<string, string>;
+};
+
 // https://api.meetup.com/long-island-javascript-group
 export interface MeetupGroup {
   id: number;
