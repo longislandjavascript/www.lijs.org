@@ -17,6 +17,8 @@ export default function PrizeRedemptionFormPage(props: PageProps) {
   const code = props.searchParams["code"];
   const prize = props.searchParams["prize"];
 
+  console.log({ code, prize });
+
   if (!code || !prize) {
     redirect("/redeem");
   }
