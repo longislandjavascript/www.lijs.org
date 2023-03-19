@@ -28,7 +28,7 @@ export const MobileNavigation = () => {
 
   return (
     <>
-      <div className="md:hidden p-3 sticky top-0 z-10 border-b-2 border-color flex items-center justify-between surface">
+      <div className="md:hidden p-4 sticky top-0 z-10 border-b-2 border-color flex items-center justify-between surface">
         <HeaderLogo />
         <button
           type="button"
@@ -65,8 +65,8 @@ export const MobileNavigation = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-screen h-screen transform overflow-scroll surface text-left align-middle transition-all p-2">
-                  <section className="w-full text-right flex items-center">
+                <Dialog.Panel className="w-screen h-screen transform overflow-scroll surface text-left align-middle transition-all">
+                  <section className="w-full text-right flex items-center sticky top-0 surface border-b border-color p-4">
                     <HeaderLogo />
                     <button
                       onClick={closeModal}

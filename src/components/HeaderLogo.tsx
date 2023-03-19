@@ -11,7 +11,7 @@ export const HeaderLogo = () => {
         aria-hidden={true}
       />
       <div className="font-display font-black text-primary">
-        <p className="text-[23px] -mb-2">Long Island</p>
+        <p className="text-[23px]">Long Island</p>
         <p className="text-[26px]">JavaScript</p>
       </div>
     </div>

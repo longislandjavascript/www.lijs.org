@@ -62,8 +62,8 @@ export const NavigationMenu = (props: NavigationMenuProps) => {
         <HeaderLogo />
       </div>
 
-      <nav className="flex-1 mt-12 md:mt-6">
-        <ul className="flex-col gap-2 flex items-start px-4 font-display">
+      <nav className="flex-1 my-12 md:mt-6">
+        <ul className="flex-col gap-2 flex items-start px-4 font-display font-bold md:text-lg text-xl">
           {navLinks.map((link) => {
             return (
               <NavLink
