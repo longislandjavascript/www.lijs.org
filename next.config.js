@@ -5,6 +5,11 @@ const ContentSecurityPolicy = `
     img-src data: maps.gstatic.com *.googleapis.com *.ggpht.com;
 `;
 
+const gmapHeader = {
+  key: "Content-Security-Policy",
+  value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
+};
+
 module.exports = {
   experimental: {
     appDir: true,
@@ -18,8 +23,12 @@ module.exports = {
   async headers() {
     return [
       {
-        key: "Content-Security-Policy",
-        value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
+        source: "/",
+        headers: [gmapHeader],
+      },
+      {
+        source: "/about",
+        headers: [gmapHeader],
       },
     ];
   },
