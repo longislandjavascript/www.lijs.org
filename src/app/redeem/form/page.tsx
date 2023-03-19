@@ -1,4 +1,4 @@
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { AirtableEmbedForm } from "components/AirtableEmbedForm";
 
 const forms = {
@@ -6,19 +6,16 @@ const forms = {
   Pass: "https://airtable.com/embed/shr5ORFfEklcml6o6",
 };
 
-// import { createMetadata } from "utils/createMetadata";
+import { createMetadata } from "utils/createMetadata";
 
-// export const metadata = createMetadata({
-//   title: "Past Events | LIJS",
-//   description:
-//     "Things move fast in the world of JavaScript and we've covered a lot of ground since 2015! Take a look back at some of our past events.",
-// });
+export const metadata = createMetadata({
+  title: "Prize Redemption Form | LIJS",
+});
 
-export default function ClaimBookPage() {
-  const router = useRouter();
+export default function PrizeRedemptionFormPage() {
   const searchParams = useSearchParams();
-  console.log({ searchParams });
-  const { code, prize } = searchParams;
+  const code = searchParams.get("code");
+  const prize = searchParams.get("prize");
 
   return (
     <div>
