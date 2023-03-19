@@ -1,15 +1,15 @@
 /** @type {import('next').NextConfig} */
 
-const ContentSecurityPolicy = `
-    default-src 'self';
-    script-src maps.googleapis.com;
-    img-src 'self' data: maps.gstatic.com *.googleapis.com *.ggpht.com;
-`;
+// const ContentSecurityPolicy = `
+//     default-src 'self';
+//     script-src maps.googleapis.com;
+//     img-src 'self' data: maps.gstatic.com *.googleapis.com *.ggpht.com;
+// `;
 
-const gmapHeader = {
-  key: "Content-Security-Policy",
-  value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
-};
+// const gmapHeader = {
+//   key: "Content-Security-Policy",
+//   value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
+// };
 
 module.exports = {
   experimental: {
@@ -21,16 +21,16 @@ module.exports = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  async headers() {
-    return [
-      {
-        source: "/",
-        headers: [gmapHeader],
-      },
-      {
-        source: "/about",
-        headers: [gmapHeader],
-      },
-    ];
-  },
+  // async headers() {
+  //   return [
+  //     {
+  //       source: "/",
+  //       headers: [gmapHeader],
+  //     },
+  //     {
+  //       source: "/about",
+  //       headers: [gmapHeader],
+  //     },
+  //   ];
+  // },
 };
