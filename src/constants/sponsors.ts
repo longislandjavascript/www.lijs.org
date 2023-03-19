@@ -1,9 +1,17 @@
 export const sponsors = [
-  { name: "LaunchPad", logo: "/sponsors/launchpad.png", href: "" },
-  { name: "O'Reilly", logo: "/sponsors/oreilly.png", href: "" },
+  {
+    name: "LaunchPad",
+    logo: "/sponsors/launchpad.png",
+    href: "https://launchpadli.com/",
+  },
+  {
+    name: "O'Reilly",
+    logo: "/sponsors/oreilly.png",
+    href: "https://www.oreilly.com/",
+  },
   {
     name: "Long Island Claims",
     logo: "/sponsors/longislandclaims.png",
-    href: "",
+    href: "https://www.longislandclaims.com/",
   },
 ];

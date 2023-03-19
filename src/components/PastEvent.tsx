@@ -4,7 +4,7 @@ import { useState } from "react";
 import { format } from "date-fns";
 
 import { FaGlobe, FaCalendar, FaBuilding } from "react-icons/fa";
-import { MeetupEvent } from "types";
+import { MeetupEvent } from "utils/types";
 import { MeetupButton } from "components/MeetupButton";
 import { Raw } from "components/Raw";
 
@@ -15,7 +15,7 @@ export const PastEvent = ({ event }: { event: MeetupEvent }) => {
       className="p-4 rounded-lg surface-alt texture max-w-4xl"
       key={event.id}
     >
-      <div className="section-title  mt-6  md:text-left">
+      <div className="mt-6">
         <p className="flex items-center gap-2 text-xl">
           {event.is_online_event ? <FaGlobe /> : <FaBuilding />}
 

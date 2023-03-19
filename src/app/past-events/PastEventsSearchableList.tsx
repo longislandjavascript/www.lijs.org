@@ -1,8 +1,9 @@
 "use client";
 
-import { PastEvent } from "components/PastEvent";
+import { Section } from "components/Section";
 import { useState } from "react";
-import { MeetupEvent } from "types";
+import { MeetupEvent } from "utils/types";
+import { MeetupEventDetails } from "components/MeetupEventDetails";
 
 type Props = {
   events: MeetupEvent[];
@@ -43,7 +44,11 @@ export const PastEventsSearchableList = ({ events }: Props) => {
 
       <div className="space-y-8">
         {filteredEvents.map((event: MeetupEvent) => {
-          return <PastEvent event={event} key={event.id} />;
+          return (
+            <Section key={event.id}>
+              <MeetupEventDetails event={event} type="past" />
+            </Section>
+          );
         })}
       </div>
     </>

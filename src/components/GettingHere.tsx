@@ -6,12 +6,13 @@ export const GettingHere = () => {
   return (
     <Section title="Getting Here" id="getting-here">
       <div className="flex flex-wrap items-start gap-2">
+        <address className=" inline-flex flex-col not-italic font-semibold bg-yellow-300 text-yellow-900 p-3 rounded-xl wiggles">
+          <span>Launchpad Huntington</span>
+          <span>315 Main Street, 2nd Floor</span>
+          <span>Huntington, NY 11743</span>
+        </address>
+
         <div className="prose">
-          <address className=" mt-4 inline-flex flex-col not-italic font-semibold border-2 border-dashed border-yellow-500 p-3 rounded-xl">
-            <span>Launchpad Huntington</span>
-            <span>315 Main Street, 2nd Floor</span>
-            <span>Huntington, NY 11743.</span>
-          </address>
           <p>
             We meet at LaunchPad Huntington located in the heart of the
             beautiful{" "}

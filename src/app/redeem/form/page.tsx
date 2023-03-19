@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { PageProps } from "types";
+import { PageProps } from "utils/types";
 import { AirtableEmbedForm } from "components/AirtableEmbedForm";
 
 import { createMetadata } from "utils/createMetadata";

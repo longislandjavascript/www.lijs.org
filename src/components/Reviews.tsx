@@ -20,13 +20,13 @@ export const Reviews = () => {
 
   return (
     <Section title="Reviews">
-      <figure className="px-8 border-l-4 py-2  border-yellow-500 surface-alt my-8">
+      <figure className="px-8 border-l-4 py-2 border-yellow-500 surface-alt my-8">
         <blockquote>
           <p className="text-2xl text-primary font-display font-bold">{name}</p>
         </blockquote>
-        <figcaption className="text-md italic flex items-center text-xl font-serif">
-          <ImQuotesLeft className="text-[100px] text-primary opacity-10 -mr-20" />
-          {title}
+        <figcaption className="relative text-md italic flex items-center text-xl font-serif">
+          <ImQuotesLeft className="flex-shrink-0 text-[80px] text-yellow-500 opacity-20" />
+          <p className="absolute left-2">{title}</p>
         </figcaption>
       </figure>
     </Section>

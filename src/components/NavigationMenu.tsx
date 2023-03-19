@@ -15,21 +15,23 @@ type NavLinkProps = {
   label: string;
   href: string;
   isActive?: boolean;
+  isExternal?: boolean;
 };
 
 const NavLink = (props: NavLinkProps) => {
-  const { icon: Icon, label, href, isActive } = props;
-  const isExternalLink = href.startsWith("http");
+  const { icon: Icon, label, href, isActive, isExternal } = props;
   const selectedClassNames = isActive ? " bg-gray-500/10" : "";
 
-  if (isExternalLink) {
+  const navIcon = <Icon className="text-2xl" />;
+
+  if (isExternal) {
     return (
       <li className="w-full">
         <ExternalLink
           className={`${navLinkClassNames} ${selectedClassNames}`}
           href={href}
         >
-          <Icon /> {label} <FaExternalLinkAlt className="text-sm" />
+          {navIcon} {label} <FaExternalLinkAlt className="text-sm" />
         </ExternalLink>
       </li>
     );
@@ -41,7 +43,7 @@ const NavLink = (props: NavLinkProps) => {
           href={href}
           className={`${navLinkClassNames} ${selectedClassNames}`}
         >
-          <Icon /> {label}
+          {navIcon} {label}
         </Link>
       </li>
     );
@@ -65,6 +67,7 @@ export const NavigationMenu = () => {
                 href={link.href}
                 label={link.label}
                 icon={link.icon}
+                isExternal={link.isExternal}
                 isActive={pathname === link.href}
               />
             );

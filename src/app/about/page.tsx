@@ -4,7 +4,7 @@ import { GettingHere } from "components/GettingHere";
 import { Reviews } from "components/Reviews";
 import { sponsors } from "constants/sponsors";
 import { organizers, pastOrganizers } from "constants/organizers";
-import { MeetupGroup } from "types";
+import { MeetupGroup } from "utils/types";
 import { PageTitle } from "components/PageTitle";
 import { createMetadata } from "utils/createMetadata";
 import Image from "next/image";
@@ -40,6 +40,8 @@ export default async function AboutUsPage() {
             return (
               <a
                 href={sponsor.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 key={sponsor.href}
                 className="hover:bg-gray-500/10 focus:bg-gray-500/10 rounded-xl p-2 transition-colors ease-in-out text-center mx-auto"
               >
