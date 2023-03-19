@@ -27,15 +27,13 @@ export default function RootLayout({ children }: Props) {
       <body
         className={`${inter.variable} ${overlock.variable} font-sans surface text`}
       >
-        <div className={`flex flex-col min-h-screen`}>
-          <div className="hidden md:block">
-            <Sidebar />
-          </div>
-
+        <div>
           <MobileNavigation />
 
+          <Sidebar />
+
           <main
-            className={`md:ml-80 py-4 px-4 md:px-12 mt-12 w-full container mx-auto max-w-4xl flex-1 pb-12`}
+            className={`relative md:ml-80 py-4 px-4 md:px-12 mt-12 max-w-4xl pb-12`}
           >
             {children}
           </main>
