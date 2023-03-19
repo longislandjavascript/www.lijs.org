@@ -54,7 +54,7 @@
   }
 
   .ghost-button {
-    @apply p-2 text-center cursor-pointer border-2 rounded-lg border-blue-500 text-blue-600 box-border w-full md:w-48 transition-colors ease-in-out hover:bg-blue-500/10 focus:bg-blue-500/10;
+    @apply font-display font-bold  p-2 text-center cursor-pointer border-2 rounded-lg border-blue-500 text-blue-600 box-border w-full md:w-48 transition-colors ease-in-out hover:bg-blue-500/10 focus:bg-blue-500/10;
   }
 
   .surface {
@@ -62,15 +62,15 @@
   }
 
   .cta {
-    @apply cursor-pointer transition-colors duration-1000 ease-in-out inline-flex items-center gap-2 text-white font-medium justify-center rounded-lg p-2 px-4 border-none  bg-gradient-to-br hover:bg-gradient-to-bl hover:bg-opacity-90 from-blue-500 to-blue-700;
+    @apply cursor-pointer font-display font-bold transition-colors duration-1000 ease-in-out inline-flex items-center gap-2 text-white justify-center rounded-lg p-2 px-4 border-none  bg-gradient-to-br hover:bg-gradient-to-bl hover:bg-opacity-90 from-blue-500 to-blue-700;
   }
 
   .surface-alt {
-    @apply bg-gray-100 dark:bg-gray-900;
+    @apply bg-gray-50 dark:bg-gray-900;
   }
 
   .text {
-    @apply text-gray-800 dark:text-gray-100 text-lg;
+    @apply text-gray-800 dark:text-gray-100 text-xl;
   }
 
   .border-color {
@@ -88,7 +88,7 @@
   }
 
   .card {
-    @apply texture flex-1 p-4 mb-12 surface-alt rounded-xl;
+    @apply texture flex-1 p-4 mb-12 surface-alt rounded-xl border-2 border-color;
   }
 
   .link {

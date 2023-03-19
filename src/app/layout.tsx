@@ -2,14 +2,10 @@ import { Sidebar } from "components/Sidebar";
 import { MobileNavigation } from "components/MobileNavigation";
 import { Footer } from "components/Footer";
 import { createMetadata } from "utils/createMetadata";
-import { Inter, Overlock } from "next/font/google";
+import { Overlock } from "next/font/google";
 import "styles/globals.css";
 
 export const metadata = createMetadata();
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
 
 const overlock = Overlock({
   subsets: ["latin"],
@@ -24,9 +20,7 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body
-        className={`${inter.variable} ${overlock.variable} font-sans surface text`}
-      >
+      <body className={`${overlock.variable} font-serif surface text`}>
         <div>
           <MobileNavigation />
 

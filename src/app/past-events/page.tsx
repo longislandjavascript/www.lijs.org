@@ -2,7 +2,7 @@ import { PageTitle } from "components/PageTitle";
 import { FaMeetup } from "react-icons/fa";
 import { ExternalLink } from "components/ExternalLink";
 import { createMetadata } from "utils/createMetadata";
-import { PastEventsSearchableList } from "./PastEventsSearchableList";
+import { PastEventsSearchableList } from "components/PastEventsSearchableList";
 import { fetchPastEvents } from "utils/meetup-api";
 
 export const metadata = createMetadata({
