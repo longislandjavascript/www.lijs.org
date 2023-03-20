@@ -2,19 +2,8 @@
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import { PageTitle } from "components/PageTitle";
-import { AirtableEmbedForm } from "components/AirtableEmbedForm";
 import { PinCode } from "components/PinCode";
-import { ExternalLink } from "components/ExternalLink";
-
-const basePath =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://www.lijs.org";
-
-const forms = {
-  Book: "https://airtable.com/embed/shr0NbP6dELj9W819",
-  Pass: "https://airtable.com/embed/shr5ORFfEklcml6o6",
-};
+import { PrizeClaimForm } from "components/PrizeClaimForm";
 
 // import { createMetadata } from "utils/createMetadata";
 
@@ -24,13 +13,26 @@ const forms = {
 //     "Things move fast in the world of JavaScript and we've covered a lot of ground since 2015! Take a look back at some of our past events.",
 // });
 
-type Result = {
-  success: boolean;
-  error?: "redeemed" | "invalid";
-  code?: string;
-  prize?: string;
-  code_record_id?: string;
+const basePath =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://www.lijs.org";
+
+type FailResult = {
+  success: false;
+  error: "invalid" | "redeemed" | "failure";
 };
+
+type SuccessResult = {
+  success: true;
+  code: string;
+  prize: "Book" | "Pass";
+  code_record_id: string;
+  link?: string;
+  link_expiration_date?: string;
+};
+
+type Result = FailResult | SuccessResult;
 
 export default function ClaimPassPage() {
   const [checkResults, setCheckResults] = useState<Result | null>(null);
@@ -98,9 +100,11 @@ export default function ClaimPassPage() {
     }
   }
 
+  const pageTitle = checkResults?.success ? "You Won!" : "Redeem a Prize";
+
   return (
     <div>
-      <PageTitle>Redeem a Prize</PageTitle>
+      <PageTitle>{pageTitle}</PageTitle>
 
       {!checkResults?.success && (
         <PinCode
@@ -114,43 +118,11 @@ export default function ClaimPassPage() {
       )}
 
       {checkResults?.success && (
-        <section>
-          <p className="font-display font-bold text-2xl my-6">
-            🎉 Congratulations on winning an O&apos;Reilly book!
-          </p>
-
-          <p className="font-medium mb-4">How to claim your book:</p>
-
-          <ol className="list-decimal ml-12">
-            <li>
-              {" "}
-              <p>
-                Find the book you want and note the title and ISBN number. You
-                can search the entire O&apos;Reilly catalog at the following
-                url:{" "}
-                <ExternalLink
-                  className="link"
-                  href="https://www.oreilly.com/search/?q=*&type=book"
-                >
-                  https://www.oreilly.com/search/?q=*&type=book
-                </ExternalLink>
-              </p>
-            </li>
-            <li>
-              <p className="mt-4">
-                Complete and submit the form below. You will receive a
-                confirmation email from O&apos;Reilly once your book is mailed.
-              </p>
-            </li>
-          </ol>
-
-          <AirtableEmbedForm
-            src={checkResults?.prize && forms[checkResults.prize]}
-            height="1180"
-            code={checkResults?.code}
-            code_record_id={checkResults?.code_record_id}
-          />
-        </section>
+        <PrizeClaimForm
+          type={checkResults.prize}
+          code={checkResults.code}
+          code_record_id={checkResults.code_record_id}
+        />
       )}
     </div>
   );

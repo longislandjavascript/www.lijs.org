@@ -32,7 +32,7 @@ export function MeetupEventDetails(props: Props) {
   const formattedEndTime = format(eventEndTime, "h:mm a");
   return (
     <div>
-      <h2 className="text-2xl md:text-4xl font-display font-black text-primary">
+      <h2 className="text-3xl md:text-4xl font-display font-black text-primary">
         {event.name}
       </h2>
 
@@ -42,8 +42,8 @@ export function MeetupEventDetails(props: Props) {
         </p>
       </div>
 
-      <section className="font-display font-bold">
-        <p className="flex items-center gap-2 text-xl">
+      <section className="font-display font-bold text-lg md:text-xl">
+        <p className="flex items-center gap-2">
           {event.is_online_event ? (
             <FaGlobe className="text-primary" />
           ) : (
@@ -52,11 +52,11 @@ export function MeetupEventDetails(props: Props) {
 
           {event?.is_online_event ? "Online Event" : "LaunchPad Huntington"}
         </p>
-        <p className="flex items-center gap-2 text-xl">
+        <p className="flex items-center gap-2">
           <FaCalendarDay className="text-primary" />
           {formattedDate}
         </p>
-        <p className="flex items-center gap-2 text-xl">
+        <p className="flex items-center gap-2">
           <FaClock className="text-primary" />
           {formattedStartTime} - {formattedEndTime}
         </p>
