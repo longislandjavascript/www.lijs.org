@@ -1,16 +1,20 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import PinField from "react-pin-field";
 import { useRef, useEffect, useState, useCallback } from "react";
-import Link from "next/link";
-import { FaExclamationTriangle, FaSpinner } from "react-icons/fa";
 import { PageTitle } from "components/PageTitle";
+import { AirtableEmbedForm } from "components/AirtableEmbedForm";
+import { PinCode } from "components/PinCode";
+import { ExternalLink } from "components/ExternalLink";
 
 const basePath =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
     : "https://www.lijs.org";
+
+const forms = {
+  Book: "https://airtable.com/embed/shr0NbP6dELj9W819",
+  Pass: "https://airtable.com/embed/shr5ORFfEklcml6o6",
+};
 
 // import { createMetadata } from "utils/createMetadata";
 
@@ -20,11 +24,21 @@ const basePath =
 //     "Things move fast in the world of JavaScript and we've covered a lot of ground since 2015! Take a look back at some of our past events.",
 // });
 
+type Result = {
+  success: boolean;
+  error?: "redeemed" | "invalid";
+  code?: string;
+  prize?: string;
+  code_record_id?: string;
+};
+
 export default function ClaimPassPage() {
+  const [checkResults, setCheckResults] = useState<Result | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<null | "redeemed" | "invalid" | "failure">(
+    null
+  );
   const ref = useRef<HTMLInputElement[]>(null);
-  const router = useRouter();
 
   const handleFocusPin = useCallback(() => {
     if (ref.current && ref.current.length > 0) {
@@ -43,7 +57,7 @@ export default function ClaimPassPage() {
 
   function resetError() {
     if (error) {
-      setError(false);
+      setError(null);
     }
   }
 
@@ -67,17 +81,15 @@ export default function ClaimPassPage() {
       const parsed = JSON.parse(values);
 
       if (parsed.success) {
-        router.replace(
-          `/redeem/form?code=${parsed.code}&prize=${parsed.prize}`
-        );
+        setCheckResults(parsed);
       } else {
         setTimeout(() => {
-          setError(true);
+          setError(parsed.error);
         }, 500);
       }
     } catch (error) {
       setTimeout(() => {
-        setError(true);
+        setError("failure");
       }, 500);
     } finally {
       setTimeout(() => {
@@ -89,60 +101,57 @@ export default function ClaimPassPage() {
   return (
     <div>
       <PageTitle>Redeem a Prize</PageTitle>
-      <div>
-        <section className="mt-8 inline-block border-2 border-color p-4 rounded-xl surface text-center">
-          <p className="mb-4 font-medium">Please enter your redemption code.</p>
-          <PinField
-            length={4}
-            ref={ref}
-            onChange={resetError}
-            onComplete={handleCheckRedemptionCode}
-            type="password"
-            pattern="[0-9]*"
-            inputMode="numeric"
-            className="surface mb-2 appearance-none caret-blue-500 h-16 w-16 border-2 border-gray-500 rounded-lg mx-1 focus:border-4 focus:border-blue-500 transition-all duration-100 outline-none text-center text-3xl"
-          />
-          <div className="text-center h-10 pt-2">
-            {!loading && !error && (
-              <button
-                className="text-blue-500 hover:underline focus:underline"
-                onClick={handlePinReset}
-              >
-                Clear
-              </button>
-            )}
-            {loading && <Feedback type="loading" />}
-            {!loading && error && <Feedback type="error" />}
-          </div>
-        </section>
-      </div>
 
-      <section className="mt-4 flex gap-2">
-        <p>Lost your redemption code?</p>
-        <Link className="link" href="/contact">
-          Get in touch.
-        </Link>
-      </section>
+      {!checkResults?.success && (
+        <PinCode
+          ref={ref}
+          onChange={resetError}
+          onComplete={handleCheckRedemptionCode}
+          loading={loading}
+          onClear={handlePinReset}
+          errorType={error}
+        />
+      )}
+
+      {checkResults?.success && (
+        <section>
+          <p className="font-display font-bold text-2xl my-6">
+            🎉 Congratulations on winning an O&apos;Reilly book!
+          </p>
+
+          <p className="font-medium mb-4">How to claim your book:</p>
+
+          <ol className="list-decimal ml-12">
+            <li>
+              {" "}
+              <p>
+                Find the book you want and note the title and ISBN number. You
+                can search the entire O&apos;Reilly catalog at the following
+                url:{" "}
+                <ExternalLink
+                  className="link"
+                  href="https://www.oreilly.com/search/?q=*&type=book"
+                >
+                  https://www.oreilly.com/search/?q=*&type=book
+                </ExternalLink>
+              </p>
+            </li>
+            <li>
+              <p className="mt-4">
+                Complete and submit the form below. You will receive a
+                confirmation email from O&apos;Reilly once your book is mailed.
+              </p>
+            </li>
+          </ol>
+
+          <AirtableEmbedForm
+            src={checkResults?.prize && forms[checkResults.prize]}
+            height="1180"
+            code={checkResults?.code}
+            code_record_id={checkResults?.code_record_id}
+          />
+        </section>
+      )}
     </div>
   );
 }
-
-const Feedback = (props: { type: "error" | "loading" }) => {
-  const isError = props.type === "error";
-  const icon = isError ? (
-    <FaExclamationTriangle />
-  ) : (
-    <FaSpinner className="animate-spin" />
-  );
-  const message = isError
-    ? "Please enter a valid code."
-    : "Checking your redemption code.";
-
-  const baseClassNames = "flex items-center gap-2";
-  const textColor = isError ? "text-red-500" : "text-yellow-500";
-  return (
-    <p className={`${baseClassNames} ${textColor}`}>
-      {icon} {message}
-    </p>
-  );
-};

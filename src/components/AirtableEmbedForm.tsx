@@ -4,11 +4,12 @@ type Props = {
   src: string;
   height: string;
   code?: string;
+  code_record_id?: string;
 };
 
 export function AirtableEmbedForm(props: Props) {
   const src = props.code
-    ? `${props.src}?prefill_Code=${props.code}`
+    ? `${props.src}?prefill_Code=${props.code}&prefill_code_record_id=${props.code_record_id}&hide_Code=true&hide_code_record_id=true`
     : props.src;
   return (
     <>

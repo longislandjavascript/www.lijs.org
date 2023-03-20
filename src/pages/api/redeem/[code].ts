@@ -16,20 +16,27 @@ export default function handler(req, res) {
 
     .firstPage(function (err, records) {
       if (err || !records) {
-        res.status(500).json({ message: "An unknown error occurred" });
-        return;
-      }
-
-      if (records[0]) {
-        res.status(200).json(
+        return res.status(404).json({ success: "false", reason: "invalid" });
+      } else if (records[0] && records[0].get("Redeemed")) {
+        return res.status(500).json(
+          JSON.stringify({
+            success: false,
+            error: "redeemed",
+          })
+        );
+      } else if (records[0]) {
+        return res.status(200).json(
           JSON.stringify({
             success: true,
             code: records[0].get("Code"),
             prize: records[0].get("Prize Type"),
+            code_record_id: records[0].getId(),
           })
         );
       } else {
-        return res.status(500).json(JSON.stringify({ success: false }));
+        return res
+          .status(404)
+          .json(JSON.stringify({ success: false, error: "invalid" }));
       }
     });
 }
