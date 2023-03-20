@@ -1,5 +1,4 @@
 import { PageTitle } from "components/PageTitle";
-import { SEO } from "components/SEO";
 import Link from "next/link";
 import { createMetadata } from "utils/createMetadata";
 
@@ -11,7 +10,6 @@ export default function ThanksAnywaysPage() {
   return (
     <div>
       <PageTitle>Thanks anyways!</PageTitle>
-      <SEO title="Thanks anyways!" />
       <p className="text-xl my-6">
         Here are a few other ways you can show your support:
       </p>
