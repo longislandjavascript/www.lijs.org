@@ -31,7 +31,7 @@ export function MeetupEventDetails(props: Props) {
   const formattedEndTime = format(eventEndTime, "h:mm a");
   return (
     <div>
-      <h2 className="text-2xl md:text-4xl font-display font-bold gap-2 surface p-2 rounded-lg">
+      <h2 className="text-2xl md:text-4xl font-display font-black text-primary">
         {event.name}
       </h2>
 
