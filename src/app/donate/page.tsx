@@ -18,8 +18,8 @@ export default function DonatePage() {
   return (
     <div>
       <PageTitle>Donate</PageTitle>
-      <section className="p-2 space-y-6">
-        <p className="border-l-4 border-blue-500 text-2xl text-gray-800 dark:text-white font-semibold surface-alt p-4">
+      <section className="p-2 space-y-6 mb-6">
+        <p className="border-l-4 border-blue-500 text-xl text-gray-800 dark:text-white font-medium surface-alt p-4">
           Long Island JavaScript will always be{" "}
           <span className="font-[700] text-primary">free to attend</span> and
           the operating costs will{" "}
