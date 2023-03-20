@@ -31,7 +31,7 @@ export function MeetupEventDetails(props: Props) {
         </p>
       </div>
 
-      <section className="rounded-xl font-display font-bold inline-block p-4  text-blue-900">
+      <section className="rounded-xl font-display font-bold inline-block p-4 border-2 border-primary  text-primary">
         <p className="flex items-center gap-2 text-xl">
           {event.is_online_event ? <FaGlobe /> : <FaBuilding />}
 
