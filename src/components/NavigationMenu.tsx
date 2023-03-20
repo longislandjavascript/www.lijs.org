@@ -55,12 +55,12 @@ export const NavigationMenu = () => {
   const pathname = usePathname();
   return (
     <div>
-      <div className="hidden items-center justify-between md:flex">
+      <div className="hidden  md:flex items-center justify-between">
         <HeaderLogo />
         <ThemeSwitch />
       </div>
 
-      <nav className="flex-1 mt-12 md:mt-6">
+      <nav className="flex-1 mt-12">
         <ul className="flex-col gap-2 flex items-start px-4 font-display font-black text-xl">
           {navLinks.map((link) => {
             return (

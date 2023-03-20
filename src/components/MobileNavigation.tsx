@@ -6,10 +6,8 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { HeaderLogo } from "./HeaderLogo";
 import { NavigationMenu } from "components/NavigationMenu";
 import { usePathname } from "next/navigation";
-import { ThemeSwitch } from "components/ThemeSwitch";
-
-const iconButtonClassNames =
-  "text-3xl text-primary p-2 rounded-full hover:bg-gray-500/10 transition-colors ease-in-out";
+import ThemeSwitch from "./ThemeSwitch";
+import { IconButton } from "./IconButton";
 
 export const MobileNavigation = () => {
   const pathname = usePathname();
@@ -31,18 +29,17 @@ export const MobileNavigation = () => {
     <>
       <div className="md:hidden p-4 sticky top-0 z-10 border-b-2 border-color flex items-center justify-between surface">
         <HeaderLogo />
-        <div className="mr-12">
-          <ThemeSwitch />
-        </div>
 
-        <button
+        <ThemeSwitch />
+
+        <IconButton
+          label="Menu"
           type="button"
           onClick={openModal}
           aria-label="Site Navigation"
-          className={iconButtonClassNames}
         >
-          <FaBars />
-        </button>
+          <FaBars className="text-3xl" />
+        </IconButton>
       </div>
 
       <Transition appear={true} show={isOpen}>
@@ -71,14 +68,11 @@ export const MobileNavigation = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-screen h-screen transform overflow-scroll surface text-left align-middle transition-all">
-                  <section className="w-full text-right flex items-center sticky top-0 surface border-b border-color p-4">
+                  <section className="w-full text-right flex items-center sticky top-0 surface border-b border-color p-4 justify-between">
                     <HeaderLogo />
-                    <button
-                      onClick={closeModal}
-                      className={iconButtonClassNames}
-                    >
-                      <FaTimes />
-                    </button>
+                    <IconButton label="Menu" onClick={closeModal}>
+                      <FaTimes className="text-3xl" />
+                    </IconButton>
                   </section>
                   <div className="pb-[150px]">
                     <NavigationMenu />

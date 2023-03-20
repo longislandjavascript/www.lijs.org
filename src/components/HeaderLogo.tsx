@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export const HeaderLogo = () => {
   return (
-    <div className="flex items-center gap-4 w-full text-primary font-semibold mx-2">
+    <div className="flex items-center gap-4 text-primary font-semibold mx-2">
       <Image
         src="/icon.svg"
         alt="Long Island JavaScript"
