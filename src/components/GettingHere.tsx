@@ -21,13 +21,13 @@ export const GettingHere = () => {
 
         <p></p>
         <p>
-          Go through the rear entrance (image below), up the elevator to the
-          second floor, and through the door. We will either be in the main area
-          or a conference room. There will be a sign directing you to the
-          correct location.
+          Go through the rear entrance, up the elevator to the second floor, and
+          through the entrance door. We will either be in the main area or a
+          conference room. There will be a sign directing you to the correct
+          location.
         </p>
 
-        <address className=" inline-flex font-display text-xl font-bold flex-col not-italic text-primary">
+        <address className=" inline-flex font-display text-xl flex-col not-italic font-black">
           <span>Launchpad Huntington</span>
           <span>315 Main Street, 2nd Floor</span>
           <span>Huntington, NY 11743</span>
@@ -49,11 +49,16 @@ export const GettingHere = () => {
         </div>
       </div>
       <div className="w-full space-y-6">
-        <img
-          src="/launchpad-entrance.png"
-          alt="LaunchPad Huntington rear entrance"
-          className="rounded-xl w-full object-cover"
-        />
+        <figure>
+          <img
+            src="/launchpad-entrance.png"
+            alt="LaunchPad Huntington rear entrance"
+            className="rounded-xl w-full object-cover"
+          />
+          <figcaption className="mt-2 text-sm">
+            Entrance door on the rear side of the building.
+          </figcaption>
+        </figure>
       </div>
     </Section>
   );
