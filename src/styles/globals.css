@@ -53,8 +53,12 @@
     @apply stripes inline-block font-display font-black text-3xl md:text-4xl my-2 mb-6 p-4  text-yellow-200 bg-blue-600 items-center gap-2 -rotate-3 rounded-lg;
   }
 
+  .btn-base {
+    @apply cursor-pointer font-display font-bold transition-colors duration-500 ease-in-out inline-flex items-center justify-center gap-2 p-2 border-2 rounded-lg box-border w-full md:w-48;
+  }
+
   .ghost-button {
-    @apply font-display font-bold  p-2 text-center cursor-pointer border-2 rounded-lg border-blue-500 text-blue-600 box-border w-full md:w-48 transition-colors ease-in-out hover:bg-blue-500/10 focus:bg-blue-500/10;
+    @apply btn-base border-blue-500 text-blue-600  hover:bg-blue-500/10 focus:bg-blue-500/20;
   }
 
   .surface {
@@ -62,7 +66,7 @@
   }
 
   .cta {
-    @apply cursor-pointer font-display text-center font-bold transition-colors duration-1000 ease-in-out inline-flex items-center gap-2 text-white justify-center rounded-lg p-2 px-4 border-2 border-blue-500  bg-gradient-to-br hover:bg-gradient-to-bl hover:bg-opacity-90 from-blue-500 to-blue-700;
+    @apply btn-base text-white border-blue-500  bg-gradient-to-br hover:bg-gradient-to-bl hover:bg-opacity-90 from-blue-500 to-blue-700;
   }
 
   .surface-alt {

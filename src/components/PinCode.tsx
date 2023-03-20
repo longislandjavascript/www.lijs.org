@@ -43,11 +43,11 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
         </div>
       </section>
 
-      <section className="h-24">
+      <section className="h-20">
         {!loading && errorType && <Error errorType={errorType} />}
       </section>
 
-      <section className="mt-4 flex gap-2">
+      <section className="mt-4 flex flex-wrap justify-center md:justify-start gap-2">
         <p>Lost your redemption code?</p>
         <Link className="link" href="/contact">
           Get in touch.
@@ -87,9 +87,9 @@ type ErrorProps = {
 const Error = (props: ErrorProps) => {
   return (
     <p
-      className={`${baseClassNames} bg-red-200 text-red-800 rounded-md p-2 mt-4`}
+      className={`${baseClassNames} bg-red-200 text-red-800 rounded-md p-2 mt-4 font-medium`}
     >
-      <FaExclamationCircle className="text-4xl md:text-lg" />
+      <FaExclamationCircle className="text-4xl md:text-lg mr-2" />
       {createErrorMessage(props.errorType)}
     </p>
   );

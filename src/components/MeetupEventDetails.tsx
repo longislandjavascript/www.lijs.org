@@ -24,14 +24,14 @@ export function MeetupEventDetails(props: Props) {
   const eventStartTime = new Date(
     new Date(event.local_date + " " + event.local_time)
   );
-  const eventEndTime = new Date(event.time + event.duration);
+  const eventEndTime = new Date(eventStartTime.getTime() + event.duration);
 
   const formattedDate = format(eventStartTime, "PPP");
   const formattedStartTime = format(eventStartTime, "h:mm");
   const formattedEndTime = format(eventEndTime, "h:mm a");
   return (
     <div>
-      <h2 className="text-2xl md:text-4xl font-display font-bold gap-2 text-primary">
+      <h2 className="text-2xl md:text-4xl font-display font-bold gap-2 text-yellow-900 dark:text-blue-400">
         {event.name}
       </h2>
 
@@ -41,23 +41,27 @@ export function MeetupEventDetails(props: Props) {
         </p>
       </div>
 
-      <section className="font-display font-bold text-primary">
+      <section className="font-display font-bold">
         <p className="flex items-center gap-2 text-xl">
-          {event.is_online_event ? <FaGlobe /> : <FaBuilding />}
+          {event.is_online_event ? (
+            <FaGlobe className="text-primary" />
+          ) : (
+            <FaBuilding className="text-primary" />
+          )}
 
           {event?.is_online_event ? "Online Event" : "LaunchPad Huntington"}
         </p>
         <p className="flex items-center gap-2 text-xl">
-          <FaCalendarDay />
+          <FaCalendarDay className="text-primary" />
           {formattedDate}
         </p>
         <p className="flex items-center gap-2 text-xl">
-          <FaClock />
+          <FaClock className="text-primary" />
           {formattedStartTime} - {formattedEndTime}
         </p>
       </section>
 
-      <div className="my-8">
+      <div className="my-6">
         {isFutureEvent && <Raw>{event.description}</Raw>}
 
         <p className={isFutureEvent ? "block" : "hidden"}>
