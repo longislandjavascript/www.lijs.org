@@ -1,4 +1,3 @@
-import { NextEvent } from "components/NextEvent";
 import { ShowcaseCard } from "components/ShowcaseCard";
 import { GettingHere } from "components/GettingHere";
 import { showcaseItems } from "constants/showcase";
