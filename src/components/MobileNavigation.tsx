@@ -6,6 +6,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { HeaderLogo } from "./HeaderLogo";
 import { NavigationMenu } from "components/NavigationMenu";
 import { usePathname } from "next/navigation";
+import { ThemeSwitch } from "components/ThemeSwitch";
 
 const iconButtonClassNames =
   "text-3xl text-primary p-2 rounded-full hover:bg-gray-500/10 transition-colors ease-in-out";
@@ -30,6 +31,10 @@ export const MobileNavigation = () => {
     <>
       <div className="md:hidden p-4 sticky top-0 z-10 border-b-2 border-color flex items-center justify-between surface">
         <HeaderLogo />
+        <div className="mr-12">
+          <ThemeSwitch />
+        </div>
+
         <button
           type="button"
           onClick={openModal}

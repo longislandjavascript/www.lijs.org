@@ -13,7 +13,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         type={type as "button"}
         ref={ref}
         title={hideTitle ? "" : label}
-        className="transition-colors rounded-full p-2 hocus ring-0 outline-2 outline-blue-500 ease-in-out"
+        className="transition-colors rounded-md p-2 hover:bg-gray-500/10 ring-0 outline-2 outline-blue-500 ease-in-out"
         aria-label={label}
         {...rest}
       >

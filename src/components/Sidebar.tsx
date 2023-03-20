@@ -7,7 +7,6 @@ export const Sidebar = () => {
       <div className="flex-1">
         <NavigationMenu />
       </div>
-
       <Footer />
     </aside>
   );

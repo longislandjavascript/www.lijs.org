@@ -6,6 +6,7 @@ import { ExternalLink } from "./ExternalLink";
 import { navLinks } from "constants/nav-links";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { HeaderLogo } from "./HeaderLogo";
+import { ThemeSwitch } from "./ThemeSwitch";
 
 const navLinkClassNames =
   "flex items-center gap-4 w-full text-primary font-semibold mx-2  transition-colors duration-200 ease-in-out p-2 rounded-md hover:bg-gray-500/10 focus-visible:bg-gray-500/10";
@@ -54,8 +55,9 @@ export const NavigationMenu = () => {
   const pathname = usePathname();
   return (
     <div>
-      <div className="hidden md:block">
+      <div className="hidden items-center justify-between md:flex">
         <HeaderLogo />
+        <ThemeSwitch />
       </div>
 
       <nav className="flex-1 mt-12 md:mt-6">
