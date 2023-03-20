@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { format } from "date-fns";
-
+import { Button } from "components/Button";
 import { FaGlobe, FaCalendar, FaBuilding } from "react-icons/fa";
 import { MeetupEvent } from "utils/types";
 import { MeetupButton } from "components/MeetupButton";
@@ -33,12 +33,9 @@ export const PastEvent = ({ event }: { event: MeetupEvent }) => {
 
       <section className="flex flex-col md:flex-row items-center justify-start gap-4 mt-4">
         {!showDescription && (
-          <button
-            onClick={() => setShowDescription(true)}
-            className="ghost-button"
-          >
+          <Button onClick={() => setShowDescription(true)} variant="ghost">
             Show Description
-          </button>
+          </Button>
         )}
 
         <MeetupButton type="view" href={event.link} />

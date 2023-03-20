@@ -7,6 +7,7 @@ import { MeetupButton } from "components/MeetupButton";
 import Link from "next/link";
 import { FaGlobe, FaCalendarDay, FaBuilding, FaClock } from "react-icons/fa";
 import { useState } from "react";
+import { Button } from "components/Button";
 
 type Props = {
   event: MeetupEvent;
@@ -86,9 +87,9 @@ export function MeetupEventDetails(props: Props) {
         )}
 
         {!isFutureEvent && !showDescription && (
-          <button onClick={handleShowDescription} className="ghost-button">
+          <Button onClick={handleShowDescription} variant="ghost">
             Show Description
-          </button>
+          </Button>
         )}
       </div>
 

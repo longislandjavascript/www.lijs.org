@@ -1,6 +1,7 @@
 import PinField, { PinFieldProps } from "react-pin-field";
 import { forwardRef } from "react";
 import Link from "next/link";
+import { Button } from "components/Button";
 import { FaExclamationCircle, FaSpinner } from "react-icons/fa";
 
 type ErrorType = "redeemed" | "invalid" | "failure" | null;
@@ -17,7 +18,7 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
   const { onChange, onComplete, onClear, loading, errorType } = props;
   return (
     <div>
-      <section className="mt-8 inline-block w-full md:w-auto border-2 border-color p-4 rounded-xl surface text-center">
+      <section className="mt-8 inline-block w-full md:w-auto border-2 border-gray-500 p-4 rounded-xl surface text-center">
         <p className="mb-4 font-medium">Please enter your redemption code</p>
         <PinField
           length={4}
@@ -31,27 +32,23 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
         />
         <div className="text-center h-4">
           {!loading && !errorType && (
-            <button
-              className="text-blue-500 hover:underline focus:underline"
-              onClick={onClear}
-            >
+            <Button variant="link" onClick={onClear}>
               Clear
-            </button>
+            </Button>
           )}
 
           {loading && <Loading />}
         </div>
       </section>
 
-      <section className="h-20">
+      <section>
+        <div className="flex flex-wrap justify-center md:justify-start gap-2 my-4">
+          <p>Lost your redemption code?</p>
+          <Link className="link" href="/contact">
+            Get in touch.
+          </Link>
+        </div>
         {!loading && errorType && <Error errorType={errorType} />}
-      </section>
-
-      <section className="mt-4 flex flex-wrap justify-center md:justify-start gap-2">
-        <p>Lost your redemption code?</p>
-        <Link className="link" href="/contact">
-          Get in touch.
-        </Link>
       </section>
     </div>
   );
@@ -87,7 +84,7 @@ type ErrorProps = {
 const Error = (props: ErrorProps) => {
   return (
     <p
-      className={`${baseClassNames} bg-red-200 text-red-800 rounded-md p-2 mt-4 font-medium`}
+      className={`${baseClassNames} bg-red-200 text-red-800 rounded-md p-2 text-base`}
     >
       <FaExclamationCircle className="text-4xl md:text-lg mr-2" />
       {createErrorMessage(props.errorType)}
