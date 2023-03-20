@@ -1,7 +1,7 @@
 import PinField, { PinFieldProps } from "react-pin-field";
 import { forwardRef } from "react";
 import Link from "next/link";
-import { FaExclamationTriangle, FaSpinner } from "react-icons/fa";
+import { FaExclamationCircle, FaSpinner } from "react-icons/fa";
 
 type ErrorType = "redeemed" | "invalid" | "failure" | null;
 
@@ -13,25 +13,12 @@ type Props = {
   errorType?: ErrorType;
 };
 
-function createErrorMessage(errorType: ErrorType) {
-  switch (errorType) {
-    case "redeemed":
-      return "This code has already been redeemed.";
-    case "invalid":
-      return "You entered an invalid code. Please try again.";
-    case "failure":
-      return "Something went wrong. Please try again.";
-    default:
-      return "";
-  }
-}
-
 export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
   const { onChange, onComplete, onClear, loading, errorType } = props;
   return (
     <div>
-      <section className="mt-8 inline-block border-2 border-color p-4 rounded-xl surface text-center">
-        <p className="mb-4 font-medium">Please enter your redemption code.</p>
+      <section className="mt-8 inline-block w-full md:w-auto border-2 border-color p-4 rounded-xl surface text-center">
+        <p className="mb-4 font-medium">Please enter your redemption code</p>
         <PinField
           length={4}
           ref={ref}
@@ -51,16 +38,13 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
               Clear
             </button>
           )}
+
+          {loading && <Loading />}
         </div>
       </section>
 
-      <section className="h-16">
-        {loading && (
-          <Feedback type="loading" message="Checking your redemption code" />
-        )}
-        {!loading && errorType && (
-          <Feedback type="error" message={createErrorMessage(errorType)} />
-        )}
+      <section className="h-24">
+        {!loading && errorType && <Error errorType={errorType} />}
       </section>
 
       <section className="mt-4 flex gap-2">
@@ -73,25 +57,40 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
   );
 });
 
-type FeedbackProps = {
-  type: "loading" | "error";
-  message: string;
+const baseClassNames = "inline-flex items-center gap-2";
+
+const Loading = () => {
+  return (
+    <p className={`${baseClassNames} text-yellow-500`}>
+      <FaSpinner className="animate-spin" /> Checking your code
+    </p>
+  );
 };
 
-const Feedback = (props: FeedbackProps) => {
-  const isError = props.type === "error";
+function createErrorMessage(errorType: ErrorType) {
+  switch (errorType) {
+    case "redeemed":
+      return "This code has already been redeemed.";
+    case "invalid":
+      return "You entered an invalid code. Please try again.";
+    case "failure":
+      return "Something went wrong. Please try again.";
+    default:
+      return "";
+  }
+}
 
-  const icon = isError ? (
-    <FaExclamationTriangle />
-  ) : (
-    <FaSpinner className="animate-spin" />
-  );
+type ErrorProps = {
+  errorType: ErrorType;
+};
 
-  const baseClassNames = "inline-flex items-center gap-2 p-2 rounded-xl";
-  const textColor = isError ? "text-red-500" : "text-yellow-500";
+const Error = (props: ErrorProps) => {
   return (
-    <p className={`${baseClassNames} ${textColor}`}>
-      {icon} {props.message}
+    <p
+      className={`${baseClassNames} bg-red-200 text-red-800 rounded-md p-2 mt-4`}
+    >
+      <FaExclamationCircle className="text-4xl md:text-lg" />
+      {createErrorMessage(props.errorType)}
     </p>
   );
 };

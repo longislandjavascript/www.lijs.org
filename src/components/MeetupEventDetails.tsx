@@ -1,9 +1,12 @@
+"use client";
+
 import { format } from "date-fns";
 import { MeetupEvent } from "utils/types";
 import { Raw } from "components/Raw";
 import { MeetupButton } from "components/MeetupButton";
 import Link from "next/link";
 import { FaGlobe, FaCalendarDay, FaBuilding, FaClock } from "react-icons/fa";
+import { useState } from "react";
 
 type Props = {
   event: MeetupEvent;
@@ -11,6 +14,11 @@ type Props = {
 };
 
 export function MeetupEventDetails(props: Props) {
+  const [showDescription, setShowDescription] = useState(false);
+
+  function handleShowDescription() {
+    setShowDescription(true);
+  }
   const { type, event } = props;
   const isFutureEvent = type === "future";
   const eventStartTime = new Date(
@@ -50,7 +58,7 @@ export function MeetupEventDetails(props: Props) {
       </section>
 
       <div className="my-8">
-        <Raw>{event.description}</Raw>
+        {isFutureEvent && <Raw>{event.description}</Raw>}
 
         <p className={isFutureEvent ? "block" : "hidden"}>
           If this is your first time attending one of our events, please review
@@ -66,11 +74,22 @@ export function MeetupEventDetails(props: Props) {
           type={isFutureEvent ? "rsvp" : "view"}
           href={event.link}
         />
+
         {isFutureEvent && (
           <a href="#getting-here" className="ghost-button">
             Getting Here
           </a>
         )}
+
+        {!isFutureEvent && !showDescription && (
+          <button onClick={handleShowDescription} className="ghost-button">
+            Show Description
+          </button>
+        )}
+      </div>
+
+      <div className="mt-2">
+        {showDescription && <Raw>{event.description}</Raw>}
       </div>
     </div>
   );

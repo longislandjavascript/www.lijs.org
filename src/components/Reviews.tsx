@@ -20,7 +20,7 @@ export const Reviews = () => {
 
   return (
     <Section title="Reviews">
-      <figure className="px-8 border-l-4 py-2 border-yellow-500 surface-alt my-8">
+      <figure className="border-l-4 border-yellow-500 pl-4">
         <blockquote>
           <p className="text-2xl text-primary font-display font-bold">{name}</p>
         </blockquote>

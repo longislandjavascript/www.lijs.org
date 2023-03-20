@@ -9,7 +9,7 @@ type Props = PropsWithChildren<{
 export const Section = (props: Props) => {
   const { title, children, id, className = "" } = props;
   return (
-    <section className={`mb-18 card ${className}`} id={id}>
+    <section className={`mb-18 card overflow-hidden ${className}`} id={id}>
       {title && <h2 className="section-title">{title}</h2>}
       <div>{children}</div>
     </section>
