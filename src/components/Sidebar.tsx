@@ -1,5 +1,5 @@
-import { NavigationMenu } from "components/NavigationMenu";
 import { Footer } from "components/Footer";
+import { NavigationMenu } from "components/NavigationMenu";
 
 export const Sidebar = () => {
   return (

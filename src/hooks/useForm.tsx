@@ -1,5 +1,4 @@
 import { FormEventHandler, useState } from "react";
-import { Form } from "components/Form";
 
 export type Form_Event = FormEventHandler<HTMLFormElement>;
 
@@ -9,13 +8,11 @@ export function useForm(handleSubmit: (e) => Promise<Response>) {
   const [status, setStatus] = useState<Status>("idle");
 
   async function onSubmit(event) {
-    console.log(event);
     try {
       event.preventDefault();
       setStatus("pending");
       const response = await handleSubmit(event);
       const result = await response.json();
-      console.log({ result });
 
       if (result.status === "error") {
         setStatus("error");

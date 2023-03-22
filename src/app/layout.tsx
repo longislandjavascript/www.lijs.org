@@ -1,9 +1,11 @@
-import { Sidebar } from "components/Sidebar";
-import { MobileNavigation } from "components/MobileNavigation";
-import { Footer } from "components/Footer";
-import { createMetadata } from "utils/createMetadata";
 import { Inter, Overlock } from "next/font/google";
+
+import { Footer } from "components/Footer";
+import { MobileNavigation } from "components/MobileNavigation";
+import { Sidebar } from "components/Sidebar";
 import { ThemeProvider } from "components/ThemeProvider";
+import { createMetadata } from "utils/createMetadata";
+
 import "styles/globals.css";
 
 const inter = Inter({
@@ -30,13 +32,13 @@ export default function RootLayout({ children }: Props) {
         className={`${inter.variable} ${overlock.variable} font-sans surface text`}
       >
         <ThemeProvider>
-          <div>
+          <div className="flex flex-col min-h-screen">
             <MobileNavigation />
 
             <Sidebar />
 
             <main
-              className={`relative md:ml-80 py-4 px-4 md:px-12 mt-6 max-w-4xl pb-12`}
+              className={`flex-1 md:ml-80 py-4 px-4 md:px-12 mt-6 max-w-4xl pb-12`}
             >
               {children}
             </main>

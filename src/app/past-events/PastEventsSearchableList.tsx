@@ -1,9 +1,10 @@
 "use client";
 
-import { Section } from "components/Section";
 import { useState } from "react";
-import { MeetupEvent } from "utils/types";
+
 import { MeetupEventDetails } from "components/MeetupEventDetails";
+import { Section } from "components/Section";
+import { MeetupEvent } from "utils/types";
 
 type Props = {
   events: MeetupEvent[];

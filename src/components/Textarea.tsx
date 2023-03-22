@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { FormControl, FormControlProps } from "./FormControl";
 
 export interface TextareaProps
@@ -29,4 +30,5 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   }
 );
 
+// eslint-disable-next-line functional/immutable-data
 Textarea.displayName = "Textarea";

@@ -34,4 +34,5 @@ export const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
   }
 );
 
+// eslint-disable-next-line functional/immutable-data
 ExternalLink.displayName = "ExternalLink";

@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ExternalLink } from "./ExternalLink";
-import { navLinks } from "constants/nav-links";
 import { FaExternalLinkAlt } from "react-icons/fa";
+
+import { navLinks } from "constants/nav-links";
+
+import { ExternalLink } from "./ExternalLink";
 import { HeaderLogo } from "./HeaderLogo";
 import { ThemeSwitch } from "./ThemeSwitch";
 

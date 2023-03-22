@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+
 import { FaSpinner } from "react-icons/fa";
 
 export interface ButtonProps
@@ -38,4 +39,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
+// eslint-disable-next-line functional/immutable-data
 Button.displayName = "Button";

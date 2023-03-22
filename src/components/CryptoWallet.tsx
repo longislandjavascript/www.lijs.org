@@ -1,8 +1,8 @@
 "use client";
 
-import useClipboard from "react-use-clipboard";
 import Image from "next/image";
-import { FaCopy, FaCheck } from "react-icons/fa";
+import { FaCheck, FaCopy } from "react-icons/fa";
+import useClipboard from "react-use-clipboard";
 
 type Props = {
   wallet: {

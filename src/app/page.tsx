@@ -1,10 +1,10 @@
-import { ShowcaseCard } from "components/ShowcaseCard";
 import { GettingHere } from "components/GettingHere";
+import { MeetupEventDetails } from "components/MeetupEventDetails";
+import { Section } from "components/Section";
+import { ShowcaseCard } from "components/ShowcaseCard";
 import { showcaseItems } from "constants/showcase";
 import { createMetadata } from "utils/createMetadata";
 import { fetchNextEvent } from "utils/meetup-api";
-import { MeetupEventDetails } from "components/MeetupEventDetails";
-import { Section } from "components/Section";
 
 export const metadata = createMetadata();
 

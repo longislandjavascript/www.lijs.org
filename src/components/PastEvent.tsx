@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+
 import { format } from "date-fns";
+import { FaBuilding, FaCalendar, FaGlobe } from "react-icons/fa";
+
 import { Button } from "components/Button";
-import { FaGlobe, FaCalendar, FaBuilding } from "react-icons/fa";
-import { MeetupEvent } from "utils/types";
 import { MeetupButton } from "components/MeetupButton";
 import { Raw } from "components/Raw";
+import { MeetupEvent } from "utils/types";
 
 export const PastEvent = ({ event }: { event: MeetupEvent }) => {
   const [showDescription, setShowDescription] = useState(false);

@@ -1,16 +1,17 @@
-import { FaMeetup } from "react-icons/fa";
 import {
-  BsPeople,
-  BsPatchQuestion,
-  BsGift,
-  BsPiggyBank,
-  BsEnvelopeHeart,
   BsClockHistory,
-  BsSlack,
-  BsGithub,
+  BsEnvelopeHeart,
   BsFillHouseHeartFill,
+  BsGift,
+  BsGithub,
+  BsPatchQuestion,
+  BsPeople,
+  BsPiggyBank,
+  BsSlack,
 } from "react-icons/bs";
+import { FaMeetup } from "react-icons/fa";
 import { GiScales } from "react-icons/gi";
+
 import { githubLink, meetupLink, slackLink } from "./links";
 
 export const navLinks = [

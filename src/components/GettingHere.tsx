@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
+import { FaMapMarked } from "react-icons/fa";
+
 import { ExternalLink } from "components/ExternalLink";
 import { Section } from "components/Section";
-import { FaMapMarked } from "react-icons/fa";
 
 export const GettingHere = () => {
   return (

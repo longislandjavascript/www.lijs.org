@@ -1,4 +1,5 @@
 import { FaMeetup } from "react-icons/fa";
+
 import { ExternalLink } from "components/ExternalLink";
 
 type Props = {

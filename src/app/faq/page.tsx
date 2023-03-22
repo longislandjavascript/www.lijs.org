@@ -1,5 +1,5 @@
-import { faqs } from "constants/faqs";
 import { PageTitle } from "components/PageTitle";
+import { faqs } from "constants/faqs";
 import { createMetadata } from "utils/createMetadata";
 
 export const metadata = createMetadata({

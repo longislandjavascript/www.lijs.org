@@ -1,5 +1,6 @@
-import { PageTitle } from "components/PageTitle";
 import Link from "next/link";
+
+import { PageTitle } from "components/PageTitle";
 import { createMetadata } from "utils/createMetadata";
 
 export const metadata = createMetadata({

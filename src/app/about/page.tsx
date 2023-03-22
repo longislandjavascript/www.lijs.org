@@ -1,13 +1,14 @@
-import { Section } from "components/Section";
-import { OrganizerCard } from "components/OrganizerCard";
-import { GettingHere } from "components/GettingHere";
-import { Reviews } from "components/Reviews";
-import { sponsors } from "constants/sponsors";
-import { organizers, pastOrganizers } from "constants/organizers";
-import { MeetupGroup } from "utils/types";
-import { PageTitle } from "components/PageTitle";
-import { createMetadata } from "utils/createMetadata";
 import Image from "next/image";
+
+import { GettingHere } from "components/GettingHere";
+import { OrganizerCard } from "components/OrganizerCard";
+import { PageTitle } from "components/PageTitle";
+import { Reviews } from "components/Reviews";
+import { Section } from "components/Section";
+import { organizers, pastOrganizers } from "constants/organizers";
+import { sponsors } from "constants/sponsors";
+import { createMetadata } from "utils/createMetadata";
+import { MeetupGroup } from "utils/types";
 
 export const metadata = createMetadata();
 

@@ -1,7 +1,8 @@
 import { PageTitle } from "components/PageTitle";
-import { createMetadata } from "utils/createMetadata";
-import { ContactForm } from "./contact-form";
 import { baseUrl } from "constants/baseUrl";
+import { createMetadata } from "utils/createMetadata";
+
+import { ContactForm } from "./contact-form";
 
 export const metadata = createMetadata({
   title: "Contact Long Island JavaScript",

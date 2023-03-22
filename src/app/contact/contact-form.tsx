@@ -1,10 +1,10 @@
 "use client";
 
-import { baseUrl } from "constants/baseUrl";
 import { Form } from "components/Form";
-import { useForm } from "hooks/useForm";
 import { Input } from "components/Input";
 import { Textarea } from "components/Textarea";
+import { baseUrl } from "constants/baseUrl";
+import { useForm } from "hooks/useForm";
 
 export const ContactForm = () => {
   async function handleSubmit(event) {
@@ -16,7 +16,7 @@ export const ContactForm = () => {
 
     const JSONdata = JSON.stringify(data);
 
-    const endpoint = baseUrl + "/api/contact-form";
+    const endpoint = baseUrl + "/api/contact-form-submission";
 
     const options = {
       method: "POST",

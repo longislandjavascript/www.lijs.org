@@ -1,13 +1,15 @@
 "use client";
 
-import { format } from "date-fns";
-import { MeetupEvent } from "utils/types";
-import { Raw } from "components/Raw";
-import { MeetupButton } from "components/MeetupButton";
-import Link from "next/link";
-import { FaGlobe, FaCalendarDay, FaBuilding, FaClock } from "react-icons/fa";
 import { useState } from "react";
+
+import { format } from "date-fns";
+import Link from "next/link";
+import { FaBuilding, FaCalendarDay, FaClock, FaGlobe } from "react-icons/fa";
+
 import { Button } from "components/Button";
+import { MeetupButton } from "components/MeetupButton";
+import { Raw } from "components/Raw";
+import { MeetupEvent } from "utils/types";
 
 type Props = {
   event: MeetupEvent;

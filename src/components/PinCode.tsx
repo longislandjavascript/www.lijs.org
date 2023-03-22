@@ -1,10 +1,10 @@
-import PinField, { PinFieldProps } from "react-pin-field";
 import { forwardRef } from "react";
-import Link from "next/link";
-import { Button } from "components/Button";
-import { FaExclamationCircle, FaSpinner } from "react-icons/fa";
 
-type ErrorType = "redeemed" | "invalid" | "failure" | null;
+import Link from "next/link";
+import { FaExclamationCircle, FaSpinner } from "react-icons/fa";
+import PinField, { PinFieldProps } from "react-pin-field";
+
+type ErrorType = "redeemed" | "invalid" | "failure" | "expired" | null;
 
 type Props = {
   onChange: PinFieldProps["onChange"];
@@ -15,10 +15,10 @@ type Props = {
 };
 
 export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
-  const { onChange, onComplete, onClear, loading, errorType } = props;
+  const { onChange, onComplete, loading, errorType } = props;
   return (
     <div>
-      <section className="mt-8 inline-block w-full md:w-auto border-2 border-gray-500 p-4 rounded-xl surface text-center">
+      <section className="mt-8 inline-block w-full md:w-auto surface text-center">
         <p className="mb-4 font-medium">Please enter your redemption code</p>
         <PinField
           length={4}
@@ -30,15 +30,7 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
           inputMode="numeric"
           className="mb-2 appearance-none caret-blue-500 h-16 w-16 bg-gray-200 border-2 border-transparent dark:bg-gray-900 rounded-lg mx-1 focus:border-2 focus:border-blue-500 transition-all duration-100 outline-none text-center text-3xl"
         />
-        <div className="text-center h-4">
-          {/* {!loading && !errorType && (
-            <Button variant="link" onClick={onClear}>
-              Clear
-            </Button>
-          )} */}
-
-          {loading && <Loading />}
-        </div>
+        <div className="text-center h-4">{loading && <Loading />}</div>
       </section>
 
       <section>
@@ -48,7 +40,9 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
             Get in touch.
           </Link>
         </div>
-        {!loading && errorType && <Error errorType={errorType} />}
+        <div className="text-center md:text-left">
+          {!loading && errorType && <Error errorType={errorType} />}
+        </div>
       </section>
     </div>
   );
@@ -72,6 +66,8 @@ function createErrorMessage(errorType: ErrorType) {
       return "You entered an invalid code. Please try again.";
     case "failure":
       return "Something went wrong. Please try again.";
+    case "expired":
+      return "Sorry, this offer has expired. Next time!";
     default:
       return "";
   }
@@ -92,4 +88,5 @@ const Error = (props: ErrorProps) => {
   );
 };
 
+// eslint-disable-next-line functional/immutable-data
 PinCode.displayName = "PinCode";

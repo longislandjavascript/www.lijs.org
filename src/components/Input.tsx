@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { FormControl, FormControlProps } from "components/FormControl";
 
 export interface InputProps
@@ -22,4 +23,5 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
+// eslint-disable-next-line functional/immutable-data
 Input.displayName = "Input";

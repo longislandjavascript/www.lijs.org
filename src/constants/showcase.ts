@@ -1,17 +1,17 @@
 import {
-  FaMeetup,
-  FaSlack,
-  FaGithub,
   FaBalanceScale,
+  FaGithub,
+  FaMeetup,
   FaPiggyBank,
+  FaSlack,
 } from "react-icons/fa";
 import { GiStarsStack } from "react-icons/gi";
 
 import {
-  meetupReviewLink,
-  slackLink,
   githubLink,
   meetupLink,
+  meetupReviewLink,
+  slackLink,
 } from "constants/links";
 
 export const showcaseItems = [

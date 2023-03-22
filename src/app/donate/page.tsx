@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { PayPalDonateButton } from "components/PayPalDonateButton";
-import { Section } from "components/Section";
-import { wallets } from "constants/wallets";
+
 import { CryptoWallet } from "components/CryptoWallet";
 import { ExternalLink } from "components/ExternalLink";
 import { PageTitle } from "components/PageTitle";
-
+import { PayPalDonateButton } from "components/PayPalDonateButton";
+import { Section } from "components/Section";
+import { wallets } from "constants/wallets";
 import { createMetadata } from "utils/createMetadata";
 
 export const metadata = createMetadata({

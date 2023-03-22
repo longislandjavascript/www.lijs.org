@@ -1,9 +1,12 @@
 "use client";
 
-import { reviews } from "constants/reviews";
-import { Section } from "./Section";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import { ImQuotesLeft } from "react-icons/im";
+
+import { reviews } from "constants/reviews";
+
+import { Section } from "./Section";
 
 export const Reviews = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
