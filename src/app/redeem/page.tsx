@@ -3,7 +3,9 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { PageTitle } from "components/PageTitle";
 import { PinCode } from "components/PinCode";
-import { PrizeClaimForm } from "components/PrizeClaimForm";
+import { baseUrl } from "constants/baseUrl";
+import { BookForm } from "./BookForm";
+import { PassForm } from "./PassForm";
 
 // import { createMetadata } from "utils/createMetadata";
 
@@ -12,11 +14,6 @@ import { PrizeClaimForm } from "components/PrizeClaimForm";
 //   description:
 //     "Things move fast in the world of JavaScript and we've covered a lot of ground since 2015! Take a look back at some of our past events.",
 // });
-
-const basePath =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://www.lijs.org";
 
 type FailResult = {
   success: false;
@@ -41,6 +38,10 @@ export default function ClaimPassPage() {
     null
   );
   const ref = useRef<HTMLInputElement[]>(null);
+
+  function reset() {
+    setCheckResults(null);
+  }
 
   const handleFocusPin = useCallback(() => {
     if (ref.current && ref.current.length > 0) {
@@ -76,7 +77,7 @@ export default function ClaimPassPage() {
   async function handleCheckRedemptionCode(value) {
     setLoading(true);
     try {
-      const response = await fetch(basePath + "/api/redeem/" + value, {
+      const response = await fetch(baseUrl + "/api/redeem/" + value, {
         method: "GET",
       });
       const values = await response.json();
@@ -100,7 +101,7 @@ export default function ClaimPassPage() {
     }
   }
 
-  const pageTitle = checkResults?.success ? "You Won!" : "Redeem a Prize";
+  const pageTitle = checkResults?.success ? "You Won 🎉" : "Redeem a Prize";
 
   return (
     <div>
@@ -118,11 +119,23 @@ export default function ClaimPassPage() {
       )}
 
       {checkResults?.success && (
-        <PrizeClaimForm
-          type={checkResults.prize}
-          code={checkResults.code}
-          code_record_id={checkResults.code_record_id}
-        />
+        <section>
+          {checkResults.prize === "Book" && (
+            <BookForm
+              code={checkResults.code}
+              code_record_id={checkResults.code_record_id}
+            />
+          )}
+
+          {checkResults.prize === "Pass" && (
+            <PassForm
+              code={checkResults.code}
+              code_record_id={checkResults.code_record_id}
+            />
+          )}
+
+          <button onClick={reset}>Cancel</button>
+        </section>
       )}
     </div>
   );
