@@ -6,16 +6,15 @@ export const faqs: FAQ[] = [
   {
     question: "When do you meet?",
     answer:
-      "We meet on the last Wednesday of every month from 6:00 PM to 9:00 PM at LaunchPad Huntington, NY.",
+      "We meet on the last Wednesday of every month from 6-9 PM at LaunchPad Huntington, NY.",
   },
   {
     question: "Does it cost to attend an LIJS Meetup?",
-    answer: "Nope. All of our events are completely free.",
+    answer: "Nope. All of our events are free.",
   },
   {
     question: "Are your events streamed or recorded?",
-    answer:
-      "Yup! Our events are viewable on Zoom. A link can be found in the event description.",
+    answer: "Our events are in-person only at this time.",
   },
   {
     question: "Do I need to know JavaScript?",
@@ -31,7 +30,7 @@ export const faqs: FAQ[] = [
   {
     question: "Do I need to bring a computer?",
     answer:
-      "Nope, but you can if you would like. If you would like to follow along, it is recommended to have Node/npm and a text editor installed on your computer.",
+      "Nope, but you can if you would like. If you would like to follow along, it is recommended to have Node, NPM, and a text editor installed on your computer.",
   },
   {
     question: "Can I bring alcoholic beverages?",
@@ -46,7 +45,7 @@ export const faqs: FAQ[] = [
   {
     question: "Can I be a presenter at one of your events?",
     answer:
-      "Ya, probably! We are always looking for presenters, so please get in touch! Presentations could include a software demo, a show and tell, or technology deep dive.",
+      "Probably! We are always looking for presenters, so please get in touch! Presentations could include a software demo, a show and tell, or technology deep dive.",
   },
   {
     question: "Can my company sponsor Long Island JavaScript?",
