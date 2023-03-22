@@ -2,10 +2,11 @@
 
 ## The official website of the Long Island JavaScript Meetup group.
 
-Built with Next.js and TailwindCSS. 
+Built with [Next.js](https://nextjs.org/) and [TailwindCSS](https://tailwindcss.com/). Deployed on [Vercel](https://vercel.com/).
 
-Deployed on Vercel. 👉🏻 ![Vercel](https://vercelbadge.vercel.app/api/longislandjavascript/www.lijs.org)
+![Vercel](https://vercelbadge.vercel.app/api/longislandjavascript/www.lijs.org)
 
+![Lighthouse score](lighthouse-score.gif)
 
 ## Getting Started
 
