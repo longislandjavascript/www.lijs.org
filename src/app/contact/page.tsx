@@ -1,5 +1,4 @@
 import { PageTitle } from "components/PageTitle";
-import { baseUrl } from "constants/baseUrl";
 import { createMetadata } from "utils/createMetadata";
 
 import { ContactForm } from "./contact-form";
@@ -15,7 +14,7 @@ export default function ContactPage() {
     <div>
       <PageTitle>Contact Us</PageTitle>
 
-      <p className="my-4">
+      <p className="my-4 max-w-md">
         Please fill out the form below or email me at{" "}
         <a href="mailto:justin@lijs.org?subject=Hello LIJS!" className="anchor">
           justin@lijs.org

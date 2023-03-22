@@ -41,7 +41,7 @@ export default function ClaimPassPage() {
   const [error, setError] = useState<ErrorType | null>(null);
   const ref = useRef<HTMLInputElement[]>(null);
 
-  function reset() {
+  function handleReset() {
     setCheckResults(null);
   }
 
@@ -127,6 +127,7 @@ export default function ClaimPassPage() {
             <BookForm
               code={checkResults.code}
               code_record_id={checkResults.code_record_id}
+              onReset={handleReset}
             />
           )}
 
@@ -134,10 +135,9 @@ export default function ClaimPassPage() {
             <PassForm
               code={checkResults.code}
               code_record_id={checkResults.code_record_id}
+              onReset={handleReset}
             />
           )}
-
-          <button onClick={reset}>Cancel</button>
         </section>
       )}
     </div>

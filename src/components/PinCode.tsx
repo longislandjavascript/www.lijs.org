@@ -19,7 +19,7 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
   return (
     <div>
       <section className="mt-8 inline-block w-full md:w-auto surface text-center">
-        <p className="mb-4 font-medium">Please enter your redemption code</p>
+        <p className="font-medium mb-4">Please enter your redemption code</p>
         <PinField
           length={4}
           ref={ref}
@@ -28,22 +28,22 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
           type="password"
           pattern="[0-9]*"
           inputMode="numeric"
-          className="mb-2 appearance-none caret-blue-500 h-16 w-16 bg-gray-200 border-2 border-transparent dark:bg-gray-900 rounded-lg mx-1 focus:border-2 focus:border-blue-500 transition-all duration-100 outline-none text-center text-3xl"
+          className="appearance-none caret-blue-500 h-16 w-16 bg-gray-200 border-2 border-transparent dark:bg-gray-900 rounded-lg mx-1 focus:border-2 focus:border-blue-500 transition-all duration-100 outline-none text-center text-3xl"
         />
-        <div className="text-center h-4">{loading && <Loading />}</div>
       </section>
 
-      <section>
-        <div className="flex flex-wrap justify-center md:justify-start gap-2 my-4">
-          <p>Lost your code?</p>
-          <Link className="link" href="/contact">
-            Get in touch.
-          </Link>
-        </div>
-        <div className="text-center md:text-left">
-          {!loading && errorType && <Error errorType={errorType} />}
-        </div>
-      </section>
+      <div className="text-center md:text-left mt-6">
+        {loading && <Loading />}
+        {!loading && errorType && <Error errorType={errorType} />}
+        {!loading && !errorType && (
+          <div className=" flex flex-wrap justify-center md:justify-start gap-2 my-4">
+            <p>Lost your code?</p>
+            <Link className="link" href="/contact">
+              Get in touch.
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 });
@@ -79,9 +79,7 @@ type ErrorProps = {
 
 const Error = (props: ErrorProps) => {
   return (
-    <p
-      className={`${baseClassNames} bg-red-200 text-red-800 rounded-md p-2 text-base`}
-    >
+    <p className={`${baseClassNames} bg-red-200 text-red-800 rounded-md p-2 `}>
       <FaExclamationCircle className="text-4xl md:text-lg mr-2" />
       {createErrorMessage(props.errorType)}
     </p>

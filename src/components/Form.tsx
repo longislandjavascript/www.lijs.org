@@ -7,16 +7,32 @@ import { Button } from "./Button";
 type FormProps = React.PropsWithChildren<{
   onSubmit: FormEventHandler<HTMLFormElement>;
   status: Status;
+  onReset?: () => void;
 }>;
 
 export const Form = (props: FormProps) => {
-  const { onSubmit, status } = props;
+  const { onSubmit, onReset, status } = props;
   return (
-    <form className="flex flex-col" onSubmit={onSubmit}>
+    <form className="flex flex-col max-w-md" onSubmit={onSubmit}>
       {props.children}
-      <Button loading={status === "pending"} type="submit">
-        Submit
-      </Button>
+      <div>
+        <Button loading={status === "pending"} type="submit" fullWidth={true}>
+          Submit
+        </Button>
+        {onReset && (
+          <Button
+            onClick={onReset}
+            className="mt-4"
+            variant="danger"
+            disabled={status === "pending"}
+            type="submit"
+            fullWidth={true}
+          >
+            Cancel
+          </Button>
+        )}
+      </div>
+
       {status === "error" && "Something went wrong"}
     </form>
   );

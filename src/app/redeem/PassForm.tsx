@@ -8,10 +8,11 @@ import { useForm } from "hooks/useForm";
 type Props = {
   code: string;
   code_record_id: string;
+  onReset: () => void;
 };
 
 export const PassForm = (props: Props) => {
-  const { code, code_record_id } = props;
+  const { code, code_record_id, onReset } = props;
   async function handleSubmit(event) {
     const data = {
       Name: event.target.name.value,
@@ -50,7 +51,7 @@ export const PassForm = (props: Props) => {
           URL that you can follow to claim your free pass.
         </p>
       </div>
-      <Form onSubmit={onSubmit} status={status}>
+      <Form onSubmit={onSubmit} status={status} onReset={onReset}>
         <Input label="Your Name" type="text" name="name" required={true} />
         <Input label="Your Email" type="email" name="email" required={true} />
       </Form>

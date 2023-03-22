@@ -8,6 +8,7 @@
       "error",
       "src/app"
     ],
-    "functional/prefer-immutable-types": "off"
+    "functional/prefer-immutable-types": "off",
+    "functional/no-mixed-types": "off"
   }
 }

@@ -4,14 +4,16 @@ import { FaSpinner } from "react-icons/fa";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "ghost" | "link";
+  variant?: "primary" | "ghost" | "link" | "danger";
   loading?: boolean;
+  fullWidth?: boolean;
 }
 
 const STYLE_MAP = {
   primary: "cta",
   ghost: "ghost-button",
   link: "link",
+  danger: "danger-button",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -21,11 +23,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant = "primary",
       disabled,
       loading = false,
+      fullWidth = false,
       children,
       ...restOfProps
     } = props;
     const variantClassNames = STYLE_MAP[variant];
-    const classNames = `${variantClassNames} ${className}`;
+    const classNames = `${variantClassNames} ${className} ${
+      fullWidth ? "!w-full" : ""
+    }`;
     return (
       <button
         ref={ref}
