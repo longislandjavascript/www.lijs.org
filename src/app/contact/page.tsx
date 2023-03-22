@@ -1,6 +1,7 @@
-import { AirtableEmbedForm } from "components/AirtableEmbedForm";
 import { PageTitle } from "components/PageTitle";
 import { createMetadata } from "utils/createMetadata";
+import { ContactForm } from "./contact-form";
+import { baseUrl } from "constants/baseUrl";
 
 export const metadata = createMetadata({
   title: "Contact Long Island JavaScript",
@@ -12,6 +13,7 @@ export default function ContactPage() {
   return (
     <div>
       <PageTitle>Contact Us</PageTitle>
+
       <p className="my-4">
         Please fill out the form below or email me at{" "}
         <a href="mailto:justin@lijs.org?subject=Hello LIJS!" className="anchor">
@@ -20,10 +22,7 @@ export default function ContactPage() {
         .
       </p>
 
-      <AirtableEmbedForm
-        src="https://airtable.com/embed/shrCsfeB7ZzSHjkhW?backgroundColor=purple"
-        height="819"
-      />
+      <ContactForm />
     </div>
   );
 }
