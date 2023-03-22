@@ -1,11 +1,11 @@
 "use client";
 
-import { baseUrl } from "constants/baseUrl";
+import { ExternalLink } from "components/ExternalLink";
 import { Form } from "components/Form";
-import { useForm } from "hooks/useForm";
 import { Input } from "components/Input";
 import { Textarea } from "components/Textarea";
-import { ExternalLink } from "components/ExternalLink";
+import { baseUrl } from "constants/baseUrl";
+import { useForm } from "hooks/useForm";
 
 type Props = {
   code: string;
@@ -27,7 +27,7 @@ export const BookForm = (props: Props) => {
 
     const JSONdata = JSON.stringify(data);
 
-    const endpoint = baseUrl + "/api/book-form";
+    const endpoint = baseUrl + "/api/redeem/book";
 
     const options = {
       method: "POST",

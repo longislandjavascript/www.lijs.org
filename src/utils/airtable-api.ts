@@ -1,12 +1,16 @@
+
+import { NextApiRequest, NextApiResponse } from "next";
 import Airtable from "airtable";
+
 const base = new Airtable({ apiKey: process.env.AIRTABLE_TOKEN }).base(
-  process.env.AIRTABLE_CONTACT_FORM_BASE!
+  process.env.AIRTABLE_BASE_ID!
 );
 
-export default function handler(req, res) {
+export function formSubmission(tableName: string) {
+  return (req: NextApiRequest, res: NextApiResponse ) => {
   const body = req.body;
 
-  base("Contact Us Form").create(
+  base(tableName).create(
     [
       {
         fields: body,

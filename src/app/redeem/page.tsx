@@ -1,9 +1,11 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import { PageTitle } from "components/PageTitle";
 import { PinCode } from "components/PinCode";
 import { baseUrl } from "constants/baseUrl";
+
 import { BookForm } from "./BookForm";
 import { PassForm } from "./PassForm";
 
@@ -15,9 +17,11 @@ import { PassForm } from "./PassForm";
 //     "Things move fast in the world of JavaScript and we've covered a lot of ground since 2015! Take a look back at some of our past events.",
 // });
 
+type ErrorType = "invalid" | "redeemed" | "failure" | "expired";
+
 type FailResult = {
   success: false;
-  error: "invalid" | "redeemed" | "failure";
+  error: ErrorType;
 };
 
 type SuccessResult = {
@@ -34,9 +38,7 @@ type Result = FailResult | SuccessResult;
 export default function ClaimPassPage() {
   const [checkResults, setCheckResults] = useState<Result | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<null | "redeemed" | "invalid" | "failure">(
-    null
-  );
+  const [error, setError] = useState<ErrorType | null>(null);
   const ref = useRef<HTMLInputElement[]>(null);
 
   function reset() {
@@ -50,6 +52,7 @@ export default function ClaimPassPage() {
   }, []);
 
   const handleClearPin = useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
     ref.current?.forEach((input) => (input.value = ""));
   }, []);
 
@@ -81,11 +84,11 @@ export default function ClaimPassPage() {
         method: "GET",
       });
       const values = await response.json();
-      const parsed = JSON.parse(values);
+      const parsed = JSON.parse(values) as Result;
 
       if (parsed.success) {
         setCheckResults(parsed);
-      } else {
+      } else if (!parsed.success) {
         setTimeout(() => {
           setError(parsed.error);
         }, 500);

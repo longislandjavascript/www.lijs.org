@@ -1,7 +1,8 @@
 import Airtable from "airtable";
+import isBefore from "date-fns/isBefore";
 
 const base = new Airtable({ apiKey: process.env.AIRTABLE_TOKEN }).base(
-  process.env.AIRTABLE_BASE_ID as string
+  process.env.AIRTABLE_BASE_ID!
 );
 
 // type CodeRecord = {
@@ -11,6 +12,10 @@ const base = new Airtable({ apiKey: process.env.AIRTABLE_TOKEN }).base(
 //   Link?: string;
 //   "Link Expiration Date": Date;
 // };
+
+function isLinkExpired(exp_date: string) {
+  return isBefore(new Date(exp_date), new Date());
+}
 
 export default function handler(req, res) {
   const { code } = req.query;
@@ -30,6 +35,18 @@ export default function handler(req, res) {
           JSON.stringify({
             success: false,
             error: "redeemed",
+          })
+        );
+      } else if (
+        records &&
+        records[0] &&
+        records[0].get("Link") &&
+        isLinkExpired(records[0].get("Link Expiration Date") as string)
+      ) {
+        return res.status(500).json(
+          JSON.stringify({
+            success: false,
+            error: "expired",
           })
         );
       } else if (records && records[0]) {
