@@ -54,7 +54,7 @@
   }
 
   .btn-base {
-    @apply cursor-pointer font-display font-bold transition-colors duration-500 ease-in-out inline-flex items-center justify-center gap-2 p-2 border-2 rounded-lg box-border w-full md:w-48;
+    @apply cursor-pointer font-display font-bold transition-colors duration-500 ease-in-out inline-flex items-center justify-center gap-2 p-2 border-2 rounded-lg box-border w-full md:w-48  focus:outline-dashed;
   }
 
   .ghost-button {
@@ -66,7 +66,7 @@
   }
 
   .cta {
-    @apply btn-base text-white border-blue-500  bg-gradient-to-br hover:bg-gradient-to-bl hover:bg-opacity-90 from-blue-500 to-blue-700;
+    @apply btn-base text-white border-blue-500  bg-gradient-to-br hover:bg-gradient-to-bl hover:bg-opacity-90 from-blue-500 to-blue-700 hover:to-blue-600 focus:to-blue-600;
   }
 
   .surface-alt {
@@ -101,5 +101,9 @@
 
   .link {
     @apply text-blue-500 hover:underline focus:underline;
+  }
+
+  .input {
+    @apply p-2 border-2 border-color rounded-lg mb-8 surface-alt focus:outline-2 outline-offset-0 focus:outline-dotted;
   }
 }

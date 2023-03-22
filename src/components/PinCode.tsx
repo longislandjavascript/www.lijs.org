@@ -28,14 +28,14 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
           type="password"
           pattern="[0-9]*"
           inputMode="numeric"
-          className="surface mb-2 appearance-none caret-blue-500 h-16 w-16 border-2 border-gray-500 rounded-lg mx-1 focus:border-4 focus:border-blue-500 transition-all duration-100 outline-none text-center text-3xl"
+          className="mb-2 appearance-none caret-blue-500 h-16 w-16 bg-gray-200 border-2 border-transparent dark:bg-gray-900 rounded-lg mx-1 focus:border-2 focus:border-blue-500 transition-all duration-100 outline-none text-center text-3xl"
         />
         <div className="text-center h-4">
-          {!loading && !errorType && (
+          {/* {!loading && !errorType && (
             <Button variant="link" onClick={onClear}>
               Clear
             </Button>
-          )}
+          )} */}
 
           {loading && <Loading />}
         </div>
@@ -43,7 +43,7 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
 
       <section>
         <div className="flex flex-wrap justify-center md:justify-start gap-2 my-4">
-          <p>Lost your redemption code?</p>
+          <p>Lost your code?</p>
           <Link className="link" href="/contact">
             Get in touch.
           </Link>
