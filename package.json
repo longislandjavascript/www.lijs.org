@@ -28,11 +28,11 @@
     "react-use-clipboard": "^1.0.9"
   },
   "devDependencies": {
-    "@apsphysics/eslint-config": "^1.2.2",
-    "@commitlint/cli": "^17.4.4",
+    "@apsphysics/eslint-config": "^1.2.3",
+    "@commitlint/cli": "^17.5.0",
     "@commitlint/config-conventional": "^17.4.4",
     "@types/date-fns": "^2.6.0",
-    "@types/node": "^18.15.3",
+    "@types/node": "^18.15.5",
     "@types/react": "^18.0.28",
     "autoprefixer": "^10.4.14",
     "eslint": "8.36.0",
