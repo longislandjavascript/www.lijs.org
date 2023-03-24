@@ -23,7 +23,7 @@ export const Form = (props: FormProps) => {
           <Button
             onClick={onReset}
             className="mt-4"
-            variant="danger"
+            variant="ghost"
             disabled={status === "pending"}
             type="submit"
             fullWidth={true}

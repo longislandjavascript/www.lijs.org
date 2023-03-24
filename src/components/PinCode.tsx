@@ -18,32 +18,31 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
   const { onChange, onComplete, loading, errorType } = props;
   return (
     <div>
-      <section className="mt-8 inline-block w-full md:w-auto surface text-center">
+      <section className="mt-8 inline-block w-full md:w-[500px] border-2 border-gray-700 p-2 rounded-xl text-center ">
         <p className="font-medium mb-4">Please enter your redemption code</p>
         <PinField
-          length={4}
+          length={5}
           ref={ref}
           onChange={onChange}
           onComplete={onComplete}
           type="password"
           pattern="[0-9]*"
           inputMode="numeric"
-          className="appearance-none caret-blue-500 h-16 w-16 bg-gray-200 border-2 border-transparent dark:bg-gray-900 rounded-lg mx-1 focus:border-2 focus:border-blue-500 transition-all duration-100 outline-none text-center text-3xl"
+          className="appearance-none caret-blue-500 h-14 w-14 md:h-16 md:w-16 bg-gray-200 border-2 border-transparent dark:bg-gray-900 rounded-lg mx-1 focus:border-2 focus:border-blue-500 transition-all duration-100 outline-none text-center text-3xl"
         />
+        <div className="flex flex-col items-center mt-6 h-20">
+          {loading && <Loading />}
+          {!loading && errorType && <Error errorType={errorType} />}
+          {!loading && !errorType && (
+            <div className=" flex flex-wrap justify-center md:justify-start gap-2 my-4">
+              <p>Lost your code?</p>
+              <Link className="link" href="/contact">
+                Get in touch.
+              </Link>
+            </div>
+          )}
+        </div>
       </section>
-
-      <div className="text-center md:text-left mt-6">
-        {loading && <Loading />}
-        {!loading && errorType && <Error errorType={errorType} />}
-        {!loading && !errorType && (
-          <div className=" flex flex-wrap justify-center md:justify-start gap-2 my-4">
-            <p>Lost your code?</p>
-            <Link className="link" href="/contact">
-              Get in touch.
-            </Link>
-          </div>
-        )}
-      </div>
     </div>
   );
 });

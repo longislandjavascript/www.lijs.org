@@ -4,7 +4,7 @@ import { FaSpinner } from "react-icons/fa";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "ghost" | "link" | "danger";
+  variant?: "primary" | "ghost" | "link";
   loading?: boolean;
   fullWidth?: boolean;
 }
@@ -13,7 +13,6 @@ const STYLE_MAP = {
   primary: "cta",
   ghost: "ghost-button",
   link: "link",
-  danger: "danger-button",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
