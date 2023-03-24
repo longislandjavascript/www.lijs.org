@@ -1,10 +1,15 @@
-import { FormEventHandler, useState } from "react";
+import { FormEvent, useState } from "react";
 
-export type Form_Event = FormEventHandler<HTMLFormElement>;
+export type Form_Event = FormEvent<HTMLFormElement>;
 
 export type Status = "idle" | "pending" | "success" | "error";
 
-export function useForm(handleSubmit: (e) => Promise<Response>) {
+export type UseFormProps = {
+  status: Status;
+  onSubmit: (e: Form_Event) => Promise<void>;
+};
+
+export function useForm(handleSubmit: (e) => Promise<Response>): UseFormProps {
   const [status, setStatus] = useState<Status>("idle");
 
   async function onSubmit(event) {
