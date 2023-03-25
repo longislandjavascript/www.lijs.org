@@ -23,16 +23,18 @@ export const Reviews = () => {
 
   return (
     <Section title="Reviews">
-      <figure className="border-l-4 border-yellow-500 pl-4">
-        <blockquote>
-          <p className="text-2xl text-primary font-display font-bold">{name}</p>
-        </blockquote>
-        <figcaption className="relative text-md italic flex items-center text-xl font-serif">
-          <ImQuotesLeft className="flex-shrink-0 text-[80px] text-yellow-500 opacity-20" />
-          <p key={currentIndex} className="absolute left-2 animate-fade">
-            {title}
-          </p>
-        </figcaption>
+      <figure className="relative border-l-4 border-yellow-500 pl-4 w-full h-28">
+        <ImQuotesLeft className="absolute top-8 flex-shrink-0 text-[80px] text-yellow-500 opacity-20" />
+        <div className="animate-fade space-y-6" key={currentIndex}>
+          <blockquote>
+            <p className="text-2xl text-primary font-display font-bold">
+              {name}
+            </p>
+          </blockquote>
+          <figcaption className="relative text-md italic flex items-center text-xl font-serif">
+            <p>{title}</p>
+          </figcaption>
+        </div>
       </figure>
     </Section>
   );
