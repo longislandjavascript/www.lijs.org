@@ -31,7 +31,11 @@ export const ContactForm = () => {
   const { status, onSubmit } = useForm(handleSubmit);
 
   return (
-    <Form onSubmit={onSubmit} status={status}>
+    <Form
+      onSubmit={onSubmit}
+      status={status}
+      successMessage="Thanks for reaching out and one of us will get back to you as soon as possible."
+    >
       <Input label="Your Name" type="text" name="name" required={true} />
       <Input label="Your Email" type="email" name="email" required={true} />
       <Textarea label="Message" name="message" required={true} />

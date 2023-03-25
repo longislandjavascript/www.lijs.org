@@ -23,7 +23,12 @@ export const BaseForm = (props: Props) => {
           {instructions}
         </div>
       </section>
-      <Form onSubmit={onSubmit} status={status} onReset={onCancel}>
+      <Form
+        onSubmit={onSubmit}
+        status={status}
+        onReset={onCancel}
+        successMessage="You are all good to go!"
+      >
         {children}
       </Form>
     </>
