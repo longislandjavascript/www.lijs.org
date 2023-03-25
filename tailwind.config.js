@@ -11,6 +11,15 @@ module.exports = {
         display: ["var(--font-overlock)"],
         sans: ["var(--font-inter)", ...fontFamily.sans],
       },
+      animation: {
+        fade: "fade 1s ease-in-out",
+      },
+      keyframes: {
+        fade: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+      },
     },
   },
 };

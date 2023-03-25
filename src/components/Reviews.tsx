@@ -29,7 +29,9 @@ export const Reviews = () => {
         </blockquote>
         <figcaption className="relative text-md italic flex items-center text-xl font-serif">
           <ImQuotesLeft className="flex-shrink-0 text-[80px] text-yellow-500 opacity-20" />
-          <p className="absolute left-2">{title}</p>
+          <p key={currentIndex} className="absolute left-2 animate-fade">
+            {title}
+          </p>
         </figcaption>
       </figure>
     </Section>
