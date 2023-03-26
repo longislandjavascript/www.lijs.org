@@ -64,12 +64,6 @@ export function Redemption() {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      handleFocusPin();
-    }, 500);
-  }, [handleFocusPin]);
-
-  useEffect(() => {
     if (error) {
       handlePinReset();
     }

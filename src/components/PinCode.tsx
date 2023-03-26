@@ -25,6 +25,8 @@ export const PinCode = forwardRef<HTMLInputElement[], Props>((props, ref) => {
           ref={ref}
           onChange={onChange}
           onComplete={onComplete}
+          // eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus={true}
           type="password"
           pattern="[0-9]*"
           inputMode="numeric"
