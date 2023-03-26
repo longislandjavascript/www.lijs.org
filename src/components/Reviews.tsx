@@ -23,7 +23,7 @@ export const Reviews = () => {
 
   return (
     <Section title="Reviews">
-      <figure className="relative border-l-4 border-yellow-500 pl-4 w-full h-28">
+      <figure className="relative border-l-4 border-yellow-500 pl-4 w-full h-36 md:h-28">
         <ImQuotesLeft className="absolute top-8 flex-shrink-0 text-[80px] text-yellow-500 opacity-20" />
         <div className="animate-fade space-y-6" key={currentIndex}>
           <blockquote>

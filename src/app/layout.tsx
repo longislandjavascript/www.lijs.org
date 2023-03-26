@@ -38,7 +38,7 @@ export default function RootLayout({ children }: Props) {
             <Sidebar />
 
             <main
-              className={`flex-1 md:ml-80 py-4 px-4 md:px-12 mt-6 max-w-4xl pb-12`}
+              className={`flex-1 md:ml-80 py-4 px-2 md:px-12 mt-6 max-w-4xl pb-12`}
             >
               {children}
             </main>
