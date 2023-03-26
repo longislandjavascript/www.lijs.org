@@ -11,14 +11,6 @@ import { baseUrl } from "constants/baseUrl";
 import { BookForm } from "./BookForm";
 import { PassForm } from "./PassForm";
 
-// import { createMetadata } from "utils/createMetadata";
-
-// export const metadata = createMetadata({
-//   title: "Past Events | LIJS",
-//   description:
-//     "Things move fast in the world of JavaScript and we've covered a lot of ground since 2015! Take a look back at some of our past events.",
-// });
-
 type ErrorType = "invalid" | "redeemed" | "failure" | "expired";
 
 type FailResult = {
@@ -88,13 +80,13 @@ export function Redemption() {
         method: "GET",
       });
       const values = await response.json();
-      const parsed = JSON.parse(values) as Result;
+      const responseValues = JSON.parse(values) as Result;
 
-      if (parsed.success) {
-        setCheckResults(parsed);
-      } else if (!parsed.success) {
+      if (responseValues.success) {
+        setCheckResults(responseValues);
+      } else if (!responseValues.success) {
         setTimeout(() => {
-          setError(parsed.error);
+          setError(responseValues.error);
         }, 500);
       }
     } catch (error) {
