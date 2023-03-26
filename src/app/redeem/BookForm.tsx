@@ -1,5 +1,7 @@
 "use client";
 
+import { Alert } from "components/Alert";
+import { Button } from "components/Button";
 import { ExternalLink } from "components/ExternalLink";
 import { Input } from "components/Input";
 import { Textarea } from "components/Textarea";
@@ -32,6 +34,21 @@ export const BookForm = (props: Props) => {
     });
   }
   const { status, onSubmit } = useForm(handleSubmit);
+
+  if (["success", "error"].includes(status)) {
+    return (
+      <div>
+        <Alert
+          status={status}
+          successMessage="Got it! You will receive an email from O'Reilly once your book is
+        shipped to the address your provided. Please allow 7-14 days."
+        />
+        <Button variant="ghost" className="mt-4" onClick={onReset}>
+          Done
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <BaseForm

@@ -136,6 +136,8 @@ export default function ClaimPassPage() {
               code={checkResults.code}
               code_record_id={checkResults.code_record_id}
               onReset={handleReset}
+              link={checkResults.link!}
+              link_expiration_date={checkResults.link_expiration_date!}
             />
           )}
         </section>
