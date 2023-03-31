@@ -18,7 +18,7 @@ export default function CodeOfConductPage() {
       <div className="prose">
         <Section title="Please Read" className="mt-12">
           <p>
-            Long Island JavaScript is dedicated to providing a
+            Long Island JavaScript is dedicated to providing a{" "}
             <b className="text-primary">
               harassment-free experience for everyone
             </b>

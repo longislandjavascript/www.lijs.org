@@ -31,8 +31,8 @@ export default async function AboutUsPage() {
           {group.members} JavaScript Developers
         </span>{" "}
         in the Long Island, NY area. We meet on the last Wednesday of each month
-        to discuss and learn about a range of topics around the JavaScript
-        ecosystem.
+        to discuss and learn about a range of topics and technologies around the
+        JavaScript ecosystem.
       </p>
 
       <Reviews />
