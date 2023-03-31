@@ -4,10 +4,17 @@ import { useState } from "react";
 
 import { format } from "date-fns";
 import Link from "next/link";
-import { FaBuilding, FaCalendarDay, FaClock, FaGlobe } from "react-icons/fa";
+import { FaMeetup } from "react-icons/fa";
+import {
+  FaBuilding,
+  FaCalendarDay,
+  FaClock,
+  FaGithub,
+  FaGlobe,
+} from "react-icons/fa";
 
 import { Button } from "components/Button";
-import { MeetupButton } from "components/MeetupButton";
+import { ExternalLink } from "components/ExternalLink";
 import { Raw } from "components/Raw";
 import { MeetupEvent } from "utils/types";
 
@@ -76,28 +83,61 @@ export function MeetupEventDetails(props: Props) {
           .
         </p>
       </div>
-      <div className="mt-4 flex flex-col md:flex-row gap-4">
+      <div className="mt-4 flex flex-col lg:flex-row gap-4">
         <MeetupButton
           type={isFutureEvent ? "rsvp" : "view"}
           href={event.link}
         />
 
         {isFutureEvent && (
-          <a href="#getting-here" className="ghost-button">
+          <a href="#getting-here" className="ghost-button w-full md:w-42">
             Getting Here
           </a>
         )}
 
+        {event?.github_url && <ResourcesButton href={event.github_url} />}
+
         {!isFutureEvent && !showDescription && (
-          <Button onClick={handleShowDescription} variant="ghost">
+          <Button
+            onClick={handleShowDescription}
+            variant="ghost"
+            className="w-full md:w-auto"
+          >
             Show Description
           </Button>
         )}
       </div>
-
       <div className="mt-2">
         {showDescription && <Raw>{event.description}</Raw>}
       </div>
     </div>
   );
 }
+
+type MeetupButtonProps = {
+  type: "rsvp" | "view";
+  href: string;
+};
+
+export const MeetupButton = (props: MeetupButtonProps) => {
+  const text = props.type === "rsvp" ? "RSVP" : "View";
+  return (
+    <ExternalLink href={props.href} className="cta w-full md:w-auto">
+      <FaMeetup />
+      {text} on Meetup
+    </ExternalLink>
+  );
+};
+
+type ResourcesButtonProps = {
+  href: string;
+};
+
+export const ResourcesButton = (props: ResourcesButtonProps) => {
+  return (
+    <ExternalLink href={props.href} className="ghost-button w-full md:w-auto">
+      <FaGithub />
+      Resources available!
+    </ExternalLink>
+  );
+};

@@ -27,3 +27,28 @@ export function formSubmission(tableName: string) {
     );
   };
 }
+
+type EventRecord = {
+  id: string;
+  github_url?: string;
+};
+
+export async function retrieveEvents(): Promise<EventRecord[]> {
+  const results: EventRecord[] = [];
+  await base("Events")
+    .select({
+      maxRecords: 200,
+      view: "Grid view",
+    })
+    .eachPage((records, fetchNextPage) => {
+      records.forEach((record) => {
+        // eslint-disable-next-line functional/immutable-data
+        results.push({
+          id: record.get("id") as EventRecord["id"],
+          github_url: record.get("github_url") as EventRecord["github_url"],
+        });
+      });
+      fetchNextPage();
+    });
+  return Promise.resolve(results);
+}
