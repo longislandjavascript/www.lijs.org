@@ -7,8 +7,8 @@ import { Button } from "./Button";
 
 export type FormProps = React.PropsWithChildren<{
   onSubmit: FormEventHandler<HTMLFormElement>;
-  status: Status;
-  successMessage: string;
+  status?: Status;
+  successMessage?: string;
   onReset?: () => void;
 }>;
 

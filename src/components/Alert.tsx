@@ -7,7 +7,7 @@ type Props = Pick<FormProps, "status" | "successMessage">;
 export function Alert(props: Props) {
   const { status, successMessage } = props;
 
-  if (!["success", "error"].includes(status)) {
+  if (!status || !["success", "error"].includes(status)) {
     return null;
   }
 
