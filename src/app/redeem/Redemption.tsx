@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 
@@ -34,40 +34,17 @@ export function Redemption() {
   const [checkResults, setCheckResults] = useState<Result | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorType | null>(null);
-  const ref = useRef<HTMLInputElement[]>(null);
 
   function handleReset() {
     setCheckResults(null);
     router.refresh();
   }
 
-  const handleFocusPin = useCallback(() => {
-    if (ref.current && ref.current.length > 0) {
-      ref.current[0]?.focus();
-    }
-  }, []);
-
-  const handleClearPin = useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
-    ref.current?.forEach((input) => (input.value = ""));
-  }, []);
-
-  const handlePinReset = useCallback(() => {
-    handleClearPin();
-    handleFocusPin();
-  }, [handleClearPin, handleFocusPin]);
-
   function resetError() {
     if (error) {
       setError(null);
     }
   }
-
-  useEffect(() => {
-    if (error) {
-      handlePinReset();
-    }
-  }, [error, handlePinReset]);
 
   async function handleCheckRedemptionCode(value) {
     setLoading(true);
@@ -104,12 +81,11 @@ export function Redemption() {
 
       {!checkResults?.success && (
         <PinCode
-          ref={ref}
+          title="Please enter your redemption code"
           onChange={resetError}
           onComplete={handleCheckRedemptionCode}
           loading={loading}
-          onClear={handlePinReset}
-          errorType={error}
+          error={error ? createErrorMessage(error) : undefined}
         />
       )}
 
@@ -136,4 +112,19 @@ export function Redemption() {
       )}
     </div>
   );
+}
+
+function createErrorMessage(errorType: ErrorType) {
+  switch (errorType) {
+    case "redeemed":
+      return "This code has already been redeemed.";
+    case "invalid":
+      return "You entered an invalid code. Please try again.";
+    case "failure":
+      return "Something went wrong. Please try again.";
+    case "expired":
+      return "Sorry, this offer has expired. Next time!";
+    default:
+      return "";
+  }
 }
