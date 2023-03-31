@@ -65,12 +65,12 @@
     @apply bg-white dark:bg-gray-800;
   }
 
-  .cta {
-    @apply btn-base text-white border-blue-600  bg-gradient-to-br hover:bg-gradient-to-bl hover:bg-opacity-90 from-blue-500 to-blue-700 hover:to-blue-700 focus:to-blue-700;
+  .surface-alt {
+    @apply bg-gray-100 dark:bg-gray-900;
   }
 
-  .surface-alt {
-    @apply bg-gray-50 dark:bg-gray-900;
+  .cta {
+    @apply btn-base text-white border-blue-600  bg-gradient-to-br hover:bg-gradient-to-bl hover:bg-opacity-90 from-blue-500 to-blue-700 hover:to-blue-700 focus:to-blue-700;
   }
 
   .text {
