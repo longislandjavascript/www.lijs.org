@@ -1,3 +1,5 @@
+[![LIJS Logo](https://raw.githubusercontent.com/longislandjavascript/longislandjavascript/main/public/logo.png)](https://www.lijs.org)
+
 # [www.lijs.org](www.lijs.org)
 
 ## The official website of the Long Island JavaScript Meetup group.
