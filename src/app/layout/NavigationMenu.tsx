@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
+import { ExternalLink } from "components/ExternalLink";
 import { navLinks } from "constants/nav-links";
 
-import { ExternalLink } from "./ExternalLink";
 import { HeaderLogo } from "./HeaderLogo";
 import { ThemeSwitch } from "./ThemeSwitch";
 

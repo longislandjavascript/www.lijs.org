@@ -6,7 +6,7 @@ import { ImQuotesLeft } from "react-icons/im";
 
 import { reviews } from "constants/reviews";
 
-import { Section } from "./Section";
+import { Section } from "../../components/Section";
 
 export const Reviews = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

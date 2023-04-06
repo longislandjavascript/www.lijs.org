@@ -6,10 +6,10 @@ import { Dialog, Transition } from "@headlessui/react";
 import { usePathname } from "next/navigation";
 import { FaBars, FaTimes } from "react-icons/fa";
 
-import { NavigationMenu } from "components/NavigationMenu";
+import { IconButton } from "components/IconButton";
 
 import { HeaderLogo } from "./HeaderLogo";
-import { IconButton } from "./IconButton";
+import { NavigationMenu } from "./NavigationMenu";
 import ThemeSwitch from "./ThemeSwitch";
 
 export const MobileNavigation = () => {

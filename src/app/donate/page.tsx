@@ -1,12 +1,13 @@
 import Image from "next/image";
 
-import { CryptoWallet } from "components/CryptoWallet";
 import { ExternalLink } from "components/ExternalLink";
 import { PageTitle } from "components/PageTitle";
-import { PayPalDonateButton } from "components/PayPalDonateButton";
 import { Section } from "components/Section";
 import { wallets } from "constants/wallets";
 import { createMetadata } from "utils/createMetadata";
+
+import { CryptoWallet } from "./CryptoWallet";
+import { PayPalDonateButton } from "./PayPalDonateButton";
 
 export const metadata = createMetadata({
   title: "Donate to Long Island JavaScript",

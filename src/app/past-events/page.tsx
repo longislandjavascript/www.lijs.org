@@ -2,9 +2,10 @@ import { FaMeetup } from "react-icons/fa";
 
 import { ExternalLink } from "components/ExternalLink";
 import { PageTitle } from "components/PageTitle";
-import { PastEventsSearchableList } from "components/PastEventsSearchableList";
 import { createMetadata } from "utils/createMetadata";
 import { fetchPastEvents } from "utils/meetup-api";
+
+import { PastEventsSearchableList } from "./PastEventsSearchableList";
 
 export const metadata = createMetadata({
   title: "Past Events | LIJS",
