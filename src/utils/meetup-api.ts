@@ -4,8 +4,8 @@ import { retrieveEvents } from "./airtable-api";
 
 export async function fetchNextEvent(): Promise<MeetupEvent> {
   const res = await fetch(
-    "https://api.meetup.com/long-island-javascript/events?status=upcoming"
-    // { next: { revalidate: 120 } }
+    "https://api.meetup.com/long-island-javascript/events?status=upcoming",
+    { next: { revalidate: 60 } }
   );
 
   const events = (await res.json()) as MeetupEvent[];
@@ -15,7 +15,7 @@ export async function fetchNextEvent(): Promise<MeetupEvent> {
 export async function fetchPastEvents(): Promise<MeetupEvent[]> {
   const res = await fetch(
     "https://api.meetup.com/long-island-javascript/events?status=past",
-    { next: { revalidate: 120 } }
+    { next: { revalidate: 60 } }
   );
   const airtableEventsList = await retrieveEvents();
   const events = (await res.json())
