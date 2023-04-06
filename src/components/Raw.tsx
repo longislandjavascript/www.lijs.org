@@ -5,7 +5,7 @@ type Props = {
 export const Raw = (props: Props) => {
   return (
     <div
-      className="prose"
+      className="lijs-prose"
       dangerouslySetInnerHTML={{ __html: props.children }}
     />
   );

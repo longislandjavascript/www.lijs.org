@@ -53,7 +53,7 @@ export function createMetadata(args?: Args): Metadata {
     },
 
     // Manifest
-    manifest: "manifest.webmanifest",
+    manifest: "/manifest.webmanifest",
 
     // Twitter
     twitter: {

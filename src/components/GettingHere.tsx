@@ -7,7 +7,7 @@ import { Section } from "components/Section";
 export const GettingHere = () => {
   return (
     <Section title="Getting Here" id="getting-here">
-      <div className="prose">
+      <div className="lijs-prose">
         <p>
           We meet at LaunchPad Huntington located in the heart of the beautiful{" "}
           <ExternalLink

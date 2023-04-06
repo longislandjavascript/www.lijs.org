@@ -15,7 +15,7 @@ export default function CodeOfConductPage() {
     <div>
       <PageTitle>Code of Conduct</PageTitle>
 
-      <div className="prose">
+      <div className="lijs-prose">
         <Section title="Please Read" className="mt-12">
           <p>
             Long Island JavaScript is dedicated to providing a{" "}

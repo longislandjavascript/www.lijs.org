@@ -12,7 +12,7 @@ module.exports = {
         sans: ["var(--font-inter)", ...fontFamily.sans],
       },
       animation: {
-        fade: "fade 1s ease-in-out",
+        fade: "fade 500ms ease-in-out",
       },
       keyframes: {
         fade: {
@@ -22,4 +22,5 @@ module.exports = {
       },
     },
   },
+  plugins: [require("@tailwindcss/typography")],
 };

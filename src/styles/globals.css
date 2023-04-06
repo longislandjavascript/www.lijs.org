@@ -54,7 +54,7 @@
   }
 
   .btn-base {
-    @apply cursor-pointer font-display font-bold transition-colors duration-500 ease-in-out inline-flex items-center justify-center gap-2 p-2 border-2 rounded-lg box-border w-full md:w-48;
+    @apply cursor-pointer font-display font-bold transition-colors duration-500 ease-in-out inline-flex items-center justify-center gap-2 p-2 border-2 rounded-lg box-border w-full md:w-48 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .ghost-button {
@@ -88,15 +88,8 @@
     @apply text-blue-600 dark:text-yellow-500;
   }
 
-  .prose p {
-    @apply text-lg my-4 text;
-  }
-  .prose li {
-    @apply ml-8;
-  }
-
   .card {
-    @apply texture flex-1 p-4 mb-12 surface-alt rounded-xl border-2 border-color;
+    @apply texture flex-1 p-4 surface-alt rounded-xl border-2 border-color;
   }
 
   .link {
@@ -105,5 +98,12 @@
 
   .input {
     @apply p-2 border-2 border-color rounded-lg mb-8 surface-alt;
+  }
+
+  .lijs-prose p {
+    @apply text-lg my-4 text;
+  }
+  .lijs-prose li {
+    @apply ml-8;
   }
 }
