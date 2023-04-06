@@ -1,6 +1,13 @@
-import { MeetupEvent } from "utils/types";
+import { MeetupEvent, MeetupGroup } from "utils/types";
 
 import { retrieveEvents } from "./airtable-api";
+
+export async function fetchMeetupGroup(): Promise<MeetupGroup> {
+  const res = await fetch("https://api.meetup.com/long-island-javascript", {
+    next: { revalidate: 60 },
+  });
+  return res.json();
+}
 
 export async function fetchNextEvent(): Promise<MeetupEvent> {
   const res = await fetch(

@@ -6,22 +6,15 @@ import { Section } from "components/Section";
 import { organizers, pastOrganizers } from "constants/organizers";
 import { sponsors } from "constants/sponsors";
 import { createMetadata } from "utils/createMetadata";
-import { MeetupGroup } from "utils/types";
+import { fetchMeetupGroup } from "utils/meetup-api";
 
 import { OrganizerCard } from "./OrganizerCard";
 import { Reviews } from "./Reviews";
 
 export const metadata = createMetadata();
 
-async function getData(): Promise<MeetupGroup> {
-  const res = await fetch("https://api.meetup.com/long-island-javascript", {
-    next: { revalidate: 120 },
-  });
-  return res.json();
-}
-
 export default async function AboutUsPage() {
-  const group = await getData();
+  const group = await fetchMeetupGroup();
   return (
     <div>
       <PageTitle>About LIJS</PageTitle>
