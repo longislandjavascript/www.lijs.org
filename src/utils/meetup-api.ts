@@ -17,6 +17,7 @@ export async function fetchNextEvent(): Promise<MeetupEvent | null> {
     );
 
     const events = (await res.json()) as MeetupEvent[];
+    console.log(events);
     return events[0];
   } catch (error) {
     return null;
