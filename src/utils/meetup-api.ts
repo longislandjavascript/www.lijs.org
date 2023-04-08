@@ -13,11 +13,10 @@ export async function fetchNextEvent(): Promise<MeetupEvent | null> {
   try {
     const res = await fetch(
       "https://api.meetup.com/long-island-javascript/events?status=upcoming",
-      { next: { revalidate: 60 } }
+      { cache: "no-store" }
     );
 
     const events = (await res.json()) as MeetupEvent[];
-    console.info(events);
     return events[0];
   } catch (error) {
     return null;
