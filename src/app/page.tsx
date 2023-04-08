@@ -13,9 +13,12 @@ export default async function IndexPage() {
 
   return (
     <div className="w-full overflow-hidden">
-      <Section title="Next Event">
-        <MeetupEventDetails event={nextEvent} type="future" />
-      </Section>
+      {nextEvent && (
+        <Section title="Next Event">
+          <MeetupEventDetails event={nextEvent} type="future" />
+        </Section>
+      )}
+
       <div className="w-full mb-12 flex items-center gap-4 overflow-scroll snap-x snap-mandatory lg:snap-none lg:flex-wrap md:justify-around">
         {showcaseItems.map((item) => {
           return (
