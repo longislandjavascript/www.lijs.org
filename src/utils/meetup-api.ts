@@ -9,14 +9,18 @@ export async function fetchMeetupGroup(): Promise<MeetupGroup> {
   return res.json();
 }
 
-export async function fetchNextEvent(): Promise<MeetupEvent> {
-  const res = await fetch(
-    "https://api.meetup.com/long-island-javascript/events?status=upcoming",
-    { next: { revalidate: 60 } }
-  );
+export async function fetchNextEvent(): Promise<MeetupEvent | null> {
+  try {
+    const res = await fetch(
+      "https://api.meetup.com/long-island-javascript/events?status=upcoming",
+      { next: { revalidate: 60 } }
+    );
 
-  const events = (await res.json()) as MeetupEvent[];
-  return events[0];
+    const events = (await res.json()) as MeetupEvent[];
+    return events[0];
+  } catch (error) {
+    return null;
+  }
 }
 
 export async function fetchPastEvents(): Promise<MeetupEvent[]> {
