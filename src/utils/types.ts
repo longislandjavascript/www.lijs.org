@@ -137,3 +137,30 @@ export type BaseComponent = {
    */
   style?: React.CSSProperties;
 };
+
+export type RecordID = string;
+
+export type AirtableRecord<Fields> = {
+  id: RecordID;
+  fields: Fields;
+};
+
+export type AirtableQuizRecord = AirtableRecord<{
+  "Auto ID": number;
+  Name: string;
+  "Timer Duration": number;
+  Questions: string[];
+  "Participant Code": number;
+  "Admin Code": number;
+  "Room ID": string;
+  Status: "In Progress" | "Ended";
+  Date: Date;
+}>;
+
+export type AirtableQuizQuestionRecord = AirtableRecord<{
+  "Auto ID": number;
+  Question: string;
+  Type: "Multiple Choice";
+  Language: "JavaScript" | "TypeScript" | "JSX" | "TSX" | "CSS" | "HTML";
+  Answer: "A" | "B" | "C" | "D";
+}>;
