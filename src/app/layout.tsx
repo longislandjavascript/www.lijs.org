@@ -1,5 +1,3 @@
-import layout, { metadata } from "./layout/layout";
-
-export { metadata };
+import layout from "./layout/layout";
 
 export default layout;
