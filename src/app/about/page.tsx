@@ -11,7 +11,7 @@ import { fetchMeetupGroup } from "utils/meetup-api";
 import { OrganizerCard } from "./OrganizerCard";
 import { Reviews } from "./Reviews";
 
-export const metadata = createMetadata();
+export const metadata = createMetadata({ path: "/about" });
 
 export default async function AboutUsPage() {
   const group = await fetchMeetupGroup();

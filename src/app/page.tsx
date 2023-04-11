@@ -6,7 +6,7 @@ import { showcaseItems } from "constants/showcase";
 import { createMetadata } from "utils/createMetadata";
 import { fetchNextEvent } from "utils/meetup-api";
 
-export const metadata = createMetadata();
+export const metadata = createMetadata({ path: "/" });
 
 export default async function IndexPage() {
   const nextEvent = await fetchNextEvent();

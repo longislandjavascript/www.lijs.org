@@ -10,6 +10,7 @@ import { CryptoWallet } from "./CryptoWallet";
 import { PayPalDonateButton } from "./PayPalDonateButton";
 
 export const metadata = createMetadata({
+  path: "/donate",
   title: "Donate to Long Island JavaScript",
   description:
     "Show your support of Long Island JavaScript with a financial donation. PayPal, Bitcoin, Ethereum, Dogecoin, and more!",

@@ -4,6 +4,7 @@ import { createMetadata } from "utils/createMetadata";
 import { ContactForm } from "./contact-form";
 
 export const metadata = createMetadata({
+  path: "/contact",
   title: "Contact Long Island JavaScript",
   description:
     "Have a question or suggestion? Interested in sponsoring our group? Just want to say hi? What ever it is, we'd love to hear from you!",

@@ -1,7 +1,5 @@
 import { Inter, Overlock } from "next/font/google";
 
-import { createMetadata } from "utils/createMetadata";
-
 import { Footer } from "./Footer";
 import { MobileNavigation } from "./MobileNavigation";
 import { Sidebar } from "./Sidebar";
@@ -19,8 +17,6 @@ const overlock = Overlock({
   weight: ["400", "700", "900"],
   variable: "--font-overlock",
 });
-
-export const metadata = createMetadata();
 
 type Props = {
   children: React.ReactNode;

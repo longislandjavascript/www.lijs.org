@@ -2,6 +2,7 @@ import { PageTitle } from "components/PageTitle";
 import { createMetadata } from "utils/createMetadata";
 
 export const metadata = createMetadata({
+  path: "/donate/thanks",
   title: "Thank you for your donation!",
 });
 
