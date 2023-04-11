@@ -12,7 +12,7 @@ export const Section = (props: Props) => {
   return (
     <section
       className={`card overflow-hidden ${className} ${
-        !noMargin ? "mb-24" : "mb-0"
+        !noMargin ? "mb-12" : "mb-0"
       }`}
       id={id}
     >
