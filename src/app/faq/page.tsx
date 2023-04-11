@@ -4,7 +4,7 @@ import { createMetadata } from "utils/createMetadata";
 
 export const metadata = createMetadata({
   path: "/faq",
-  title: "Frequently Asked Questions | LIJS",
+  title: "Frequently Asked Questions",
   description:
     "Here you will find answers to the most common questions we get as a group such as 'Does is cost to attend a Long Island JavaScript event?' (spoiler: no!)",
 });

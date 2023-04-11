@@ -6,7 +6,10 @@ import { showcaseItems } from "constants/showcase";
 import { createMetadata } from "utils/createMetadata";
 import { fetchNextEvent } from "utils/meetup-api";
 
-export const metadata = createMetadata({ path: "/" });
+export const metadata = createMetadata({
+  title: "Welcome to Long Island JavaScript!",
+  path: "/",
+});
 
 export default async function IndexPage() {
   const nextEvent = await fetchNextEvent();
