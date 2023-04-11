@@ -172,12 +172,12 @@ export async function updateQuizStatusDetails(args: Args) {
   ]);
 }
 
-type AirtableRedemptionCode = {
-  id: string;
-  code: number;
-  Printed: boolean;
-  "Prize Type": "Book" | "Pass";
-};
+// type AirtableRedemptionCode = {
+//   id: string;
+//   code: number;
+//   Printed: boolean;
+//   "Prize Type": "Book" | "Pass";
+// };
 
 export type RedemptionCode = null | {
   id: string;
