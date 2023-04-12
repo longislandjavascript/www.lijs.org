@@ -37,10 +37,27 @@ export function formSubmission(tableName: string) {
 }
 
 type EventRecord = {
-  id: string;
+  event_id: string;
   github_url?: string;
   graphic_url?: any;
 };
+
+export async function retrieveMatchingAirtableEvent(
+  id: string
+): Promise<EventRecord> {
+  const match = await base("Events")
+    .select({
+      view: "Grid view",
+      filterByFormula: `{event_id} = "${id}"`,
+    })
+    .firstPage();
+  const matchedRecord = match[0];
+  return Promise.resolve({
+    event_id: matchedRecord.fields.event_id,
+    github_url: matchedRecord?.fields?.github_url,
+    graphic_url: matchedRecord?.fields.graphic?.[0].thumbnails?.large?.url,
+  } as EventRecord);
+}
 
 export async function retrieveAirtableEvents(): Promise<EventRecord[]> {
   const results: EventRecord[] = [];
@@ -53,7 +70,7 @@ export async function retrieveAirtableEvents(): Promise<EventRecord[]> {
       records.forEach((record) => {
         // eslint-disable-next-line functional/immutable-data
         results.push({
-          id: record.get("id") as EventRecord["id"],
+          event_id: record.get("event_id") as EventRecord["event_id"],
           github_url: record.get("github_url") as EventRecord["github_url"],
           graphic_url: record.get("graphic")?.[0]?.thumbnails?.large?.url,
         });

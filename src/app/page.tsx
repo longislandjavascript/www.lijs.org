@@ -13,7 +13,6 @@ export const metadata = createMetadata({
 
 export default async function IndexPage() {
   const nextEvent = await fetchNextEvent();
-
   return (
     <div className="w-full overflow-hidden">
       {nextEvent && (
