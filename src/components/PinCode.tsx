@@ -8,7 +8,7 @@ import PinField, { PinFieldProps } from "react-pin-field";
 
 type Props = {
   title: string;
-  onChange: PinFieldProps["onChange"];
+  onChange?: PinFieldProps["onChange"];
   onComplete: PinFieldProps["onComplete"];
   onClear?: () => void;
   loading: boolean;
@@ -16,7 +16,14 @@ type Props = {
 };
 
 export const PinCode = (props: Props) => {
-  const { onChange, onComplete, loading, onClear, title, error } = props;
+  const {
+    onChange = () => {},
+    onComplete,
+    loading,
+    onClear,
+    title,
+    error,
+  } = props;
   const ref = useRef<HTMLInputElement[]>(null);
 
   const handleFocusPin = useCallback(() => {

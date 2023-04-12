@@ -1,6 +1,6 @@
 import { MeetupEvent, MeetupGroup } from "utils/types";
 
-import { retrieveEvents } from "./airtable-api";
+import { retrieveAirtableEvents } from "./airtable-api";
 
 export async function fetchMeetupGroup(): Promise<MeetupGroup> {
   const res = await fetch("https://api.meetup.com/long-island-javascript", {
@@ -28,13 +28,14 @@ export async function fetchPastEvents(): Promise<MeetupEvent[]> {
     "https://api.meetup.com/long-island-javascript/events?status=past",
     { next: { revalidate: 30 } }
   );
-  const airtableEventsList = await retrieveEvents();
+  const airtableEventsList = await retrieveAirtableEvents();
   const events = (await res.json())
     .map((event) => {
       const match = airtableEventsList.find((v) => v.id === event.id);
       return {
         ...event,
         github_url: match?.github_url,
+        graphic_url: match?.graphic_url,
       };
     })
     .filter((event) => event.time && event.duration)

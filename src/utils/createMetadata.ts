@@ -3,19 +3,18 @@ import { baseUrl } from "constants/baseUrl";
 import type { Metadata } from "next";
 
 type Args = {
-  title?: string;
+  title: string;
   description?: string;
   path: `/${string}`;
   image?: string;
 };
 
-const defaultTitle = "Long Island JavaScript";
 const defaultDescription =
   "Welcome to Long Island JavaScript! Our monthly Meetup covers all things JavaScript, from frontend to backend, libraries to frameworks, Node to Deno, React to Svelte, and everything in between. We meet on the last Wednesday of each month at LaunchPad Huntington.";
 const defaultImage = "/longislandjavascript.png";
 
 export function createMetadata(args: Args): Metadata {
-  const title = args?.title || defaultTitle;
+  const { title } = args;
   const description = args?.description || defaultDescription;
   const image = args?.image || defaultImage;
 

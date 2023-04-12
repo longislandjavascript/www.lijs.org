@@ -6,7 +6,7 @@ import { createMetadata } from "utils/createMetadata";
 
 export const metadata = createMetadata({
   path: "/code-of-conduct",
-  title: "Code of Conduct | LIJS",
+  title: "Code of Conduct",
   description:
     "Help us to keep Long Island JavaScript a safe and fun space for everyone by reviewing and following our code of conduct.",
 });
