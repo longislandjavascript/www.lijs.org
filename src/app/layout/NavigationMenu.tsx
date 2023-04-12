@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaExternalLinkAlt } from "react-icons/fa";
@@ -42,7 +44,6 @@ const NavLink = (props: NavLinkProps) => {
     return (
       <li className="w-full">
         <Link
-          scroll={true}
           href={href}
           className={`${navLinkClassNames} ${selectedClassNames}`}
         >
@@ -55,6 +56,13 @@ const NavLink = (props: NavLinkProps) => {
 
 export const NavigationMenu = () => {
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (window) {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname]);
+
   return (
     <div>
       <div className="hidden  md:flex items-center justify-between">
