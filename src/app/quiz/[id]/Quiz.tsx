@@ -112,6 +112,7 @@ export function Quiz(props: Props) {
             timer={timer}
             quiz={quiz}
             participant={user}
+            participants={participants}
           />
         </div>
       )}

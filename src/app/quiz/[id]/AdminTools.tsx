@@ -26,11 +26,12 @@ type Props = {
   question: QuizQuestion;
   quiz: QuizRecord;
   timer: SharedTimer;
-  participant?: SharedQuiz["participant"];
+  participant?: any;
+  participants: SharedQuiz["participants"];
 };
 
 export function AdminTools(props: Props) {
-  const { admin, question, quiz, timer, participant } = props;
+  const { admin, question, quiz, timer, participant, participants } = props;
 
   return (
     <div>
@@ -103,7 +104,7 @@ export function AdminTools(props: Props) {
                 <BsPeople />
                 Participants{" "}
                 <span className="bg-yellow-500 text-gray-800 px-2 rounded-full text-sm">
-                  {participant?.all?.length}
+                  {participants?.length}
                 </span>
               </span>
               <FaCaretDown
@@ -121,7 +122,7 @@ export function AdminTools(props: Props) {
             >
               <Disclosure.Panel className="mt-6" static={true}>
                 <ParticipantList
-                  participants={participant?.all}
+                  participants={participants}
                   isAdmin={participant?.isAdmin || false}
                   onRequestRemoveParticipant={admin.removeParticipant}
                   onRequestBanParticipant={admin.banParticipant}
