@@ -1,5 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
+import Loader from "react-spinners/ClockLoader";
+
 import { useSharedQuiz } from "hooks/useSharedQuiz";
 import { useSharedTimer } from "hooks/useSharedTimer";
 import { QuizRecord } from "utils/airtable-api";
@@ -22,19 +26,31 @@ type Props = {
 export function Quiz(props: Props) {
   const { isAdmin, quiz } = props;
   const timer = useSharedTimer(quiz.timer);
-  const { status, question, admin, participant } = useSharedQuiz(
-    isAdmin,
-    quiz,
-    timer
-  );
+  const { status, question, admin, user, user_actions, participants } =
+    useSharedQuiz(isAdmin, quiz, timer);
 
-  const isConfirmedAdmin = participant.isAdmin;
+  const is_admin = user?.isAdmin;
 
-  if (!status.ready) {
+  if (!user) {
     return null;
   }
 
-  if (!status.started && isConfirmedAdmin) {
+  if (!status.ready) {
+    return (
+      <div className="h-[70vh] grid place-items-center gap-2">
+        <ConnectionStatus connected={status.connected} />
+        <Loader
+          color={"#166ada"}
+          loading={true}
+          size={300}
+          aria-label="Loading Spinner"
+        />
+        <p className="text-primary font-display text-4xl">Almost there...</p>
+      </div>
+    );
+  }
+
+  if (!status.started && is_admin) {
     return (
       <div>
         <div className="space-y-6">
@@ -42,9 +58,10 @@ export function Quiz(props: Props) {
 
           <JoinInfo code={quiz.participant_code} />
           <ParticipantList
-            participants={participant.all}
-            isAdmin={isConfirmedAdmin}
+            participants={participants}
+            isAdmin={is_admin}
             onRequestRemoveParticipant={admin.removeParticipant}
+            onRequestBanParticipant={admin.banParticipant}
           />
         </div>
 
@@ -55,15 +72,15 @@ export function Quiz(props: Props) {
     );
   }
 
-  if (!participant.name && !isConfirmedAdmin) {
+  if (!user?.name && !is_admin) {
     return (
       <div className="space-y-6">
         <ConnectionStatus connected={status.connected} />
         <ParticipantJoinForm
-          onSubmit={participant.joinQuiz}
-          userName={participant?.name}
+          onSubmit={user_actions.joinQuiz}
+          userName={user?.name}
         />
-        <ParticipantList participants={participant.all} />
+        <ParticipantList participants={participants} />
       </div>
     );
   }
@@ -73,7 +90,7 @@ export function Quiz(props: Props) {
       <div>
         <ConnectionStatus connected={status.connected} />
         <p className="text-3xl font-bold my-4 text-primary">{quiz.name}</p>
-        <ParticipantList participants={participant.all} />
+        <ParticipantList participants={participants} />
         <p>We will get started shortly.</p>
       </div>
     );
@@ -83,18 +100,18 @@ export function Quiz(props: Props) {
     <div className="mb-12">
       <div className="flex justify-end">
         <p className="font-display text-3xl surface-alt p-1 px-4 rounded-full">
-          {participant.name}
+          {user.name}
         </p>
       </div>
 
-      {isConfirmedAdmin && (
+      {is_admin && (
         <div className="sticky top-10 z-[8] mb-12 backdrop-blur-xl bg-black/10 p-4 rounded-xl border-2 border-color">
           <AdminTools
             question={question}
             admin={admin}
             timer={timer}
             quiz={quiz}
-            participant={participant}
+            participant={user}
           />
         </div>
       )}
@@ -111,15 +128,15 @@ export function Quiz(props: Props) {
             }`}
             question={question}
             answerKey={admin.answerKey as "A"}
-            onSubmitAnswer={participant.submitAnswer}
+            onSubmitAnswer={user_actions.submitAnswer}
             isTimerDone={timer.secondsRemaining === 0}
-            answer={status.results?.[participant?.name]?.[question.id]}
-            isAdmin={isConfirmedAdmin}
+            answer={status.results?.[user?.name]?.[question.id]}
+            isAdmin={is_admin}
           />
         </div>
       )}
 
-      {(!admin.showLeaderboard || isConfirmedAdmin) && (
+      {(!admin.showLeaderboard || is_admin) && (
         <Timer
           secondsRemaining={timer.secondsRemaining}
           defaultSeconds={quiz.timer}

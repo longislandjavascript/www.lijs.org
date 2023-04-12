@@ -102,12 +102,19 @@ export async function fetchQuiz(recordId: string): Promise<QuizRecord> {
     participant_code: fields["Participant Code"],
   };
 
-  const questionFetchers = fields.Questions.map((q, i) =>
-    base("Quiz Questions").find(fields.Questions[i] as string)
-  );
-  const questionsResult = (await Promise.all(
-    questionFetchers
-  )) as unknown as AirtableQuizQuestionRecord[];
+  const questionsQuery = fields.Questions.reduce((acc, q) => {
+    return [...acc, `{Record_ID} = "${q}"`];
+  }, []);
+
+  const query = questionsQuery.join(", ");
+
+  const questionsResult = (await base("Quiz Questions")
+    .select({
+      view: "Grid view",
+      maxRecords: 200,
+      filterByFormula: `OR(${query})`,
+    })
+    .firstPage()) as unknown as AirtableQuizQuestionRecord[];
 
   const questions = questionsResult.map((value, i) => {
     const { id, fields } = value;
@@ -127,6 +134,7 @@ export async function fetchQuiz(recordId: string): Promise<QuizRecord> {
       question: fields.Question,
       answer: fields.Answer,
       language: fields.Language,
+      explanation: fields.Explanation,
       options: questionOptions,
     };
 
@@ -145,6 +153,7 @@ export type QuizQuestion = {
   question: AirtableQuizQuestionRecord["fields"]["Question"];
   answer: AirtableQuizQuestionRecord["fields"]["Answer"];
   language: AirtableQuizQuestionRecord["fields"]["Language"];
+  explanation: AirtableQuizQuestionRecord["fields"]["Explanation"];
   options: QuizQuestionOption[];
   index?: number;
 };
@@ -159,30 +168,28 @@ export type QuizRecord = {
   questions: QuizQuestion[];
 };
 
-export async function findQuiz(code: string) {
+export async function findQuizByCode(code: string) {
   return base("Quizzes")
     .select({
       view: "Grid view",
       filterByFormula: `OR({Participant Code} = "${code}", {Admin Code} = "${code}")`,
     })
-    .firstPage() as unknown as AirtableQuizRecord;
+    .firstPage() as unknown as AirtableQuizRecord[];
 }
 
 type Args = {
   id: RecordID;
-  room_id: string;
   admin_client_id: string;
 };
 
 export async function updateQuizStatusDetails(args: Args) {
-  const { id, room_id, admin_client_id } = args;
+  const { id, admin_client_id } = args;
   const today = format(new Date(), "MM/dd/yyyy");
 
   return base("Quizzes").update([
     {
       id: id,
       fields: {
-        "Room ID": room_id,
         "Admin Client ID": admin_client_id,
         Status: "In Progress",
         Date: today,

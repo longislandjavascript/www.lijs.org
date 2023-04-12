@@ -124,6 +124,7 @@ export function AdminTools(props: Props) {
                   participants={participant?.all}
                   isAdmin={participant?.isAdmin || false}
                   onRequestRemoveParticipant={admin.removeParticipant}
+                  onRequestBanParticipant={admin.banParticipant}
                 />
               </Disclosure.Panel>
             </Transition>

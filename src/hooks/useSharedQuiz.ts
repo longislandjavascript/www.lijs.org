@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo } from "react";
 
 import {
   useConnectionStatus,
-  useDatabase,
   useSharedReducer,
   useUniqueClientId,
 } from "driftdb-react";
@@ -18,8 +17,9 @@ type SharedState = {
   index: number;
   ready: boolean;
   started: boolean;
-  participants: string[];
+  participants: User[];
   removedParticipants: string[];
+  bannedParticipants: string[];
   showLeaderBoard: boolean;
   leaderboard: [string, number, number][];
   scores: any;
@@ -28,6 +28,12 @@ type SharedState = {
 type Action = {
   type: string;
   payload?: any;
+};
+
+export type User = {
+  name: string;
+  clientID: string;
+  isAdmin: boolean;
 };
 
 export function useSharedQuiz(
@@ -39,13 +45,10 @@ export function useSharedQuiz(
   const router = useRouter();
   const { connected } = useConnectionStatus();
 
-  const db = useDatabase();
-
-  const [user, setUser] = useLocalStorage(`username-${clientID}`, {
-    name: "",
-    clientID,
-    isAdmin: false,
-  });
+  const [user, setUser] = useLocalStorage<User | null>(
+    `lijs-quiz-user-${clientID}`,
+    null
+  );
 
   const defaultSharedState = useMemo<SharedState>(() => {
     return {
@@ -56,6 +59,7 @@ export function useSharedQuiz(
       scores: {},
       participants: [],
       removedParticipants: [],
+      bannedParticipants: [],
       showLeaderBoard: false,
       leaderboard: [],
     };
@@ -65,10 +69,9 @@ export function useSharedQuiz(
     "answer-key",
     (state = defaultSharedState, action: Action) => {
       if (!state) return;
-
       switch (action.type) {
         case "set-ready":
-          return { ...state, ready: action.payload };
+          return { ...state, ready: true };
         case "reset":
           return {
             ...defaultSharedState,
@@ -146,17 +149,14 @@ export function useSharedQuiz(
         case "add-participant":
           return {
             ...state,
-            participants: [
-              ...state.participants,
-              action.payload.userName,
-            ] as string[],
+            participants: [...state.participants, action.payload] as User[],
           };
 
         case "remove-participant":
           return {
             ...state,
             scores: Object.keys(state.scores).reduce((acc, value) => {
-              if (value === action.payload.userName) {
+              if (value === action.payload.name) {
                 return acc;
               } else {
                 return {
@@ -166,9 +166,30 @@ export function useSharedQuiz(
               }
             }, {}),
             participants: state.participants.filter(
-              (v) => v !== action.payload.userName
+              (v) => v.clientID !== action.payload.clientID
             ),
-            removedParticipants: [user?.clientID, action.payload.userName],
+            removedParticipants: [...state.removedParticipants, action.payload],
+          };
+        case "ban-participant":
+          return {
+            ...state,
+            scores: Object.keys(state.scores).reduce((acc, value) => {
+              if (value === action.payload.name) {
+                return acc;
+              } else {
+                return {
+                  ...acc,
+                  ...state.scores[value],
+                };
+              }
+            }, {}),
+            participants: state.participants.filter(
+              (v) => v.clientID !== action.payload.clientID
+            ),
+            bannedParticipants: [
+              ...state.bannedParticipants,
+              action.payload.name,
+            ],
           };
 
         default:
@@ -182,60 +203,64 @@ export function useSharedQuiz(
 
   useEffect(() => {
     if (!isAdmin) return;
-    setTimeout(() => {
-      if (db?.dbUrl) {
-        if (quiz.room_id) return;
-        const room_id = db.dbUrl?.split("room/")[1].split("/connect")[0];
-        fetch(
-          `/api/quiz/update-quiz-status-details?id=${quiz.id}&room_id=${room_id}&admin_client_id=${clientID}`
-        );
+    fetch(
+      `/api/quiz/update-quiz-status?id=${quiz.id}&admin_client_id=${clientID}`
+    ).then(async (res) => {
+      const body = await res.json();
+      if (body?.success) {
+        setUser({ isAdmin: true, clientID, name: "" });
+        dispatch({ type: "set-ready" });
       }
-    }, 1000);
-  }, []);
-
-  useEffect(() => {
-    if (quiz.admin_client_id === clientID && !user) {
-      setUser({ ...user, isAdmin: true });
-    }
-  }, [clientID, quiz, setUser, user]);
+    });
+  }, [clientID, dispatch, isAdmin, quiz, setUser]);
 
   // Admin Methods
 
   const goToPreviousQuestion = useCallback(() => {
     dispatch({ type: "previous-question" });
     timer.actions.reset();
-  }, [dispatch, timer.actions]);
+  }, []);
 
   const goToNextQuestion = useCallback(() => {
     dispatch({ type: "next-question" });
     timer.actions.reset();
-  }, [dispatch, timer.actions]);
+  }, []);
 
   const resetQuiz = useCallback(() => {
     // setIndex(0);
     dispatch({ type: "reset" });
     timer.actions.reset();
-  }, [dispatch, timer.actions]);
+  }, []);
 
-  const removeParticipant = useCallback(
-    (name) => {
-      dispatch({ type: "remove-participant", payload: { userName: name } });
-    },
-    [dispatch]
-  );
+  const removeParticipant = useCallback((user: User) => {
+    dispatch({ type: "remove-participant", payload: user });
+  }, []);
+
+  const banParticipant = useCallback((user: User) => {
+    dispatch({ type: "ban-participant", payload: user });
+  }, []);
 
   useEffect(() => {
-    if (isAdmin) return;
-    if (sharedState?.removedParticipants.includes(user?.clientID)) {
+    if (user?.isAdmin) return;
+    if (sharedState?.bannedParticipants.includes(clientID)) {
       setUser(null);
+      if (window) {
+        // FIX!!!
+        window.localStorage.removeItem(clientID);
+      }
       router.replace("/quiz");
+    } else if (sharedState?.removedParticipants.includes(clientID)) {
+      setUser(null);
     }
-  }, [isAdmin, router, setUser, sharedState, user?.clientID]);
-
-  useEffect(() => {
-    if (sharedState?.ready) return;
-    dispatch({ type: "set-ready", payload: sharedState !== null });
-  }, [dispatch, sharedState]);
+  }, [
+    clientID,
+    dispatch,
+    isAdmin,
+    router,
+    setUser,
+    sharedState,
+    user?.isAdmin,
+  ]);
 
   // Participant Methods
 
@@ -266,74 +291,32 @@ export function useSharedQuiz(
       e.preventDefault();
       const name = e.target.name.value;
       if (sharedState?.participants.includes(name)) {
-        alert("name taken");
+        alert("Please choose another name.");
         return;
       }
-      setUser({ ...user, name });
-      dispatch({ type: "add-participant", payload: { userName: name } });
+
+      const updatedUser = { name, clientID, isAdmin: false };
+      setUser(updatedUser);
+      dispatch({ type: "add-participant", payload: updatedUser });
     },
-    [dispatch, setUser, sharedState?.participants, user]
+    [clientID, dispatch, setUser, sharedState?.participants]
   );
 
-  const admin = useMemo(
-    () => ({
-      answerKey: sharedState?.answerKey,
-      startQuiz: () => dispatch({ type: "set-started" }),
-      goToPreviousQuestion,
-      goToNextQuestion,
-      toggleAnswer: () => dispatch({ type: "toggle-answer-key" }),
-      resetQuiz,
-      removeParticipant,
-      resetTimer: timer.actions.reset,
-      startTimer: timer.actions.start,
-      pauseTimer: timer.actions.pause,
-      stopTimer: timer.actions.stop,
-      toggleLeaderboard: () => dispatch({ type: "toggle-leaderboard" }),
-      showLeaderboard: sharedState?.showLeaderBoard,
-    }),
-    [
-      dispatch,
-      goToNextQuestion,
-      goToPreviousQuestion,
-      removeParticipant,
-      resetQuiz,
-      sharedState?.answerKey,
-      sharedState?.showLeaderBoard,
-      timer.actions.pause,
-      timer.actions.reset,
-      timer.actions.start,
-      timer.actions.stop,
-    ]
-  );
-
-  const participant = useMemo(
-    () => ({
-      all: sharedState?.participants,
-      name: user?.name,
-      clientID: user?.clientID,
-      isAdmin: user?.isAdmin,
-      joinQuiz,
-      submitAnswer,
-    }),
-    [joinQuiz, sharedState?.participants, submitAnswer, user]
-  );
-
-  const status = useMemo(
-    () => ({
+  const status = useMemo(() => {
+    return {
       connected,
       started: sharedState?.started,
       results: sharedState?.scores,
       ready: sharedState?.ready,
       leaderboard: sharedState?.leaderboard,
-    }),
-    [
-      connected,
-      sharedState?.leaderboard,
-      sharedState?.ready,
-      sharedState?.scores,
-      sharedState?.started,
-    ]
-  );
+    };
+  }, [
+    connected,
+    sharedState?.leaderboard,
+    sharedState?.ready,
+    sharedState?.scores,
+    sharedState?.started,
+  ]);
 
   const question = useMemo(() => {
     return {
@@ -342,11 +325,52 @@ export function useSharedQuiz(
     };
   }, [currentQuestion, sharedState?.index]);
 
+  const admin = useMemo(() => {
+    return {
+      answerKey: sharedState?.answerKey,
+      startQuiz: () => dispatch({ type: "set-started" }),
+      goToPreviousQuestion,
+      goToNextQuestion,
+      toggleAnswer: () => dispatch({ type: "toggle-answer-key" }),
+      resetQuiz,
+      removeParticipant,
+      banParticipant,
+      resetTimer: timer.actions.reset,
+      startTimer: timer.actions.start,
+      pauseTimer: timer.actions.pause,
+      stopTimer: timer.actions.stop,
+      toggleLeaderboard: () => dispatch({ type: "toggle-leaderboard" }),
+      showLeaderboard: sharedState?.showLeaderBoard,
+    };
+  }, [
+    banParticipant,
+    dispatch,
+    goToNextQuestion,
+    goToPreviousQuestion,
+    removeParticipant,
+    resetQuiz,
+    sharedState?.answerKey,
+    sharedState?.showLeaderBoard,
+    timer.actions.pause,
+    timer.actions.reset,
+    timer.actions.start,
+    timer.actions.stop,
+  ]);
+
+  const user_actions = useMemo(() => {
+    return {
+      joinQuiz,
+      submitAnswer,
+    };
+  }, [joinQuiz, submitAnswer]);
+
   return {
     status,
     question,
     admin,
-    participant,
+    user,
+    user_actions,
+    participants: sharedState?.participants,
   } as const;
 }
 

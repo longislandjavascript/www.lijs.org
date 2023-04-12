@@ -16,7 +16,7 @@ const dbUrl = process.env.NEXT_PUBLIC_DRIFTDB_URL;
 export function DriftDBProviderWrapper(props: Props) {
   if (!dbUrl) return null;
   return (
-    <DriftDBProvider api={dbUrl} room={props.quiz?.room_id}>
+    <DriftDBProvider api={dbUrl} room={props.quiz.id}>
       <Quiz quiz={props.quiz} isAdmin={props.isAdmin} />
     </DriftDBProvider>
   );

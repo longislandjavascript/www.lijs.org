@@ -3,6 +3,7 @@
 import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import useKeypress from "react-use-keypress";
 
+import { Section } from "components/Section";
 import { QuizQuestion } from "utils/airtable-api";
 
 import { MDRenderer } from "./MDRenderer";
@@ -96,6 +97,15 @@ export function Question(props: Props) {
           </button>
         );
       })}
+
+      <Section
+        title="Explanation"
+        className={`${answerKey ? "block" : "hidden"} my-4`}
+      >
+        <MDRenderer language={question.language}>
+          {question.explanation}
+        </MDRenderer>
+      </Section>
     </div>
   );
 }

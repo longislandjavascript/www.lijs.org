@@ -164,4 +164,5 @@ export type AirtableQuizQuestionRecord = AirtableRecord<{
   Type: "Multiple Choice";
   Language: "JavaScript" | "TypeScript" | "JSX" | "TSX" | "CSS" | "HTML";
   Answer: "A" | "B" | "C" | "D";
+  Explanation: string;
 }>;

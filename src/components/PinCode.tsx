@@ -13,6 +13,7 @@ type Props = {
   onClear?: () => void;
   loading: boolean;
   error?: string;
+  loadingMessage?: string;
 };
 
 export const PinCode = (props: Props) => {
@@ -23,6 +24,7 @@ export const PinCode = (props: Props) => {
     onClear,
     title,
     error,
+    loadingMessage,
   } = props;
   const ref = useRef<HTMLInputElement[]>(null);
 
@@ -66,7 +68,12 @@ export const PinCode = (props: Props) => {
           className="appearance-none caret-blue-500 h-14 w-14 md:h-16 md:w-16 bg-gray-200 border-2 border-transparent dark:bg-gray-900 rounded-lg mx-1 focus:border-2 focus:border-blue-500 transition-all duration-100 outline-none text-center text-3xl"
         />
         <div className="flex flex-col items-center mt-6 h-20">
-          {loading && <Loading />}
+          {loading && (
+            <p className={`${baseClassNames} text-yellow-500`}>
+              <FaSpinner className="animate-spin" />{" "}
+              {loadingMessage || "Checking your code"}
+            </p>
+          )}
           {!loading && error && <Error error={error} />}
           {!loading && !error && (
             <div className="flex flex-wrap justify-center md:justify-start gap-2 my-4">
@@ -83,14 +90,6 @@ export const PinCode = (props: Props) => {
 };
 
 const baseClassNames = "inline-flex items-center gap-2";
-
-const Loading = () => {
-  return (
-    <p className={`${baseClassNames} text-yellow-500`}>
-      <FaSpinner className="animate-spin" /> Checking your code
-    </p>
-  );
-};
 
 type ErrorProps = {
   error: string;

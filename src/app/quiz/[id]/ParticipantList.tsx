@@ -1,15 +1,23 @@
-import { FaSpinner, FaTimes } from "react-icons/fa";
+import { FaSpinner } from "react-icons/fa";
 
 import { Section } from "components/Section";
+import { User } from "hooks/useSharedQuiz";
 
+import { ParticipantBadge } from "./ParticipantBadge";
 type Props = {
-  participants?: string[];
+  participants?: User[];
   isAdmin?: boolean;
-  onRequestRemoveParticipant?: (name: string) => void;
+  onRequestRemoveParticipant?: (user: User) => void;
+  onRequestBanParticipant?: (user: User) => void;
 };
 
 export function ParticipantList(props: Props) {
-  const { participants, isAdmin, onRequestRemoveParticipant } = props;
+  const {
+    participants,
+    isAdmin,
+    onRequestRemoveParticipant,
+    onRequestBanParticipant,
+  } = props;
 
   const len = participants?.length;
 
@@ -25,26 +33,15 @@ export function ParticipantList(props: Props) {
         </div>
       )}
       <div className="flex items-center justify-center md:justify-start flex-wrap gap-4">
-        {props.participants?.map((v) => {
-          const adminButtonClassNames =
-            "justify-between flex items-center group gap-2";
-          const baseClassNames =
-            "surface rounded-full p-1 px-4 text-xl text-center";
+        {props.participants?.map((participant) => {
           return (
-            <button
-              disabled={!isAdmin}
-              onClick={() => onRequestRemoveParticipant?.(v)}
-              className={`${baseClassNames} ${adminButtonClassNames}`}
-              key={v}
-            >
-              {v}
-
-              {isAdmin && (
-                <div className="group-hover:bg-gray-500/20 transition-colors duration-300 ease-in-out p-1 rounded-full text-sm">
-                  <FaTimes />
-                </div>
-              )}
-            </button>
+            <ParticipantBadge
+              participant={participant}
+              isAdmin={isAdmin || false}
+              key={participant.name}
+              onRemove={() => onRequestRemoveParticipant?.(participant)}
+              onBan={() => onRequestBanParticipant?.(participant)}
+            />
           );
         })}
       </div>

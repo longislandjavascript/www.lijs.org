@@ -22,7 +22,7 @@ export function JoinInfo(props: Props) {
         <li>
           <p>
             Enter code{" "}
-            <span className="font-bold surface p-1 text-alt rounded-lg px-2">
+            <span className="font-bold surface p-1 text-alt rounded-lg px-2 border-2 border-dashed">
               {code}
             </span>
           </p>

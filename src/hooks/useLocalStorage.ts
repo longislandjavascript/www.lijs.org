@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useLocalStorage(storageKey: string, fallbackState: any) {
+export function useLocalStorage<T>(storageKey: string, fallbackState: any) {
   const valueInLocalStorage =
     typeof window !== "undefined" ? localStorage?.getItem(storageKey) : null;
   const [value, setValue] = useState(
@@ -12,5 +12,5 @@ export function useLocalStorage(storageKey: string, fallbackState: any) {
     localStorage.setItem(storageKey, JSON.stringify(value));
   }, [value, storageKey]);
 
-  return [value, setValue];
+  return [value, setValue] as [T, (args: Partial<T>) => T];
 }
