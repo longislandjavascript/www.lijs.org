@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { format } from "date-fns";
+import Image from "next/image";
 import Link from "next/link";
 import { FaMeetup } from "react-icons/fa";
 import {
@@ -45,32 +46,44 @@ export function MeetupEventDetails(props: Props) {
         {event.name}
       </h2>
 
-      <div className="mb-8 mt-2">
+      <div className="mt-2 mb-4">
         <p className="inline-block !text-xs font-medium rounded-full px-2 py-1 bg-blue-600  !text-white">
           {event.yes_rsvp_count} RSVPs
         </p>
       </div>
 
-      <section className="font-display font-bold text-lg md:text-xl">
-        <p className="flex items-center gap-2">
-          {event.is_online_event ? (
-            <FaGlobe className="text-primary" />
-          ) : (
-            <FaBuilding className="text-primary" />
+      <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4 justify-between">
+        <section className="font-display font-bold text-lg md:text-xl">
+          <p className="flex items-center gap-2">
+            {event.is_online_event ? (
+              <FaGlobe className="text-primary" />
+            ) : (
+              <FaBuilding className="text-primary" />
+            )}
+
+            {event?.is_online_event ? "Online Event" : "LaunchPad Huntington"}
+          </p>
+          <p className="flex items-center gap-2">
+            <FaCalendarDay className="text-primary" />
+            {formattedDate}
+          </p>
+          <p className="flex items-center gap-2">
+            <FaClock className="text-primary" />
+            {formattedStartTime} - {formattedEndTime}
+          </p>
+        </section>
+
+        <div className="flex-shrink-0">
+          {event.graphic_url && (
+            <Image
+              src={event.graphic_url}
+              alt={event.name}
+              height={100}
+              width={200}
+            />
           )}
-
-          {event?.is_online_event ? "Online Event" : "LaunchPad Huntington"}
-        </p>
-        <p className="flex items-center gap-2">
-          <FaCalendarDay className="text-primary" />
-          {formattedDate}
-        </p>
-        <p className="flex items-center gap-2">
-          <FaClock className="text-primary" />
-          {formattedStartTime} - {formattedEndTime}
-        </p>
-      </section>
-
+        </div>
+      </div>
       <div className="my-6">
         {isFutureEvent && <Raw>{event.description}</Raw>}
 
@@ -83,7 +96,7 @@ export function MeetupEventDetails(props: Props) {
           .
         </p>
       </div>
-      <div className="mt-4 flex flex-col lg:flex-row gap-4">
+      <div className="mt-4 flex flex-col lg:flex-row gap-4 ">
         <MeetupButton
           type={isFutureEvent ? "rsvp" : "view"}
           href={event.link}

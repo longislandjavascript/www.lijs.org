@@ -59,6 +59,7 @@ export interface MeetupEvent {
   member_pay_fee: boolean;
   is_online_event: string;
   github_url?: string;
+  graphic_url?: string;
   group: Pick<
     MeetupGroup,
     | "created"

@@ -39,9 +39,10 @@ export function formSubmission(tableName: string) {
 type EventRecord = {
   id: string;
   github_url?: string;
+  graphic_url?: any;
 };
 
-export async function retrieveEvents(): Promise<EventRecord[]> {
+export async function retrieveAirtableEvents(): Promise<EventRecord[]> {
   const results: EventRecord[] = [];
   await base("Events")
     .select({
@@ -54,6 +55,7 @@ export async function retrieveEvents(): Promise<EventRecord[]> {
         results.push({
           id: record.get("id") as EventRecord["id"],
           github_url: record.get("github_url") as EventRecord["github_url"],
+          graphic_url: record.get("graphic")?.[0]?.thumbnails?.large?.url,
         });
       });
       fetchNextPage();
