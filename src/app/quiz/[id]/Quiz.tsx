@@ -132,7 +132,7 @@ export function Quiz(props: Props) {
             onSubmitAnswer={user_actions.submitAnswer}
             isTimerDone={timer.secondsRemaining === 0}
             answer={status.results?.[user?.name]?.[question.id]}
-            isAdmin={is_admin}
+            isAdmin={is_admin!}
           />
         </div>
       )}
