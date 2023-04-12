@@ -26,8 +26,7 @@ export async function fetchNextEvent(): Promise<MeetupEvent | null> {
     );
     return {
       ...nextEvent,
-      github_url: matchingAirtableEvent?.github_url,
-      graphic_url: matchingAirtableEvent?.graphic_url,
+      ...matchingAirtableEvent,
     };
   } catch (error) {
     return null;

@@ -39,7 +39,7 @@ export function formSubmission(tableName: string) {
 type EventRecord = {
   event_id: string;
   github_url?: string;
-  graphic_url?: any;
+  graphic_url?: string;
 };
 
 export async function retrieveMatchingAirtableEvent(

@@ -42,48 +42,49 @@ export function MeetupEventDetails(props: Props) {
   const formattedEndTime = format(eventEndTime, "h:mm a");
   return (
     <div>
-      <h2 className="text-3xl md:text-4xl font-display font-black text-primary">
-        {event.name}
-      </h2>
-
-      <div className="mt-2 mb-4">
-        <p className="inline-block !text-xs font-medium rounded-full px-2 py-1 bg-blue-600  !text-white">
-          {event.yes_rsvp_count} RSVPs
-        </p>
-      </div>
-
-      <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4 justify-between">
-        <section className="font-display font-bold text-lg md:text-xl">
-          <p className="flex items-center gap-2">
-            {event.is_online_event ? (
-              <FaGlobe className="text-primary" />
-            ) : (
-              <FaBuilding className="text-primary" />
-            )}
-
-            {event?.is_online_event ? "Online Event" : "LaunchPad Huntington"}
-          </p>
-          <p className="flex items-center gap-2">
-            <FaCalendarDay className="text-primary" />
-            {formattedDate}
-          </p>
-          <p className="flex items-center gap-2">
-            <FaClock className="text-primary" />
-            {formattedStartTime} - {formattedEndTime}
-          </p>
-        </section>
-
+      <div className="flex flex-col md:flex-row items-center gap-4 justify-between">
+        <div>
+          <h2 className="text-3xl md:text-4xl font-display font-black text-primary">
+            {event.name}
+          </h2>
+        </div>
         <div className="flex-shrink-0">
           {event.graphic_url && (
             <Image
               src={event.graphic_url}
               alt={event.name}
-              height={100}
+              height={75}
               width={200}
             />
           )}
         </div>
       </div>
+
+      <section className="font-display font-bold text-lg md:text-xl">
+        <div className="my-2">
+          <p className="inline-block !text-sm font-bold rounded-full px-2 py-1 bg-yellow-600  !text-white">
+            {event.yes_rsvp_count} RSVPs
+          </p>
+        </div>
+        <p className="flex items-center gap-2">
+          {event.is_online_event ? (
+            <FaGlobe className="text-primary" />
+          ) : (
+            <FaBuilding className="text-primary" />
+          )}
+
+          {event?.is_online_event ? "Online Event" : "LaunchPad Huntington"}
+        </p>
+        <p className="flex items-center gap-2">
+          <FaCalendarDay className="text-primary" />
+          {formattedDate}
+        </p>
+        <p className="flex items-center gap-2">
+          <FaClock className="text-primary" />
+          {formattedStartTime} - {formattedEndTime}
+        </p>
+      </section>
+
       <div className="my-6">
         {isFutureEvent && <Raw>{event.description}</Raw>}
 
