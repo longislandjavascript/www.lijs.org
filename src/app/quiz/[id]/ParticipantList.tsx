@@ -19,7 +19,7 @@ export function ParticipantList(props: Props) {
     onRequestBanParticipant,
   } = props;
 
-  const len = participants?.length;
+  const len = participants?.length || 0;
 
   return (
     <Section

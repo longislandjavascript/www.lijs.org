@@ -15,19 +15,17 @@ import {
 import { MdDoneAll, MdOutlineRestartAlt } from "react-icons/md";
 
 import { IconButton } from "components/IconButton";
-import { SharedQuiz } from "hooks/useSharedQuiz";
-import { SharedTimer } from "hooks/useSharedTimer";
 import { QuizQuestion, QuizRecord } from "utils/airtable-api";
 
 import { ParticipantList } from "./ParticipantList";
 
 type Props = {
-  admin: SharedQuiz["admin"];
+  admin: any;
   question: QuizQuestion;
   quiz: QuizRecord;
-  timer: SharedTimer;
+  timer: any;
   participant?: any;
-  participants: SharedQuiz["participants"];
+  participants: any;
 };
 
 export function AdminTools(props: Props) {

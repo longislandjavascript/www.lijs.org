@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import Loader from "react-spinners/ClockLoader";
+// import Loader from "react-spinners/ClockLoader";
 
 import { useSharedQuiz } from "hooks/useSharedQuiz";
-import { useSharedTimer } from "hooks/useSharedTimer";
 import { QuizRecord } from "utils/airtable-api";
 
 import { AdminTools } from "./AdminTools";
@@ -19,36 +16,44 @@ import { StartQuizButton } from "./StartQuizButton";
 import { Timer } from "./Timer";
 
 type Props = {
-  quiz: QuizRecord;
+  quiz: QuizRecord | null;
   isAdmin: boolean;
 };
 
 export function Quiz(props: Props) {
-  const { isAdmin, quiz } = props;
-  const timer = useSharedTimer(quiz.timer);
-  const { status, question, admin, user, user_actions, participants } =
-    useSharedQuiz(isAdmin, quiz, timer);
+  const { isAdmin } = props;
+
+  const {
+    status,
+    question,
+    admin,
+    user,
+    user_actions,
+    participants,
+    quiz,
+    timer,
+  } = useSharedQuiz(isAdmin, props.quiz);
 
   const is_admin = user?.isAdmin;
 
-  if (!user) {
+  if (!user || !quiz) {
     return null;
   }
 
-  if (!status.ready) {
-    return (
-      <div className="h-[70vh] grid place-items-center gap-2">
-        <ConnectionStatus connected={status.connected} />
-        <Loader
-          color={"#166ada"}
-          loading={true}
-          size={300}
-          aria-label="Loading Spinner"
-        />
-        <p className="text-primary font-display text-4xl">Almost there...</p>
-      </div>
-    );
-  }
+  // if (!status.ready) {
+  //   return (
+  //     <div className="h-[70vh] grid place-items-center gap-2">
+  //       <ConnectionStatus connected={status.connected} />
+  //       <Loader
+  //         color={"#166ada"}
+  //         loading={true}
+  //         size={300}
+  //         aria-label="Loading Spinner"
+  //       />
+  //       <p className="text-primary font-display text-4xl">Almost there...</p>
+  //     </div>
+  //   );
+  // }
 
   if (!status.started && is_admin) {
     return (
@@ -98,8 +103,8 @@ export function Quiz(props: Props) {
 
   return (
     <div className="mb-12">
-      <div className="flex justify-end">
-        <p className="font-display text-3xl surface-alt p-1 px-4 rounded-full">
+      <div className="flex justify-end mb-6">
+        <p className="font-display font-bold text-3xl text-gray-800 bg-yellow-400 p-1 px-8 rounded-full">
           {user.name}
         </p>
       </div>
@@ -130,8 +135,8 @@ export function Quiz(props: Props) {
             question={question}
             answerKey={admin.answerKey as "A"}
             onSubmitAnswer={user_actions.submitAnswer}
-            isTimerDone={timer.secondsRemaining === 0}
-            answer={status.results?.[user?.name]?.[question.id]}
+            isTimerDone={timer?.seconds_remaining === 0}
+            answer={status.results?.[user?.clientID]?.[question.id]}
             isAdmin={is_admin!}
           />
         </div>
@@ -139,8 +144,8 @@ export function Quiz(props: Props) {
 
       {(!admin.showLeaderboard || is_admin) && (
         <Timer
-          secondsRemaining={timer.secondsRemaining}
-          defaultSeconds={quiz.timer}
+          secondsRemaining={timer?.seconds_remaining}
+          defaultSeconds={timer?.duration}
         />
       )}
     </div>
