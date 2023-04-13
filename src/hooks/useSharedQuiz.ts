@@ -47,7 +47,9 @@ export function useSharedQuiz(
 
   const [user, setUser] = useLocalStorage<User | null>(
     `lijs-quiz-user-${clientID}`,
-    null
+    {
+      clientID,
+    }
   );
 
   const defaultSharedState = useMemo<SharedState>(() => {
