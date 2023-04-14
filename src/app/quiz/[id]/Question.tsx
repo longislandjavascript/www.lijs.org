@@ -33,7 +33,7 @@ export function Question(props: Props) {
 
   useKeypress(["a", "b", "c", "d", "Enter"], (event: KeyboardEvent) => {
     if (shouldBeDisabled) return;
-    const selectedOption = question.options!.find(
+    const selectedOption = question!.options!.find(
       (opt) => opt.key.toLowerCase() === event.key
     );
     if (selectedOption) {
@@ -46,15 +46,15 @@ export function Question(props: Props) {
       <h2 className="inline-block surface-alt px-2 py-1 font-bold text-sm rounded-full text-primary">
         {title}
       </h2>
-      <MDRenderer language={question.language!}>
-        {question.question!}
+      <MDRenderer language={question!.language!}>
+        {question!.question!}
       </MDRenderer>
 
       <div className="border-b-2 border-color my-4"></div>
 
-      {question.options!.map((opt) => {
+      {question!.options!.map((opt) => {
         function getBorderColor() {
-          if (showAnswerKey && opt.key === question.answer) {
+          if (showAnswerKey && opt.key === question!.answer) {
             return "border-emerald-500";
           } else if (answer?.key === opt.key) {
             return showAnswerKey ? "border-red-500" : "border-primary";
@@ -97,7 +97,7 @@ export function Question(props: Props) {
           >
             <div className="w-12 text-center">{getButtonValue()}</div>
 
-            <MDRenderer size="small" language={question.language!}>
+            <MDRenderer size="small" language={question!.language!}>
               {opt.value}
             </MDRenderer>
           </button>
@@ -108,8 +108,8 @@ export function Question(props: Props) {
         title="Explanation"
         className={`${showAnswerKey ? "block" : "hidden"} my-4 animate-fade`}
       >
-        <MDRenderer language={question.language!}>
-          {question.explanation!}
+        <MDRenderer language={question!.language!}>
+          {question!.explanation!}
         </MDRenderer>
       </Section>
     </div>

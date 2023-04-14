@@ -214,7 +214,7 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
 
     // eslint-disable-next-line functional/immutable-data
     interval.current = setInterval(() => {
-      setSecondsLeft((v) => v - 1);
+      setSecondsLeft((v) => v! - 1);
     }, 1000);
   }, [secondsLeft, sharedState?.timer?.duration]);
 
