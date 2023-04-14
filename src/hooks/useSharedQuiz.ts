@@ -5,40 +5,12 @@ import {
   useSharedReducer,
   useUniqueClientId,
 } from "driftdb-react";
+import isEmpty from "lodash/isEmpty";
 import { useRouter } from "next/navigation";
 
-import { QuizQuestion, QuizRecord } from "utils/airtable-api";
+import { Action, QuizRecord, SharedState, User } from "utils/types";
 
 import { useLocalStorage } from "./useLocalStorage";
-
-type SharedState = {
-  quiz: QuizRecord;
-  timer: {
-    duration: number;
-    secondsRemaining: number;
-  };
-  answerKey: QuizQuestion["answer"] | null;
-  index: number;
-  ready: boolean;
-  started: boolean;
-  participants: User[];
-  removedParticipants: string[];
-  bannedParticipants: string[];
-  showLeaderBoard: boolean;
-  leaderboard: [string, number, number][];
-  scores: any;
-};
-
-type Action = {
-  type: string;
-  payload?: any;
-};
-
-export type User = {
-  name: string;
-  clientID: string;
-  isAdmin: boolean;
-};
 
 export function useSharedQuiz(
   isAdmin: boolean,
@@ -58,9 +30,12 @@ export function useSharedQuiz(
     }
   );
 
-  const [sharedState, dispatch] = useSharedReducer(
+  const [sharedState, dispatch] = useSharedReducer<
+    Partial<SharedState> | null,
+    Action
+  >(
     "answer-key",
-    (state: SharedState, action: Action) => {
+    (state, action) => {
       // if (!state) return;
       switch (action.type) {
         case "set-quiz":
@@ -94,30 +69,30 @@ export function useSharedQuiz(
           };
         case "reset":
           return {
-            quiz: state.quiz,
+            quiz: state?.quiz,
             index: 0,
             participants: state?.participants,
             ready: true,
             started: false,
             timer: {
-              duration: state.timer.duration,
-              seconds_remaining: state.timer.duration,
+              duration: state?.timer?.duration,
+              seconds_remaining: state?.timer?.duration,
               status: "stopped",
             },
           };
         case "toggle-leaderboard":
-          return { ...state, showLeaderBoard: !state.showLeaderBoard };
+          return { ...state, showLeaderBoard: state?.showLeaderBoard };
         case "next-question":
           return {
             ...state,
-            index: state.index + 1,
+            index: (state?.index || 0) + 1,
             answerKey: null,
             showLeaderBoard: false,
           };
         case "previous-question":
           return {
             ...state,
-            index: state.index - 1,
+            index: (state?.index || 0) - 1,
             answerKey: null,
             showLeaderBoard: false,
           };
@@ -125,8 +100,8 @@ export function useSharedQuiz(
           return {
             ...state,
             answerKey:
-              state.answerKey === null
-                ? state.quiz.questions[state.index]?.answer
+              state?.answerKey === null
+                ? state?.quiz?.questions[state?.index || 0]?.answer
                 : null,
           };
         case "set-started":
@@ -134,9 +109,9 @@ export function useSharedQuiz(
         case "submit-answer":
           const { questionID, selectedOptionKey, isCorrect, clientID } =
             action.payload;
-          const existingCount = state.scores?.[clientID]?.count || 0;
+          const existingCount = state?.scores?.[clientID]?.count || 0;
           const wasAlreadyAnswered =
-            !!state.scores?.[clientID]?.[questionID]?.key;
+            !!state?.scores?.[clientID]?.[questionID]?.key;
 
           const updatedScores = {
             ...state?.scores,
@@ -159,14 +134,14 @@ export function useSharedQuiz(
                   return acc + 1;
                 } else return acc;
               }, 0);
-              const getName = state.participants.find(
+              const getName = state?.participants?.find(
                 (v) => v.clientID === client_id
               )?.name;
 
               return [
                 ...acc,
                 [getName, correctAnswerCount, updatedScores[client_id].count],
-              ];
+              ] as [string, number, number][];
             }, [])
             .sort((a, b) => b[1] - a[1]);
 
@@ -180,7 +155,7 @@ export function useSharedQuiz(
           return {
             ...state,
             participants: [
-              ...(state.participants || []),
+              ...(state?.participants || []),
               action.payload,
             ] as User[],
           };
@@ -188,39 +163,46 @@ export function useSharedQuiz(
         case "remove-participant":
           return {
             ...state,
-            scores: Object.keys(state.scores).reduce((acc, value) => {
-              if (value === action.payload.name) {
-                return acc;
-              } else {
-                return {
-                  ...acc,
-                  ...state.scores[value],
-                };
-              }
-            }, {}),
-            participants: state.participants?.filter(
+            scores: isEmpty(state?.scores)
+              ? {}
+              : Object.keys(state?.scores!).reduce((acc, value) => {
+                  if (value === action.payload.name) {
+                    return acc;
+                  } else {
+                    return {
+                      ...acc,
+                      ...state?.scores![value],
+                    };
+                  }
+                }, {}),
+            participants: state?.participants?.filter(
               (v) => v.clientID !== action.payload.clientID
             ),
-            removedParticipants: [...state.removedParticipants, action.payload],
+            removedParticipants: [
+              ...(state?.removedParticipants || []),
+              action.payload,
+            ],
           };
         case "ban-participant":
           return {
             ...state,
-            scores: Object.keys(state.scores).reduce((acc, value) => {
-              if (value === action.payload.name) {
-                return acc;
-              } else {
-                return {
-                  ...acc,
-                  ...state.scores[value],
-                };
-              }
-            }, {}),
-            participants: state.participants?.filter(
+            scores: isEmpty(state?.scores)
+              ? {}
+              : Object.keys(state?.scores!).reduce((acc, value) => {
+                  if (value === action.payload.name) {
+                    return acc;
+                  } else {
+                    return {
+                      ...acc,
+                      ...state?.scores![value],
+                    };
+                  }
+                }, {}),
+            participants: state?.participants?.filter(
               (v) => v.clientID !== action.payload.clientID
             ),
             bannedParticipants: [
-              ...state.bannedParticipants,
+              ...(state?.bannedParticipants || []),
               action.payload.name,
             ],
           };
@@ -271,7 +253,7 @@ export function useSharedQuiz(
   const reset = useCallback(() => {
     clearInterval(interval.current);
     dispatch({ type: "set-timer-status", payload: "stopped" });
-    setSecondsLeft(sharedState?.timer?.duration);
+    setSecondsLeft(sharedState?.timer?.duration!);
   }, [sharedState?.timer?.duration]);
 
   const timer_actions = useMemo(
@@ -401,7 +383,7 @@ export function useSharedQuiz(
     };
   }, [currentQuestion, sharedState?.index]);
 
-  const admin = useMemo(() => {
+  const admin_actions = useMemo(() => {
     return {
       answerKey: sharedState?.answerKey,
       startQuiz: () => dispatch({ type: "set-started" }),
@@ -445,11 +427,9 @@ export function useSharedQuiz(
     timer: sharedState?.timer,
     status,
     question,
-    admin,
+    admin_actions,
     user,
     user_actions,
     participants: sharedState?.participants,
   } as const;
 }
-
-export type SharedQuiz = ReturnType<typeof useSharedQuiz>;

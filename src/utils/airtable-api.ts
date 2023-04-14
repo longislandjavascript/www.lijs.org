@@ -6,6 +6,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import {
   AirtableQuizQuestionRecord,
   AirtableQuizRecord,
+  QuizQuestion,
+  QuizRecord,
   RecordID,
 } from "./types";
 
@@ -82,11 +84,6 @@ export async function retrieveAirtableEvents(): Promise<EventRecord[]> {
 
 // QUIZ
 
-type QuizQuestionOption = {
-  key: QuizQuestion["answer"];
-  value: string;
-};
-
 export async function fetchQuiz(recordId: string): Promise<QuizRecord> {
   const values = (await base("Quizzes").find(
     recordId
@@ -146,27 +143,6 @@ export async function fetchQuiz(recordId: string): Promise<QuizRecord> {
     questions: fields["Random Order"] ? shuffle(questions) : questions,
   };
 }
-
-export type QuizQuestion = {
-  id: AirtableQuizQuestionRecord["id"];
-  type: AirtableQuizQuestionRecord["fields"]["Type"];
-  question: AirtableQuizQuestionRecord["fields"]["Question"];
-  answer: AirtableQuizQuestionRecord["fields"]["Answer"];
-  language: AirtableQuizQuestionRecord["fields"]["Language"];
-  explanation: AirtableQuizQuestionRecord["fields"]["Explanation"];
-  options: QuizQuestionOption[];
-  index?: number;
-};
-
-export type QuizRecord = {
-  id: string;
-  name: string;
-  timer: number;
-  room_id: string;
-  admin_client_id?: string;
-  participant_code: number;
-  questions: QuizQuestion[];
-};
 
 export async function findQuizByCode(code: string) {
   return base("Quizzes")

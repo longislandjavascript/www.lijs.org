@@ -8,6 +8,7 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 
 import { ExternalLink } from "components/ExternalLink";
 import { navLinks } from "constants/nav-links";
+import { ReactIcon } from "utils/types";
 
 import { HeaderLogo } from "./HeaderLogo";
 import { ThemeSwitch } from "./ThemeSwitch";
@@ -16,7 +17,7 @@ const navLinkClassNames =
   "flex items-center gap-4 w-full text-primary font-semibold mx-2  transition-colors duration-200 ease-in-out p-2 rounded-md hover:bg-gray-500/10 focus-visible:bg-gray-500/10";
 
 type NavLinkProps = {
-  icon: any;
+  icon: ReactIcon;
   label: string;
   href: string;
   isActive?: boolean;

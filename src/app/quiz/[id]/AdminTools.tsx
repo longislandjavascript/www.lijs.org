@@ -15,62 +15,62 @@ import {
 import { MdDoneAll, MdOutlineRestartAlt } from "react-icons/md";
 
 import { IconButton } from "components/IconButton";
-import { QuizQuestion, QuizRecord } from "utils/airtable-api";
+import { SharedQuiz } from "utils/types";
 
 import { ParticipantList } from "./ParticipantList";
 
 type Props = {
-  admin: any;
-  question: QuizQuestion;
-  quiz: QuizRecord;
-  timer: any;
-  participant?: any;
-  participants: any;
+  admin_actions: SharedQuiz["admin_actions"];
+  question: SharedQuiz["question"];
+  quiz: SharedQuiz["quiz"];
+  timer: SharedQuiz["timer"];
+  user?: SharedQuiz["user"];
+  participants: SharedQuiz["participants"];
 };
 
 export function AdminTools(props: Props) {
-  const { admin, question, quiz, timer, participant, participants } = props;
+  const { admin_actions, question, quiz, timer, user, participants } = props;
 
   return (
     <div>
       <div className="flex items-center flex-col md:flex-row flex-wrap justify-around gap-2 md:gap-4">
         <ButtonSection title="Timer">
-          <IconButton onClick={admin.resetTimer} label="Rest Timer">
+          <IconButton onClick={admin_actions.resetTimer} label="Rest Timer">
             <BiReset className="text-xl" />
           </IconButton>
 
-          <IconButton onClick={admin.stopTimer} label="Stop Timer">
+          <IconButton onClick={admin_actions.stopTimer} label="Stop Timer">
             <FaStop />
           </IconButton>
           <IconButton
-            disabled={timer.secondsRemaining === 0}
+            disabled={timer?.seconds_remaining === 0}
             onClick={() =>
-              timer.status === "running"
-                ? admin.pauseTimer()
-                : admin.startTimer()
+              timer?.status === "running"
+                ? admin_actions.pauseTimer()
+                : admin_actions.startTimer()
             }
-            label={timer.status === "running" ? "Pause timer" : "Stop timer"}
+            label={timer?.status === "running" ? "Pause timer" : "Stop timer"}
           >
-            {timer.status === "running" ? <FaPause /> : <FaPlay />}
+            {timer?.status === "running" ? <FaPause /> : <FaPlay />}
           </IconButton>
         </ButtonSection>
         <ButtonSection title="Questions">
           <IconButton
-            onClick={admin.goToPreviousQuestion}
+            onClick={admin_actions.goToPreviousQuestion}
             disabled={question.index === 0}
             label="Go to previous question"
           >
             <FaStepBackward />
           </IconButton>
           <IconButton
-            onClick={admin.toggleAnswer}
+            onClick={admin_actions.toggleAnswer}
             label="Toggle Answer"
-            isToggled={!!admin.answerKey}
+            isToggled={!!admin_actions.answerKey}
           >
-            {admin.answerKey ? <FaEyeSlash /> : <FaEye />}
+            {admin_actions.answerKey ? <FaEyeSlash /> : <FaEye />}
           </IconButton>
           <IconButton
-            onClick={admin.goToNextQuestion}
+            onClick={admin_actions.goToNextQuestion}
             disabled={question.index === quiz.questions.length - 1}
             label="Go to next question"
           >
@@ -80,16 +80,16 @@ export function AdminTools(props: Props) {
 
         <ButtonSection title="Quiz">
           <IconButton
-            isToggled={!!admin.showLeaderboard}
-            onClick={admin.toggleLeaderboard}
+            isToggled={!!admin_actions.showLeaderboard}
+            onClick={admin_actions.toggleLeaderboard}
             label="Toggle leaderboard"
           >
             <AiOutlineTrophy className="text-xl" />
           </IconButton>
-          <IconButton onClick={admin.resetQuiz} label="Reset quiz">
+          <IconButton onClick={admin_actions.resetQuiz} label="Reset quiz">
             <MdOutlineRestartAlt className="text-xl" />
           </IconButton>
-          <IconButton onClick={admin.resetQuiz} label="Finish quiz">
+          <IconButton onClick={admin_actions.resetQuiz} label="Finish quiz">
             <MdDoneAll className="text-xl" />
           </IconButton>
         </ButtonSection>
@@ -121,9 +121,9 @@ export function AdminTools(props: Props) {
               <Disclosure.Panel className="mt-6" static={true}>
                 <ParticipantList
                   participants={participants}
-                  isAdmin={participant?.isAdmin || false}
-                  onRequestRemoveParticipant={admin.removeParticipant}
-                  onRequestBanParticipant={admin.banParticipant}
+                  isAdmin={user?.isAdmin || false}
+                  onRequestRemoveParticipant={admin_actions.removeParticipant}
+                  onRequestBanParticipant={admin_actions.banParticipant}
                 />
               </Disclosure.Panel>
             </Transition>

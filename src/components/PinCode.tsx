@@ -12,7 +12,7 @@ type Props = {
   onComplete: PinFieldProps["onComplete"];
   onClear?: () => void;
   loading: boolean;
-  error?: string;
+  error?: string | null;
   loadingMessage?: string;
 };
 

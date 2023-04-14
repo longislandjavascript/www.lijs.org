@@ -1,7 +1,9 @@
 import { Section } from "components/Section";
 
+import type { LeaderBoard as LeaderBoardType } from "utils/types";
+
 type Props = {
-  leaderboard: any;
+  leaderboard: LeaderBoardType;
 };
 
 export function LeaderBoard(props: Props) {

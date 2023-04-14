@@ -3,7 +3,7 @@
 // import Loader from "react-spinners/ClockLoader";
 
 import { useSharedQuiz } from "hooks/useSharedQuiz";
-import { QuizRecord } from "utils/airtable-api";
+import { QuizRecord } from "utils/types";
 
 import { AdminTools } from "./AdminTools";
 import { ConnectionStatus } from "./ConnectionStatus";
@@ -26,7 +26,7 @@ export function Quiz(props: Props) {
   const {
     status,
     question,
-    admin,
+    admin_actions,
     user,
     user_actions,
     participants,
@@ -65,13 +65,13 @@ export function Quiz(props: Props) {
           <ParticipantList
             participants={participants}
             isAdmin={is_admin}
-            onRequestRemoveParticipant={admin.removeParticipant}
-            onRequestBanParticipant={admin.banParticipant}
+            onRequestRemoveParticipant={admin_actions.removeParticipant}
+            onRequestBanParticipant={admin_actions.banParticipant}
           />
         </div>
 
         <div className="mt-12 flex justify-center">
-          <StartQuizButton onClick={admin.startQuiz} />
+          <StartQuizButton onClick={admin_actions.startQuiz} />
         </div>
       </div>
     );
@@ -113,10 +113,10 @@ export function Quiz(props: Props) {
         <div className="sticky top-10 z-[8] mb-12 backdrop-blur-xl bg-black/10 p-4 rounded-xl border-2 border-color">
           <AdminTools
             question={question}
-            admin={admin}
+            admin_actions={admin_actions}
             timer={timer}
             quiz={quiz}
-            participant={user}
+            user={user}
             participants={participants}
           />
         </div>

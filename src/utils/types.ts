@@ -1,7 +1,15 @@
+/*******QUIZ**********/
+
+import { IconBaseProps } from "react-icons";
+
+import { useSharedQuiz } from "hooks/useSharedQuiz";
+
 export type PageProps = {
   params: Record<string, string>;
   searchParams: Record<string, string>;
 };
+
+export type ReactIcon = React.FC<IconBaseProps>;
 
 // https://api.meetup.com/long-island-javascript-group
 export interface MeetupGroup {
@@ -166,3 +174,74 @@ export type AirtableQuizQuestionRecord = AirtableRecord<{
   Answer: "A" | "B" | "C" | "D";
   Explanation: string;
 }>;
+
+type QuizQuestionOption = {
+  key: QuizQuestion["answer"];
+  value: string;
+};
+
+export type QuizQuestion = {
+  id: AirtableQuizQuestionRecord["id"];
+  type: AirtableQuizQuestionRecord["fields"]["Type"];
+  question: AirtableQuizQuestionRecord["fields"]["Question"];
+  answer: AirtableQuizQuestionRecord["fields"]["Answer"];
+  language: AirtableQuizQuestionRecord["fields"]["Language"];
+  explanation: AirtableQuizQuestionRecord["fields"]["Explanation"];
+  options: QuizQuestionOption[];
+  index?: number;
+};
+
+export type QuizRecord = {
+  id: string;
+  name: string;
+  timer: number;
+  room_id: string;
+  admin_client_id?: string;
+  participant_code: number;
+  questions: QuizQuestion[];
+};
+
+type Timer = {
+  duration?: number;
+  seconds_remaining?: number;
+  status?: "stopped" | "running" | "paused";
+};
+
+export type LeaderBoard = [string, number, number][];
+
+type Scores = Record<
+  string,
+  Record<string, { key: QuizQuestion["answer"]; isCorrect: boolean }> & {
+    count: number;
+  }
+>;
+
+export type SharedState = {
+  quiz: QuizRecord;
+  timer?: Timer;
+  answerKey?: QuizQuestion["answer"] | null;
+  index: number;
+  ready?: boolean;
+  started?: boolean;
+  participants: User[];
+  removedParticipants: string[];
+  bannedParticipants: string[];
+  showLeaderBoard: boolean;
+  leaderboard: [string, number, number][];
+  scores: Scores;
+};
+
+export type Action = {
+  type: string;
+  payload?: any;
+};
+
+export type User = {
+  name: string;
+  clientID: string;
+  isAdmin: boolean;
+};
+
+export type SharedQuiz = ReturnType<typeof useSharedQuiz>;
+
+/*******END QUIZ******/

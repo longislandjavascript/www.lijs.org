@@ -11,7 +11,7 @@ export function QuizCodeForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState<string>();
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   function resetError() {
     if (error) {

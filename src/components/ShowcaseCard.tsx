@@ -1,7 +1,9 @@
 import Link from "next/link";
 
+import { ReactIcon } from "utils/types";
+
 type Props = {
-  icon: any;
+  icon: ReactIcon;
   children: React.ReactNode;
   className: string;
   href: string;
