@@ -71,7 +71,7 @@ export function AdminTools(props: Props) {
           </IconButton>
           <IconButton
             onClick={admin_actions.goToNextQuestion}
-            disabled={question.index === quiz.questions.length - 1}
+            disabled={question.index === quiz?.questions.length! - 1}
             label="Go to next question"
           >
             <FaStepForward />

@@ -2,7 +2,7 @@
 
 import { DriftDBProvider } from "driftdb-react";
 
-import { QuizRecord } from "utils/airtable-api";
+import { QuizRecord } from "utils/types";
 
 import { Quiz } from "./Quiz";
 

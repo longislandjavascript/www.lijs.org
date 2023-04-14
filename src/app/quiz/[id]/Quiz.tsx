@@ -121,31 +121,31 @@ export function Quiz(props: Props) {
           />
         </div>
       )}
-      {admin.showLeaderboard && (
+      {admin_actions.showLeaderboard && (
         <div className="animate-fade">
-          <LeaderBoard leaderboard={status.leaderboard} />
+          <LeaderBoard leaderboard={status.leaderboard!} />
         </div>
       )}
-      {!admin.showLeaderboard && (
+      {!admin_actions.showLeaderboard && (
         <div className="animate-fade mb-12">
           <Question
             title={`Question ${(question.index || 0) + 1} of ${
               quiz.questions.length
             }`}
             question={question}
-            answerKey={admin.answerKey as "A"}
+            answerKey={admin_actions.answerKey as "A"}
             onSubmitAnswer={user_actions.submitAnswer}
             isTimerDone={timer?.seconds_remaining === 0}
-            answer={status.results?.[user?.clientID]?.[question.id]}
+            answer={status.results?.[user?.clientID]?.[question?.id as string]!}
             isAdmin={is_admin!}
           />
         </div>
       )}
 
-      {(!admin.showLeaderboard || is_admin) && (
+      {(!admin_actions.showLeaderboard || is_admin) && timer && (
         <Timer
-          secondsRemaining={timer?.seconds_remaining}
-          defaultSeconds={timer?.duration}
+          secondsRemaining={timer.seconds_remaining!}
+          defaultSeconds={timer.duration!}
         />
       )}
     </div>

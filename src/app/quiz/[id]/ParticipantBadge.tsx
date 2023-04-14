@@ -5,7 +5,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { FaBan, FaChevronDown, FaTrash } from "react-icons/fa";
 
-import { User } from "hooks/useSharedQuiz";
+import { User } from "utils/types";
 
 type Props = {
   participant?: User;

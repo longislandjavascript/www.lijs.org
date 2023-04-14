@@ -1,7 +1,7 @@
 import { FaSpinner } from "react-icons/fa";
 
 import { Section } from "components/Section";
-import { User } from "hooks/useSharedQuiz";
+import { User } from "utils/types";
 
 import { ParticipantBadge } from "./ParticipantBadge";
 type Props = {

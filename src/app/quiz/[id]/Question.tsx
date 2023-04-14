@@ -4,13 +4,13 @@ import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import useKeypress from "react-use-keypress";
 
 import { Section } from "components/Section";
-import { QuizQuestion } from "utils/airtable-api";
+import { SharedQuiz } from "utils/types";
 
 import { MDRenderer } from "./MDRenderer";
 
 type Props = {
-  question: QuizQuestion;
-  answerKey: QuizQuestion["answer"];
+  question: SharedQuiz["question"];
+  answerKey: SharedQuiz["admin_actions"]["answerKey"];
   onSubmitAnswer: (answerKey: string) => void;
   answer: { key: string; isCorrect: boolean };
   isAdmin: boolean;
@@ -33,7 +33,7 @@ export function Question(props: Props) {
 
   useKeypress(["a", "b", "c", "d", "Enter"], (event: KeyboardEvent) => {
     if (shouldBeDisabled) return;
-    const selectedOption = question.options.find(
+    const selectedOption = question.options!.find(
       (opt) => opt.key.toLowerCase() === event.key
     );
     if (selectedOption) {
@@ -44,11 +44,13 @@ export function Question(props: Props) {
   return (
     <div>
       <h2 className="section-title">{title}</h2>
-      <MDRenderer language={question.language}>{question.question}</MDRenderer>
+      <MDRenderer language={question.language!}>
+        {question.question!}
+      </MDRenderer>
 
       <div className="border-b-2 border-color my-4"></div>
 
-      {question.options.map((opt) => {
+      {question.options!.map((opt) => {
         function getBorderColor() {
           if (opt.key === answerKey) {
             return "border-emerald-500";
@@ -93,7 +95,7 @@ export function Question(props: Props) {
           >
             <div className="w-12 text-center">{getButtonValue()}</div>
 
-            <MDRenderer language={question.language}>{opt.value}</MDRenderer>
+            <MDRenderer language={question.language!}>{opt.value}</MDRenderer>
           </button>
         );
       })}
@@ -102,8 +104,8 @@ export function Question(props: Props) {
         title="Explanation"
         className={`${answerKey ? "block" : "hidden"} my-4`}
       >
-        <MDRenderer language={question.language}>
-          {question.explanation}
+        <MDRenderer language={question.language!}>
+          {question.explanation!}
         </MDRenderer>
       </Section>
     </div>
