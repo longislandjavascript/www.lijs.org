@@ -13,7 +13,7 @@ export function JoinInfo(props: Props) {
       <ol className="text-xl md:text-3xl ml-12 list-decimal space-y-6">
         <li>
           <p>
-            Visit{" "}
+            Go to{" "}
             <ExternalLink href="https://lijs.org/quiz" className="anchor">
               lijs.org/quiz
             </ExternalLink>{" "}

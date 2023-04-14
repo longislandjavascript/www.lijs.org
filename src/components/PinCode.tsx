@@ -53,7 +53,7 @@ export const PinCode = (props: Props) => {
 
   return (
     <div>
-      <section className="mt-8 inline-block w-full md:w-[500px] border-2 border-gray-700 p-2 rounded-xl text-center ">
+      <section className="mt-8 inline-block w-full md:w-[500px] surface-alt p-2 rounded-xl text-center ">
         <p className="font-medium mb-4">{title}</p>
         <PinField
           length={5}
@@ -65,7 +65,7 @@ export const PinCode = (props: Props) => {
           type="password"
           pattern="[0-9]*"
           inputMode="numeric"
-          className="appearance-none caret-blue-500 h-14 w-14 md:h-16 md:w-16 bg-gray-200 border-2 border-transparent dark:bg-gray-900 rounded-lg mx-1 focus:border-2 focus:border-blue-500 transition-all duration-100 outline-none text-center text-3xl"
+          className="appearance-none caret-blue-500 h-14 w-14 md:h-16 md:w-16 surface border-2 border-transparent rounded-lg mx-1 focus:border-2 focus:border-blue-500 transition-all duration-100 outline-none text-center text-3xl"
         />
         <div className="flex flex-col items-center mt-6 h-20">
           {loading && (

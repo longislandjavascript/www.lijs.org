@@ -22,6 +22,7 @@ SyntaxHighlighter.registerLanguage("typescript", typescript);
 type Props = {
   language: string;
   children: string;
+  size?: "small";
 };
 
 export function MDRenderer(props: Props) {
@@ -36,7 +37,7 @@ export function MDRenderer(props: Props) {
   }, [resolvedTheme]);
 
   return (
-    <div className="prose md:prose-2xl dark:prose-invert prose-pre:p-0 prose-code:m-0 prose-code:p-0 prose-pre:m-0 prose-pre:bg-transparent">
+    <div className="prose-lg md:prose-xl dark:prose-invert prose-pre:p-0 prose-code:m-0 prose-code:p-0 prose-pre:m-0 prose-pre:bg-transparent">
       <ReactMarkdown
         components={{
           code: ({ node, inline, ...rest }) => {
@@ -48,7 +49,7 @@ export function MDRenderer(props: Props) {
                 customStyle={{
                   display: inline ? "inline" : "block",
                   background: "rgba(150,150,150, .1)",
-                  fontSize: "22px",
+                  fontSize: props.size === "small" ? "16px" : "22px",
                   margin: 0,
                   padding: inline ? "0px 4px 2px 4px" : "6px 12px 12px 12px",
                 }}

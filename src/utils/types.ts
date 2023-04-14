@@ -173,6 +173,7 @@ export type AirtableQuizQuestionRecord = AirtableRecord<{
   Language: "JavaScript" | "TypeScript" | "JSX" | "TSX" | "CSS" | "HTML";
   Answer: "A" | "B" | "C" | "D";
   Explanation: string;
+  "Timer Duration": number;
 }>;
 
 type QuizQuestionOption = {
@@ -187,6 +188,7 @@ export type QuizQuestion = {
   answer: AirtableQuizQuestionRecord["fields"]["Answer"];
   language: AirtableQuizQuestionRecord["fields"]["Language"];
   explanation: AirtableQuizQuestionRecord["fields"]["Explanation"];
+  timer_duration: AirtableQuizQuestionRecord["fields"]["Timer Duration"];
   options: QuizQuestionOption[];
   index?: number;
 };
@@ -207,8 +209,6 @@ type Timer = {
   status?: "stopped" | "running" | "paused";
 };
 
-export type LeaderBoard = [string, number, number][];
-
 type Scores = Record<
   string,
   Record<string, { key: QuizQuestion["answer"]; isCorrect: boolean }> & {
@@ -216,18 +216,27 @@ type Scores = Record<
   }
 >;
 
+type LeaderBoardItem = {
+  name: string;
+  clientID: string;
+  correctAnswers: number;
+  totalAnswers: number;
+  score: number;
+};
+
 export type SharedState = {
   quiz: QuizRecord;
+  question: QuizQuestion;
   timer?: Timer;
+  showAnswerKey: boolean;
   answerKey?: QuizQuestion["answer"] | null;
-  index: number;
   ready?: boolean;
   started?: boolean;
   participants: User[];
   removedParticipants: string[];
   bannedParticipants: string[];
   showLeaderBoard: boolean;
-  leaderboard: [string, number, number][];
+  leaderboard: LeaderBoardItem[];
   scores: Scores;
 };
 

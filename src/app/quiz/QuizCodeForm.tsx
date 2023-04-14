@@ -29,7 +29,7 @@ export function QuizCodeForm() {
       const isAdmin = response?.admin;
 
       if (response.success && isAdmin) {
-        setLoadingMessage("Creating your quiz room...");
+        setLoadingMessage("Preparing your quiz room...");
         router.push(`/quiz/${response.record_id}?admin=true`);
       } else if (response.success) {
         setLoadingMessage("Getting you into the quiz room...");

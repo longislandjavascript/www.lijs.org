@@ -1,9 +1,9 @@
 import { Section } from "components/Section";
 
-import type { LeaderBoard as LeaderBoardType } from "utils/types";
+import type { SharedState } from "utils/types";
 
 type Props = {
-  leaderboard: LeaderBoardType;
+  leaderboard: SharedState["leaderboard"];
 };
 
 export function LeaderBoard(props: Props) {
@@ -21,20 +21,18 @@ export function LeaderBoard(props: Props) {
           </tr>
         </thead> */}
         <tbody>
-          {leaderboard?.map((v) => {
-            const [name, score, count] = v;
-            const percentageCorrect = parseFloat(
-              ((score / count) * 100).toFixed(2)
-            );
+          {leaderboard?.map((item) => {
+            const { name, correctAnswers, totalAnswers, score } = item;
+
             return (
               <tr key={name} className="even:surface-alt font-bold">
                 <td className="pl-4 p-2 text-2xl font-display">{name}</td>
                 <td className="p-2">
                   <span className="inline-block rounded-full p-1 bg-yellow-400 w-16 text-center text-gray-800 ">
-                    {score}/{count}
+                    {correctAnswers}/{totalAnswers}
                   </span>
                 </td>
-                <td className="p-2">{percentageCorrect}%</td>
+                <td className="p-2">{score}%</td>
               </tr>
             );
           })}

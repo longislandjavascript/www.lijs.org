@@ -57,7 +57,7 @@ export function AdminTools(props: Props) {
         <ButtonSection title="Questions">
           <IconButton
             onClick={admin_actions.goToPreviousQuestion}
-            disabled={question.index === 0}
+            disabled={question?.index! === 0}
             label="Go to previous question"
           >
             <FaStepBackward />
@@ -65,13 +65,13 @@ export function AdminTools(props: Props) {
           <IconButton
             onClick={admin_actions.toggleAnswer}
             label="Toggle Answer"
-            isToggled={!!admin_actions.answerKey}
+            isToggled={admin_actions.showAnswerKey}
           >
-            {admin_actions.answerKey ? <FaEyeSlash /> : <FaEye />}
+            {admin_actions.showAnswerKey ? <FaEyeSlash /> : <FaEye />}
           </IconButton>
           <IconButton
             onClick={admin_actions.goToNextQuestion}
-            disabled={question.index === quiz?.questions.length! - 1}
+            disabled={question?.index! === quiz?.questions.length! - 1}
             label="Go to next question"
           >
             <FaStepForward />

@@ -133,6 +133,7 @@ export async function fetchQuiz(recordId: string): Promise<QuizRecord> {
       language: fields.Language,
       explanation: fields.Explanation,
       options: questionOptions,
+      timer_duration: fields["Timer Duration"],
     };
 
     return formattedQuestion as unknown as QuizQuestion;

@@ -20,18 +20,15 @@ export function ParticipantBadge(props: Props) {
     "text-lg font-medium surface rounded-full flex items-center justify-between px-4 py-1";
   const adminBadgeClassNames = `${badgeClassNames} hover:bg-opacity-30 transition-colors duration-200}`;
   const sharedButtonClassNames =
-    "group flex w-full items-center  rounded-md px-2 py-2 transition-colors duration-200";
+    "group flex w-full items-center rounded-md px-2 py-2 transition-colors duration-200";
   const menuItemClassNames =
-    "absolute left-0 mt-2 w-48 text-base origin-top-right divide-y rounded-md surface";
+    "absolute left-0 mt-2 w-48 text-base origin-top-right divide-y rounded-md surface shadow-xl";
 
   if (!isAdmin) {
     return <p className={badgeClassNames}>{participant?.name}</p>;
   }
   return (
-    <Menu
-      as="div"
-      className=" inline-block text-left surface rounded-full px-3"
-    >
+    <Menu as="div" className="inline-block text-left surface rounded-full px-3">
       <Menu.Button className={adminBadgeClassNames}>
         {participant?.name}
         <FaChevronDown className="ml-2 -mr-1 h-4 w-4" aria-hidden="true" />

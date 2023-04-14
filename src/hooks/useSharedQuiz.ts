@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"; //441
 
 import {
   useConnectionStatus,
@@ -8,20 +8,22 @@ import {
 import isEmpty from "lodash/isEmpty";
 import { useRouter } from "next/navigation";
 
-import { Action, QuizRecord, SharedState, User } from "utils/types";
+import {
+  Action,
+  QuizQuestion,
+  QuizRecord,
+  SharedState,
+  User,
+} from "utils/types";
 
 import { useLocalStorage } from "./useLocalStorage";
 
-export function useSharedQuiz(
-  isAdmin: boolean,
-  quiz: QuizRecord | null
-  // timer: SharedTimer
-) {
+export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
   const clientID = useUniqueClientId();
   const router = useRouter();
   const { connected } = useConnectionStatus();
   const interval = useRef<any>(0);
-  const [secondsLeft, setSecondsLeft] = useState<number>(0);
+  const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
 
   const [user, setUser] = useLocalStorage<User | null>(
     `lijs-quiz-user-${clientID}`,
@@ -31,79 +33,82 @@ export function useSharedQuiz(
   );
 
   const [sharedState, dispatch] = useSharedReducer<
-    Partial<SharedState> | null,
+    Partial<SharedState>,
     Action
   >(
-    "answer-key",
+    "shared-state",
     (state, action) => {
-      // if (!state) return;
       switch (action.type) {
         case "set-quiz":
-          return {
-            ...state,
-            quiz: action.payload.quiz,
-            index: 0,
-            timer: {
-              duration: action.payload.quiz.timer,
-              seconds_remaining: action.payload.quiz.timer,
-              status: "stopped",
-            },
-          };
-        case "set-ready":
+        case "reset-quiz": {
+          return setDefaultState({ state, action });
+        }
+
+        case "set-ready": {
           return { ...state, ready: true };
-        case "set-seconds-left":
+        }
+
+        case "set-seconds-left": {
           return {
             ...state,
             timer: {
-              ...state?.timer,
+              ...state.timer,
               seconds_remaining: action.payload,
             },
           };
-        case "set-timer-status":
+        }
+
+        case "set-timer-status": {
           return {
             ...state,
             timer: {
-              ...state?.timer,
+              ...state.timer,
               status: action.payload,
             },
           };
-        case "reset":
+        }
+
+        case "toggle-leaderboard": {
           return {
-            quiz: state?.quiz,
-            index: 0,
-            participants: state?.participants,
-            ready: true,
-            started: false,
-            timer: {
-              duration: state?.timer?.duration,
-              seconds_remaining: state?.timer?.duration,
-              status: "stopped",
+            ...state,
+            showLeaderBoard: !state?.showLeaderBoard,
+          };
+        }
+
+        case "next-question": {
+          const nextIndex = state?.question?.index! + 1;
+          return {
+            ...state,
+            question: {
+              ...state.quiz?.questions[nextIndex]!,
+              index: nextIndex,
             },
-          };
-        case "toggle-leaderboard":
-          return { ...state, showLeaderBoard: state?.showLeaderBoard };
-        case "next-question":
-          return {
-            ...state,
-            index: (state?.index || 0) + 1,
-            answerKey: null,
+            showAnswerKey: false,
             showLeaderBoard: false,
           };
-        case "previous-question":
+        }
+
+        case "previous-question": {
+          const previousIndex = state?.question?.index! - 1;
+
           return {
             ...state,
-            index: (state?.index || 0) - 1,
-            answerKey: null,
+            question: {
+              ...state.quiz?.questions[previousIndex]!,
+              index: previousIndex,
+            },
+            showAnswerKey: false,
             showLeaderBoard: false,
           };
-        case "toggle-answer-key":
+        }
+
+        case "toggle-answer-key": {
           return {
             ...state,
-            answerKey:
-              state?.answerKey === null
-                ? state?.quiz?.questions[state?.index || 0]?.answer
-                : null,
+            showAnswerKey: !state.showAnswerKey || false,
           };
+        }
+
         case "set-started":
           return { ...state, started: true };
         case "submit-answer":
@@ -127,23 +132,33 @@ export function useSharedQuiz(
 
           const leaderboard = Object.keys(updatedScores)
             .reduce((acc, client_id) => {
-              const correctAnswerCount = Object.keys(
-                updatedScores[client_id]
-              ).reduce((acc, key) => {
-                if (updatedScores[client_id][key].isCorrect) {
-                  return acc + 1;
-                } else return acc;
-              }, 0);
+              const userAnswers = updatedScores[client_id];
+              const answerCount = userAnswers.count || 0;
+              const correctAnswers = Object.keys(userAnswers).reduce(
+                (acc, key) => {
+                  if (userAnswers[key].isCorrect) {
+                    return acc + 1;
+                  } else return acc;
+                },
+                0
+              );
+
               const getName = state?.participants?.find(
                 (v) => v.clientID === client_id
               )?.name;
 
               return [
                 ...acc,
-                [getName, correctAnswerCount, updatedScores[client_id].count],
-              ] as [string, number, number][];
+                {
+                  name: getName!,
+                  clientID,
+                  correctAnswers,
+                  totalAnswers: answerCount,
+                  score: parseInt((correctAnswers / answerCount).toFixed(2)),
+                },
+              ];
             }, [])
-            .sort((a, b) => b[1] - a[1]);
+            .sort((a, b) => b.correctAnswers - a.correctAnswers);
 
           return {
             ...state,
@@ -163,18 +178,10 @@ export function useSharedQuiz(
         case "remove-participant":
           return {
             ...state,
-            scores: isEmpty(state?.scores)
-              ? {}
-              : Object.keys(state?.scores!).reduce((acc, value) => {
-                  if (value === action.payload.name) {
-                    return acc;
-                  } else {
-                    return {
-                      ...acc,
-                      ...state?.scores![value],
-                    };
-                  }
-                }, {}),
+            scores: removeUserScores({
+              scores: state?.scores,
+              clientID: action.payload.clientID,
+            }),
             participants: state?.participants?.filter(
               (v) => v.clientID !== action.payload.clientID
             ),
@@ -183,35 +190,11 @@ export function useSharedQuiz(
               action.payload,
             ],
           };
-        case "ban-participant":
-          return {
-            ...state,
-            scores: isEmpty(state?.scores)
-              ? {}
-              : Object.keys(state?.scores!).reduce((acc, value) => {
-                  if (value === action.payload.name) {
-                    return acc;
-                  } else {
-                    return {
-                      ...acc,
-                      ...state?.scores![value],
-                    };
-                  }
-                }, {}),
-            participants: state?.participants?.filter(
-              (v) => v.clientID !== action.payload.clientID
-            ),
-            bannedParticipants: [
-              ...(state?.bannedParticipants || []),
-              action.payload.name,
-            ],
-          };
-
         default:
           return state;
       }
     },
-    null
+    setDefaultState()
   );
 
   // TIMER******************************************************
@@ -225,53 +208,48 @@ export function useSharedQuiz(
   }, [secondsLeft]);
 
   const startInterval = useCallback(() => {
+    if (secondsLeft === undefined) {
+      setSecondsLeft(sharedState?.timer?.duration!);
+    }
+
     // eslint-disable-next-line functional/immutable-data
     interval.current = setInterval(() => {
-      if (secondsLeft > 0) {
-        setSecondsLeft((v) => v - 1);
-      }
+      setSecondsLeft((v) => v - 1);
     }, 1000);
-  }, [secondsLeft]);
+  }, [secondsLeft, sharedState?.timer?.duration]);
 
-  const start = useCallback(() => {
-    // setSecondsLeft(sharedState?.quiz?.timer?.duration);
-    startInterval();
+  const startTimer = useCallback(() => {
     dispatch({ type: "set-timer-status", payload: "running" });
-  }, [startInterval]);
+    startInterval();
+  }, []);
 
-  const pause = useCallback(() => {
+  const pauseTimer = useCallback(() => {
     clearInterval(interval.current);
     dispatch({ type: "set-timer-status", payload: "paused" });
   }, []);
 
-  const stop = useCallback(() => {
+  const stopTimer = useCallback(() => {
     clearInterval(interval.current);
     dispatch({ type: "set-timer-status", payload: "stopped" });
     setSecondsLeft(0);
   }, []);
 
-  const reset = useCallback(() => {
-    clearInterval(interval.current);
-    dispatch({ type: "set-timer-status", payload: "stopped" });
-    setSecondsLeft(sharedState?.timer?.duration!);
+  const resetTimer = useCallback(() => {
+    if (sharedState?.timer?.duration) {
+      clearInterval(interval.current);
+      dispatch({ type: "set-timer-status", payload: "stopped" });
+      setSecondsLeft(sharedState?.timer?.duration!);
+    }
   }, [sharedState?.timer?.duration]);
 
-  const timer_actions = useMemo(
-    () => ({ start, pause, reset, stop }),
-    [pause, reset, start, stop]
-  );
-
   // END TIMER******************************************************
-  const currentQuestion =
-    sharedState?.quiz?.questions?.[sharedState?.index || 0];
 
   useEffect(() => {
-    if (isAdmin && quiz?.id) {
-      setSecondsLeft(quiz?.timer);
+    if (sharedState?.quiz?.id && isAdmin) {
+      resetTimer();
+      return;
+      // dispatch({ type: "set-quiz", payload: { quiz: sharedState?.quiz } });
     }
-  }, [isAdmin, quiz?.id, quiz?.timer]);
-
-  useEffect(() => {
     if (!isAdmin || !quiz?.id) return;
 
     dispatch({ type: "set-quiz", payload: { quiz } });
@@ -285,31 +263,37 @@ export function useSharedQuiz(
         dispatch({ type: "set-ready" });
       }
     });
-  }, [isAdmin, quiz]);
+  }, [isAdmin, quiz, sharedState?.quiz]);
 
   // Admin Methods
 
   const goToPreviousQuestion = useCallback(() => {
     dispatch({ type: "previous-question" });
-    timer_actions.reset();
+    resetTimer();
   }, []);
 
   const goToNextQuestion = useCallback(() => {
     dispatch({ type: "next-question" });
-    timer_actions.reset();
+    resetTimer();
   }, []);
 
   const resetQuiz = useCallback(() => {
-    timer_actions.reset();
-    dispatch({ type: "reset" });
+    resetTimer();
+    dispatch({ type: "reset-quiz" });
   }, []);
 
   const removeParticipant = useCallback((user: User) => {
-    dispatch({ type: "remove-participant", payload: user });
+    dispatch({
+      type: "remove-participant",
+      payload: { ...user, banned: false },
+    });
   }, []);
 
   const banParticipant = useCallback((user: User) => {
-    dispatch({ type: "ban-participant", payload: user });
+    dispatch({
+      type: "remove-participant",
+      payload: { ...user, banned: true },
+    });
   }, []);
 
   useEffect(() => {
@@ -331,20 +315,19 @@ export function useSharedQuiz(
 
   const submitAnswer = useCallback(
     (value) => {
-      const correctAnswer =
-        sharedState?.quiz?.questions[sharedState?.index || 0].answer;
+      const correctAnswer = sharedState?.question?.answer;
 
       const payload = {
         userName: user?.name,
         clientID: user?.clientID,
-        questionID: currentQuestion?.id,
+        questionID: sharedState?.question?.id!,
         selectedOptionKey: value,
         isCorrect: value === correctAnswer,
       } as const;
 
       dispatch({ type: "submit-answer", payload });
     },
-    [currentQuestion?.id, user?.name]
+    [sharedState?.question?.id!, user?.name]
   );
 
   const joinQuiz = useCallback((e) => {
@@ -376,16 +359,9 @@ export function useSharedQuiz(
     sharedState?.started,
   ]);
 
-  const question = useMemo(() => {
-    return {
-      ...currentQuestion,
-      index: sharedState?.index,
-    };
-  }, [currentQuestion, sharedState?.index]);
-
   const admin_actions = useMemo(() => {
     return {
-      answerKey: sharedState?.answerKey,
+      showAnswerKey: sharedState?.showAnswerKey,
       startQuiz: () => dispatch({ type: "set-started" }),
       goToPreviousQuestion,
       goToNextQuestion,
@@ -393,25 +369,25 @@ export function useSharedQuiz(
       resetQuiz,
       removeParticipant,
       banParticipant,
-      resetTimer: timer_actions.reset,
-      startTimer: timer_actions.start,
-      pauseTimer: timer_actions.pause,
-      stopTimer: timer_actions.stop,
+      resetTimer: resetTimer,
+      startTimer: startTimer,
+      pauseTimer: pauseTimer,
+      stopTimer: stopTimer,
       toggleLeaderboard: () => dispatch({ type: "toggle-leaderboard" }),
       showLeaderboard: sharedState?.showLeaderBoard,
     };
   }, [
-    sharedState?.answerKey,
+    sharedState?.showAnswerKey,
     sharedState?.showLeaderBoard,
     goToPreviousQuestion,
     goToNextQuestion,
     resetQuiz,
     removeParticipant,
     banParticipant,
-    timer_actions.reset,
-    timer_actions.start,
-    timer_actions.pause,
-    timer_actions.stop,
+    resetTimer,
+    startTimer,
+    pauseTimer,
+    stopTimer,
     dispatch,
   ]);
 
@@ -426,10 +402,60 @@ export function useSharedQuiz(
     quiz: sharedState?.quiz,
     timer: sharedState?.timer,
     status,
-    question,
+    question: sharedState?.question,
     admin_actions,
     user,
     user_actions,
     participants: sharedState?.participants,
   } as const;
+}
+
+// HELPERS
+
+function setDefaultState(args?: {
+  state?: Partial<SharedState> | null;
+  action?: Action;
+}) {
+  const isReset = args?.action?.type === "reset-quiz";
+  const quest = isReset
+    ? { ...args?.state?.quiz?.questions?.[0], index: 0 }
+    : args?.state?.question;
+  return {
+    ...args?.state,
+    quiz: args?.action?.payload?.quiz || args?.state?.quiz,
+    question: quest as QuizQuestion,
+    showLeaderBoard: false,
+    participants: isReset ? args?.state?.participants : [],
+    leaderboard: isReset ? undefined : args?.state?.leaderboard,
+    scores: isReset ? undefined : args?.state?.scores,
+    showAnswerKey: false,
+    ready: true,
+    started: isReset ? false : args?.state?.started,
+    timer: {
+      duration: isReset ? args?.state?.timer?.duration! : undefined,
+      seconds_remaining: isReset
+        ? args?.state?.timer?.seconds_remaining!
+        : undefined,
+      status: "stopped" as const,
+    },
+  };
+}
+
+function removeUserScores(args: {
+  scores?: SharedState["scores"];
+  clientID: string;
+}) {
+  const { scores, clientID } = args;
+  return isEmpty(scores)
+    ? {}
+    : Object.keys(scores!).reduce((acc, value) => {
+        if (value === clientID) {
+          return acc;
+        } else {
+          return {
+            ...acc,
+            ...scores![value],
+          };
+        }
+      }, {});
 }

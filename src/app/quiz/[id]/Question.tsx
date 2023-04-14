@@ -10,7 +10,7 @@ import { MDRenderer } from "./MDRenderer";
 
 type Props = {
   question: SharedQuiz["question"];
-  answerKey: SharedQuiz["admin_actions"]["answerKey"];
+  showAnswerKey: SharedQuiz["admin_actions"]["showAnswerKey"];
   onSubmitAnswer: (answerKey: string) => void;
   answer: { key: string; isCorrect: boolean };
   isAdmin: boolean;
@@ -21,7 +21,7 @@ type Props = {
 export function Question(props: Props) {
   const {
     question,
-    answerKey,
+    showAnswerKey,
     onSubmitAnswer,
     answer,
     isAdmin,
@@ -29,7 +29,7 @@ export function Question(props: Props) {
     title,
   } = props;
 
-  const shouldBeDisabled = !!isAdmin || !!answerKey || isTimerDone;
+  const shouldBeDisabled = !!isAdmin || showAnswerKey || isTimerDone;
 
   useKeypress(["a", "b", "c", "d", "Enter"], (event: KeyboardEvent) => {
     if (shouldBeDisabled) return;
@@ -43,7 +43,9 @@ export function Question(props: Props) {
 
   return (
     <div>
-      <h2 className="section-title">{title}</h2>
+      <h2 className="inline-block surface-alt px-2 py-1 font-bold text-sm rounded-full text-primary">
+        {title}
+      </h2>
       <MDRenderer language={question.language!}>
         {question.question!}
       </MDRenderer>
@@ -52,21 +54,21 @@ export function Question(props: Props) {
 
       {question.options!.map((opt) => {
         function getBorderColor() {
-          if (opt.key === answerKey) {
+          if (showAnswerKey && opt.key === question.answer) {
             return "border-emerald-500";
           } else if (answer?.key === opt.key) {
-            return answerKey ? "border-red-500" : "border-primary";
+            return showAnswerKey ? "border-red-500" : "border-primary";
           } else {
             return "border-transparent";
           }
         }
 
         const baseClassName =
-          "disabled:cursor-not-allowed p-2 font-mono surface-alt my-2 w-full flex items-center gap-4 text-lg md:text-xl rounded-lg border-4 ease-in-out overflow-x-scroll ";
+          "disabled:cursor-not-allowed p-2 font-mono surface-alt my-2 w-full flex items-center gap-4 text-lg md:text-xl rounded-lg border-4 ease-in-out overflow-x-scroll transition-colors duration-200";
         const borderColorClassName = getBorderColor();
 
         function getButtonValue() {
-          if (!answerKey || opt.key !== answer?.key) {
+          if (!showAnswerKey || opt.key !== answer?.key) {
             return (
               <div
                 className="p-1 px-2 surface rounded-md font-semibold text-center"
@@ -95,14 +97,16 @@ export function Question(props: Props) {
           >
             <div className="w-12 text-center">{getButtonValue()}</div>
 
-            <MDRenderer language={question.language!}>{opt.value}</MDRenderer>
+            <MDRenderer size="small" language={question.language!}>
+              {opt.value}
+            </MDRenderer>
           </button>
         );
       })}
 
       <Section
         title="Explanation"
-        className={`${answerKey ? "block" : "hidden"} my-4`}
+        className={`${showAnswerKey ? "block" : "hidden"} my-4 animate-fade`}
       >
         <MDRenderer language={question.language!}>
           {question.explanation!}

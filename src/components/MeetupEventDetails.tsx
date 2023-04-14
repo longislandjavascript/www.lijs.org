@@ -60,9 +60,9 @@ export function MeetupEventDetails(props: Props) {
         </div>
       </div>
 
-      <section className="font-display font-bold text-lg md:text-xl">
+      <section className="font-display font-bold text-lg md:text-xl flex flex-col items-center md:items-start">
         <div className="my-2">
-          <p className="inline-block !text-sm font-bold rounded-full px-2 py-1 bg-yellow-600  !text-white">
+          <p className="inline-block !text-sm font-bold rounded-full px-2 py-1 bg-yellow-400  !text-gray-800">
             {event.yes_rsvp_count} RSVPs
           </p>
         </div>

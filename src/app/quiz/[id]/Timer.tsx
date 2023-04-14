@@ -20,25 +20,23 @@ export function Timer(props: Props) {
   }
 
   return (
-    <div>
-      {secondsRemaining > 0 ? (
-        <div className="fixed bottom-0 left-0 md:left-80 right-0 h-16 bg-transparent grid place-items-center px-2 md:px-12">
-          <div className="w-full surface-alt rounded-full animate-fade">
-            <div
-              className={`${getTimerColor()} transition-all duration-500 ease-in-out text-2xl text-center text-white h-8 rounded-full`}
-              style={{ width: timerPercentage + "%" }}
-            >
-              {secondsRemaining}s
-            </div>
+    <div className="h-16 bg-transparent grid place-items-center px-2">
+      <div className="w-full surface-alt rounded-full animate-fade">
+        {secondsRemaining > 0 ? (
+          <div
+            className={`${getTimerColor()} transition-all duration-500 ease-in-out text-2xl text-center text-white h-8 rounded-full`}
+            style={{ width: timerPercentage + "%" }}
+          >
+            {secondsRemaining}s
           </div>
-        </div>
-      ) : (
-        <div className="flex justify-center">
-          <p className="font-display font-black text-center text-3xl text-red-100 animate-fade bg-red-600 rounded-xl p-2">
-            Time&apos;s up!
-          </p>
-        </div>
-      )}
+        ) : (
+          <div className="flex justify-center animate-pulse">
+            <p className="font-display font-black text-center text-3xl text-red-500 animate-fade">
+              Time&apos;s up!
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
