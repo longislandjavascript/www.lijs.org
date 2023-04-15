@@ -35,12 +35,15 @@ export function Quiz(props: Props) {
   } = useSharedQuiz(isAdmin, props.quiz);
 
   const is_admin = user?.isAdmin;
+  const is_in_progress = status.status === "in-progress";
+
+  console.log(user);
 
   if (!user || !quiz?.id) {
     return null;
   }
 
-  if (!status.started && is_admin) {
+  if (!is_in_progress && is_admin) {
     return (
       <div>
         <div className="space-y-6">
@@ -77,7 +80,7 @@ export function Quiz(props: Props) {
     );
   }
 
-  if (!status.started) {
+  if (status.status === "ready") {
     return (
       <div>
         <ConnectionStatus connected={status.connected} />
@@ -93,8 +96,8 @@ export function Quiz(props: Props) {
       <div className="sticky top-0">
         {(!admin_actions.showLeaderboard || is_admin) && timer && (
           <Timer
-            secondsRemaining={timer.seconds_remaining!}
-            defaultSeconds={timer.duration!}
+            secondsRemaining={timer.secondsRemaining}
+            duration={timer.duration}
           />
         )}
 
@@ -125,7 +128,7 @@ export function Quiz(props: Props) {
             question={question}
             showAnswerKey={admin_actions.showAnswerKey}
             onSubmitAnswer={user_actions.submitAnswer}
-            isTimerDone={timer?.seconds_remaining === 0}
+            isTimerDone={timer?.secondsRemaining === 0}
             answer={status.results?.[user?.clientID]?.[question?.id as string]!}
             isAdmin={is_admin!}
           />

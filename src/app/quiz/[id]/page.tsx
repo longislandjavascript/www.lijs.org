@@ -1,3 +1,4 @@
+import { RenderCounter } from "components/RenderCounter";
 import { fetchQuiz } from "utils/airtable-api";
 import { QuizRecord } from "utils/types";
 
@@ -13,6 +14,13 @@ export default async function QuizPage({ params, searchParams }) {
   }
 
   return (
-    <DriftDBProviderWrapper quiz={quiz} quiz_id={params.id} isAdmin={isAdmin} />
+    <>
+      <RenderCounter message="QuizPage" />
+      <DriftDBProviderWrapper
+        quiz={quiz}
+        quiz_id={params.id}
+        isAdmin={isAdmin}
+      />
+    </>
   );
 }

@@ -203,10 +203,15 @@ export type QuizRecord = {
   questions: QuizQuestion[];
 };
 
-type Timer = {
-  duration?: number;
-  seconds_remaining?: number;
-  status?: "stopped" | "running" | "paused";
+export type Timer = {
+  status: "idle" | "running" | "paused" | "stopped" | "finished";
+  secondsRemaining: number;
+  duration: number;
+  setDuration: (arg: number) => void;
+  start: () => void;
+  pause: () => void;
+  stop: () => void;
+  reset: () => void;
 };
 
 type Scores = Record<
@@ -225,16 +230,15 @@ type LeaderBoardItem = {
 };
 
 export type SharedState = {
+  status: "loading" | "ready" | "in-progress" | "ended";
   quiz: QuizRecord;
   question: QuizQuestion;
-  timer?: Timer;
   showAnswerKey: boolean;
   answerKey?: QuizQuestion["answer"] | null;
   ready?: boolean;
   started?: boolean;
   participants: User[];
-  removedParticipants: string[];
-  bannedParticipants: string[];
+  removedParticipants: User[];
   showLeaderBoard: boolean;
   leaderboard: LeaderBoardItem[];
   scores: Scores;

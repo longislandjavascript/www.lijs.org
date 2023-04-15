@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"; //441
+import { useCallback, useEffect, useMemo } from "react"; //441
 
 import {
   useConnectionStatus,
   useSharedReducer,
   useUniqueClientId,
 } from "driftdb-react";
+import { useSharedTimer } from "hooks/useSharedTimer";
 import isEmpty from "lodash/isEmpty";
 import { useRouter } from "next/navigation";
 
@@ -19,11 +20,10 @@ import {
 import { useLocalStorage } from "./useLocalStorage";
 
 export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
+  const timer = useSharedTimer();
   const clientID = useUniqueClientId();
   const router = useRouter();
   const { connected } = useConnectionStatus();
-  const interval = useRef<any>(0);
-  const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
 
   const [user, setUser] = useLocalStorage<User | null>(
     `lijs-quiz-user-${clientID}`,
@@ -43,29 +43,8 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
         case "reset-quiz": {
           return setDefaultState({ state, action });
         }
-
-        case "set-ready": {
-          return { ...state, ready: true };
-        }
-
-        case "set-seconds-left": {
-          return {
-            ...state,
-            timer: {
-              ...state.timer,
-              seconds_remaining: action.payload,
-            },
-          };
-        }
-
-        case "set-timer-status": {
-          return {
-            ...state,
-            timer: {
-              ...state.timer,
-              status: action.payload,
-            },
-          };
+        case "set-status": {
+          return { ...state, status: action.payload };
         }
 
         case "toggle-leaderboard": {
@@ -109,9 +88,7 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
           };
         }
 
-        case "set-started":
-          return { ...state, started: true };
-        case "submit-answer":
+        case "submit-answer": {
           const { questionID, selectedOptionKey, isCorrect, clientID } =
             action.payload;
           const existingCount = state?.scores?.[clientID]?.count || 0;
@@ -165,8 +142,9 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
             leaderboard,
             scores: updatedScores,
           };
+        }
 
-        case "add-participant":
+        case "add-participant": {
           return {
             ...state,
             participants: [
@@ -174,8 +152,9 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
               action.payload,
             ] as User[],
           };
+        }
 
-        case "remove-participant":
+        case "remove-participant": {
           return {
             ...state,
             scores: removeUserScores({
@@ -190,69 +169,21 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
               action.payload,
             ],
           };
-        default:
+        }
+
+        default: {
           return state;
+        }
       }
     },
-    setDefaultState()
+    setInitialState(quiz!)
   );
 
-  // TIMER******************************************************
-
   useEffect(() => {
-    dispatch({ type: "set-seconds-left", payload: secondsLeft });
-    if (secondsLeft === 0) {
-      clearInterval(interval.current);
-      dispatch({ type: "set-timer-status", payload: "stopped" });
-    }
-  }, [secondsLeft]);
-
-  const startInterval = useCallback(() => {
-    if (secondsLeft === undefined) {
-      setSecondsLeft(sharedState?.timer?.duration!);
-    }
-
-    // eslint-disable-next-line functional/immutable-data
-    interval.current = setInterval(() => {
-      setSecondsLeft((v) => v! - 1);
-    }, 1000);
-  }, [secondsLeft, sharedState?.timer?.duration]);
-
-  const startTimer = useCallback(() => {
-    dispatch({ type: "set-timer-status", payload: "running" });
-    startInterval();
-  }, []);
-
-  const pauseTimer = useCallback(() => {
-    clearInterval(interval.current);
-    dispatch({ type: "set-timer-status", payload: "paused" });
-  }, []);
-
-  const stopTimer = useCallback(() => {
-    clearInterval(interval.current);
-    dispatch({ type: "set-timer-status", payload: "stopped" });
-    setSecondsLeft(0);
-  }, []);
-
-  const resetTimer = useCallback(() => {
-    if (sharedState?.timer?.duration) {
-      clearInterval(interval.current);
-      dispatch({ type: "set-timer-status", payload: "stopped" });
-      setSecondsLeft(sharedState?.timer?.duration!);
-    }
-  }, [sharedState?.timer?.duration]);
-
-  // END TIMER******************************************************
-
-  useEffect(() => {
-    if (sharedState?.quiz?.id && isAdmin) {
-      resetTimer();
+    if (!isAdmin || !quiz?.id) {
+      // dispatch({ type: "set-status", payload: "ready" });
       return;
-      // dispatch({ type: "set-quiz", payload: { quiz: sharedState?.quiz } });
     }
-    if (!isAdmin || !quiz?.id) return;
-
-    dispatch({ type: "set-quiz", payload: { quiz } });
 
     fetch(
       `/api/quiz/update-quiz-status?id=${quiz.id}&admin_client_id=${clientID}`
@@ -260,26 +191,29 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
       const body = await res.json();
       if (body?.success) {
         setUser({ isAdmin: true, clientID, name: "" });
-        dispatch({ type: "set-ready" });
+        dispatch({ type: "set-quiz", payload: { quiz } });
+        dispatch({ type: "set-status", payload: "ready" });
       }
     });
   }, [isAdmin, quiz, sharedState?.quiz]);
 
-  // Admin Methods
+  useEffect(() => {
+    if (sharedState?.question) {
+      timer.setDuration(sharedState?.question?.timer_duration);
+    }
+  }, [sharedState?.question]);
 
   const goToPreviousQuestion = useCallback(() => {
     dispatch({ type: "previous-question" });
-    resetTimer();
   }, []);
 
   const goToNextQuestion = useCallback(() => {
     dispatch({ type: "next-question" });
-    resetTimer();
   }, []);
 
   const resetQuiz = useCallback(() => {
-    resetTimer();
     dispatch({ type: "reset-quiz" });
+    timer.reset();
   }, []);
 
   const removeParticipant = useCallback((user: User) => {
@@ -297,19 +231,13 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
   }, []);
 
   useEffect(() => {
-    if (user?.isAdmin || !sharedState) return;
-    if (sharedState?.bannedParticipants?.includes(clientID)) {
-      setUser(null);
-      if (window) {
-        // FIX!!!
-        window.localStorage.removeItem(clientID);
-      }
+    const isUserRemoved = sharedState?.removedParticipants?.find(
+      (user) => user.clientID === clientID
+    );
+    if (isUserRemoved) {
       router.replace("/quiz");
-    } else if (sharedState?.removedParticipants?.includes(clientID)) {
-      router.replace("/quiz");
-      setUser(null);
     }
-  }, []);
+  }, [sharedState?.removedParticipants]);
 
   // Participant Methods
 
@@ -330,49 +258,46 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
     [sharedState?.question?.id!, user?.name]
   );
 
-  const joinQuiz = useCallback((e) => {
-    e.preventDefault();
-    const name = e.target.name.value;
-    if (sharedState?.participants?.includes(name)) {
-      alert("Please choose another name.");
-      return;
-    }
+  const joinQuiz = useCallback(
+    (e) => {
+      e.preventDefault();
+      const name = e.target.name.value;
+      if (sharedState?.participants?.includes(name)) {
+        alert("Please choose another name.");
+        return;
+      }
 
-    const updatedUser = { name, clientID, isAdmin: false };
-    setUser(updatedUser);
-    dispatch({ type: "add-participant", payload: updatedUser });
-  }, []);
+      const updatedUser = { ...user, name };
+      setUser(updatedUser);
+      dispatch({ type: "add-participant", payload: updatedUser });
+    },
+    [user]
+  );
 
   const status = useMemo(() => {
     return {
+      status: sharedState?.status,
       connected,
-      started: sharedState?.started,
       results: sharedState?.scores,
-      ready: sharedState?.ready,
       leaderboard: sharedState?.leaderboard,
     };
   }, [
     connected,
+    sharedState?.status,
     sharedState?.leaderboard,
-    sharedState?.ready,
     sharedState?.scores,
-    sharedState?.started,
   ]);
 
   const admin_actions = useMemo(() => {
     return {
       showAnswerKey: sharedState?.showAnswerKey,
-      startQuiz: () => dispatch({ type: "set-started" }),
+      startQuiz: () => dispatch({ type: "set-status", payload: "in-progress" }),
       goToPreviousQuestion,
       goToNextQuestion,
       toggleAnswer: () => dispatch({ type: "toggle-answer-key" }),
       resetQuiz,
       removeParticipant,
       banParticipant,
-      resetTimer: resetTimer,
-      startTimer: startTimer,
-      pauseTimer: pauseTimer,
-      stopTimer: stopTimer,
       toggleLeaderboard: () => dispatch({ type: "toggle-leaderboard" }),
       showLeaderboard: sharedState?.showLeaderBoard,
     };
@@ -384,11 +309,6 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
     resetQuiz,
     removeParticipant,
     banParticipant,
-    resetTimer,
-    startTimer,
-    pauseTimer,
-    stopTimer,
-    dispatch,
   ]);
 
   const user_actions = useMemo(() => {
@@ -400,8 +320,8 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
 
   return {
     quiz: sharedState?.quiz,
-    timer: sharedState?.timer,
     status,
+    timer,
     question: sharedState?.question,
     admin_actions,
     user,
@@ -412,32 +332,39 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
 
 // HELPERS
 
-function setDefaultState(args?: {
-  state?: Partial<SharedState> | null;
-  action?: Action;
+function setDefaultState(args: {
+  state: Partial<SharedState> | null;
+  action: Action;
 }) {
   const isReset = args?.action?.type === "reset-quiz";
+  const firstQuestion = { ...args?.state?.quiz?.questions?.[0], index: 0 };
   const quest = isReset
-    ? { ...args?.state?.quiz?.questions?.[0], index: 0 }
-    : args?.state?.question;
+    ? firstQuestion
+    : args?.state?.question || firstQuestion;
+
   return {
     ...args?.state,
-    quiz: args?.action?.payload?.quiz || args?.state?.quiz,
+    status: "loading" as const,
+    quiz: args?.state?.quiz || args?.action?.payload?.quiz,
     question: quest as QuizQuestion,
     showLeaderBoard: false,
     participants: isReset ? args?.state?.participants : [],
     leaderboard: isReset ? undefined : args?.state?.leaderboard,
     scores: isReset ? undefined : args?.state?.scores,
     showAnswerKey: false,
-    ready: true,
-    started: isReset ? false : args?.state?.started,
-    timer: {
-      duration: isReset ? args?.state?.timer?.duration! : undefined,
-      seconds_remaining: isReset
-        ? args?.state?.timer?.seconds_remaining!
-        : undefined,
-      status: "stopped" as const,
-    },
+  };
+}
+
+function setInitialState(quiz: QuizRecord) {
+  const firstQuestion = { ...quiz?.questions?.[0], index: 0 };
+  return {
+    quiz,
+    question: firstQuestion,
+    showLeaderBoard: false,
+    participants: undefined,
+    leaderboard: undefined,
+    scores: undefined,
+    showAnswerKey: false,
   };
 }
 

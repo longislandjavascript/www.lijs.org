@@ -35,19 +35,17 @@ export function AdminTools(props: Props) {
     <div>
       <div className="flex items-center flex-col md:flex-row flex-wrap justify-around gap-2 md:gap-4">
         <ButtonSection title="Timer">
-          <IconButton onClick={admin_actions.resetTimer} label="Rest Timer">
+          <IconButton onClick={timer.reset} label="Rest Timer">
             <BiReset className="text-xl" />
           </IconButton>
 
-          <IconButton onClick={admin_actions.stopTimer} label="Stop Timer">
+          <IconButton onClick={timer.stop} label="Stop Timer">
             <FaStop />
           </IconButton>
           <IconButton
-            disabled={timer?.seconds_remaining === 0}
+            disabled={timer?.secondsRemaining === 0}
             onClick={() =>
-              timer?.status === "running"
-                ? admin_actions.pauseTimer()
-                : admin_actions.startTimer()
+              timer?.status === "running" ? timer.pause() : timer.start()
             }
             label={timer?.status === "running" ? "Pause timer" : "Stop timer"}
           >

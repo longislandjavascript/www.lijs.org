@@ -1,11 +1,11 @@
 type Props = {
   secondsRemaining: number;
-  defaultSeconds: number;
+  duration: number;
 };
 
 export function Timer(props: Props) {
-  const { secondsRemaining, defaultSeconds } = props;
-  const timerPercentage = (secondsRemaining * 100) / defaultSeconds;
+  const { secondsRemaining, duration } = props;
+  const timerPercentage = (secondsRemaining * 100) / duration;
 
   function getTimerColor() {
     if (timerPercentage > 75) {
@@ -31,7 +31,7 @@ export function Timer(props: Props) {
           </div>
         ) : (
           <div className="flex justify-center animate-pulse">
-            <p className="font-display font-black text-center text-3xl text-red-500 animate-fade">
+            <p className="font-display font-black text-center text-2xl text-red-500 animate-fade">
               Time&apos;s up!
             </p>
           </div>
