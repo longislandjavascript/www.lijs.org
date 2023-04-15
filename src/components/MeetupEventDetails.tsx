@@ -42,12 +42,12 @@ export function MeetupEventDetails(props: Props) {
   const formattedStartTime = format(eventStartTime, "h:mm");
   const formattedEndTime = format(eventEndTime, "h:mm a");
   return (
-    <div>
-      <h2 className="text-3xl md:text-4xl text-center lg:text-left font-display font-black text-primary">
+    <div className="@container">
+      <h2 className="text-3xl @md:text-4xl text-center @md:text-left font-display font-black text-primary">
         {event.name}
       </h2>
 
-      <section className="font-display font-bold text-lg md:text-xl flex gap-6 flex-col-reverse lg:flex-row justify-between items-center md:items-start  lg:surface  p-4 rounded-xl my-6 lg:my-12">
+      <section className="font-display font-bold text-lg @md:text-xl flex gap-6 flex-col-reverse @md:flex-row justify-between items-center @md:items-start  @md:surface  p-4 rounded-xl my-6 @md:my-12">
         <div>
           <p className="flex items-center gap-2">
             {event.is_online_event ? (
@@ -96,14 +96,14 @@ export function MeetupEventDetails(props: Props) {
           .
         </p>
       </div>
-      <div className="mt-4 flex flex-col lg:flex-row gap-4 ">
+      <div className="mt-4 flex flex-col @md:flex-row gap-4 ">
         <MeetupButton
           type={isFutureEvent ? "rsvp" : "view"}
           href={event.link}
         />
 
         {isFutureEvent && (
-          <a href="#getting-here" className="ghost-button w-full md:w-42">
+          <a href="#getting-here" className="ghost-button w-full @md:w-42">
             Getting Here
           </a>
         )}
@@ -114,7 +114,7 @@ export function MeetupEventDetails(props: Props) {
           <Button
             onClick={handleShowDescription}
             variant="ghost"
-            className="w-full md:w-auto"
+            className="w-full @md:w-auto"
           >
             Show Description
           </Button>
