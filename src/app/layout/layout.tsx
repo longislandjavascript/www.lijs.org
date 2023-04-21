@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { Inter, Overlock } from "next/font/google";
 
 import { Footer } from "./Footer";
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: Props) {
             </div>
           </div>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
