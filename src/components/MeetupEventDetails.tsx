@@ -79,6 +79,7 @@ export function MeetupEventDetails(props: Props) {
               alt={event.name}
               height={75}
               width={200}
+              className="rounded-lg"
             />
           )}
         </div>

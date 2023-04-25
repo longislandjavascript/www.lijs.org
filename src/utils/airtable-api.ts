@@ -94,23 +94,31 @@ export async function fetchQuiz(recordId: string): Promise<QuizRecord> {
     id: values.id,
     name: fields.Name,
     timer: fields["Timer Duration"],
-    room_id: fields["Room ID"],
     admin_client_id: fields["Admin Client ID"],
     participant_code: fields["Participant Code"],
   };
 
-  const questionsQuery = fields.Questions.reduce((acc, q) => {
+  const hasSelectedQuestions =
+    fields.Questions?.length && fields.Questions?.length > 0;
+
+  const questionsQuery = fields.Questions?.reduce((acc, q) => {
     return [...acc, `{Record_ID} = "${q}"`];
   }, []);
 
-  const query = questionsQuery.join(", ");
+  const querySelect = hasSelectedQuestions
+    ? {
+        view: "Grid view",
+        maxRecords: 200,
+        // Filter by selected questions if provided, otherwise return all questions.
+        filterByFormula: `OR(${questionsQuery.join(", ")})`,
+      }
+    : {
+        view: "Grid view",
+        maxRecords: 200,
+      };
 
   const questionsResult = (await base("Quiz Questions")
-    .select({
-      view: "Grid view",
-      maxRecords: 200,
-      filterByFormula: `OR(${query})`,
-    })
+    .select(querySelect)
     .firstPage()) as unknown as AirtableQuizQuestionRecord[];
 
   const questions = questionsResult.map((value, i) => {

@@ -39,7 +39,12 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
     "shared-state",
     (state, action) => {
       switch (action.type) {
-        case "set-quiz":
+        case "set-quiz": {
+          return {
+            ...state,
+            quiz: action.payload,
+          };
+        }
         case "reset-quiz": {
           return setDefaultState({ state, action });
         }
@@ -191,7 +196,7 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
       const body = await res.json();
       if (body?.success) {
         setUser({ isAdmin: true, clientID, name: "" });
-        dispatch({ type: "set-quiz", payload: { quiz } });
+        dispatch({ type: "set-quiz", payload: quiz });
         dispatch({ type: "set-status", payload: "ready" });
       }
     });
@@ -345,7 +350,7 @@ function setDefaultState(args: {
   return {
     ...args?.state,
     status: "loading" as const,
-    quiz: args?.state?.quiz || args?.action?.payload?.quiz,
+    quiz: args?.state?.quiz || args?.action?.payload,
     question: quest as QuizQuestion,
     showLeaderBoard: false,
     participants: isReset ? args?.state?.participants : [],

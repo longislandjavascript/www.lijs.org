@@ -37,7 +37,16 @@ export function Quiz(props: Props) {
   const is_admin = user?.isAdmin;
   const is_in_progress = status.status === "in-progress";
 
-  console.log(user);
+  // console.log({
+  //   status,
+  //   question,
+  //   admin_actions,
+  //   user,
+  //   user_actions,
+  //   participants,
+  //   quiz,
+  //   timer,
+  // });
 
   if (!user || !quiz?.id) {
     return null;

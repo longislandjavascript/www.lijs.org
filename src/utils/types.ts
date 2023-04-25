@@ -197,7 +197,6 @@ export type QuizRecord = {
   id: string;
   name: string;
   timer: number;
-  room_id: string;
   admin_client_id?: string;
   participant_code: number;
   questions: QuizQuestion[];

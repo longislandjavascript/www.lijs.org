@@ -43,7 +43,7 @@ export function Question(props: Props) {
 
   return (
     <div>
-      <h2 className="inline-block surface-alt px-2 py-1 font-bold text-sm rounded-full text-primary">
+      <h2 className="inline-block surface-alt px-2 py-1 font-bold text-sm rounded-full text-primary mb-1">
         {title}
       </h2>
       <MDRenderer language={question!.language!}>
