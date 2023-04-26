@@ -37,17 +37,6 @@ export function Quiz(props: Props) {
   const is_admin = user?.isAdmin;
   const is_in_progress = status.status === "in-progress";
 
-  // console.log({
-  //   status,
-  //   question,
-  //   admin_actions,
-  //   user,
-  //   user_actions,
-  //   participants,
-  //   quiz,
-  //   timer,
-  // });
-
   if (!user || !quiz?.id) {
     return null;
   }
@@ -70,7 +59,10 @@ export function Quiz(props: Props) {
         </div>
 
         <div className="mt-12 flex justify-center">
-          <StartQuizButton onClick={admin_actions.startQuiz} />
+          <StartQuizButton
+            onClick={admin_actions.startQuiz}
+            inProgress={question?.index ? question?.index > 0 : false}
+          />
         </div>
       </div>
     );

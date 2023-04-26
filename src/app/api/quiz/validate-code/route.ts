@@ -31,12 +31,14 @@ export async function GET(request: Request) {
         record_id: id,
         admin: isAdmin,
       });
-    } else if (fields["Status"] !== "In Progress") {
-      return NextResponse.json({
-        success: false,
-        error: "This quiz is not active at this time.",
-      });
-    } else {
+    }
+    // else if (fields["Status"] !== "In Progress") {
+    //   return NextResponse.json({
+    //     success: false,
+    //     error: "This quiz is not active at this time.",
+    //   });
+    // }
+    else {
       return NextResponse.json({
         success: true,
         record_id: id,

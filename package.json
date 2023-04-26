@@ -40,6 +40,7 @@
     "@apsphysics/eslint-config": "^1.2.3",
     "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^17.6.1",
+    "@swc/helpers": "^0.5.1",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.9",
     "@types/date-fns": "^2.6.0",

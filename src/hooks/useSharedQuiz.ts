@@ -136,7 +136,7 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
                   clientID,
                   correctAnswers,
                   totalAnswers: answerCount,
-                  score: parseInt((correctAnswers / answerCount).toFixed(2)),
+                  score: Math.round((correctAnswers / answerCount) * 100),
                 },
               ];
             }, [])
@@ -181,17 +181,17 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
         }
       }
     },
-    isAdmin ? setInitialState(quiz!) : setDefaultState()
+    setInitialState(quiz!)
   );
 
   useEffect(() => {
-    if (!isAdmin || !quiz?.id) {
+    if (sharedState?.quiz?.id || !isAdmin) {
       // dispatch({ type: "set-status", payload: "ready" });
       return;
     }
 
     fetch(
-      `/api/quiz/update-quiz-status?id=${quiz.id}&admin_client_id=${clientID}`
+      `/api/quiz/update-quiz-status?id=${quiz?.id}&admin_client_id=${clientID}`
     ).then(async (res) => {
       const body = await res.json();
       if (body?.success) {
@@ -203,8 +203,9 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
   }, [isAdmin, quiz, sharedState?.quiz]);
 
   useEffect(() => {
-    if (sharedState?.question) {
+    if (sharedState?.question && timer.status !== "running") {
       timer.setDuration(sharedState?.question?.timer_duration);
+      timer.reset();
     }
   }, [sharedState?.question]);
 
@@ -218,7 +219,6 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
 
   const resetQuiz = useCallback(() => {
     dispatch({ type: "reset-quiz" });
-    timer.reset();
   }, []);
 
   const removeParticipant = useCallback((user: User) => {
@@ -361,11 +361,7 @@ function setDefaultState(args: {
 }
 
 function setInitialState(quiz: QuizRecord) {
-  if (!quiz) {
-    return null;
-  }
   const firstQuestion = { ...quiz?.questions?.[0], index: 0 };
-  console.log("SETINITIALSTATE", quiz);
   return {
     quiz,
     question: firstQuestion,

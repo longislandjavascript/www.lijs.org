@@ -4,6 +4,8 @@ import { QuizRecord } from "utils/types";
 
 import { DriftDBProviderWrapper } from "./DriftDBProviderWrapper";
 
+const SHOW_RENDER_COUNT = false;
+
 export default async function QuizPage({ params, searchParams }) {
   const isAdmin = searchParams.admin;
   // eslint-disable-next-line functional/no-let
@@ -15,7 +17,8 @@ export default async function QuizPage({ params, searchParams }) {
 
   return (
     <>
-      <RenderCounter message="QuizPage" />
+      {SHOW_RENDER_COUNT && <RenderCounter message="QuizPage" />}
+
       <DriftDBProviderWrapper
         quiz={quiz}
         quiz_id={params.id}

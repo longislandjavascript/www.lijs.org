@@ -90,7 +90,9 @@ export function Question(props: Props) {
           <button
             key={opt.key}
             className={`${baseClassName} ${borderColorClassName}`}
-            onClick={() => onSubmitAnswer(opt.key)}
+            onClick={() => {
+              onSubmitAnswer(opt.key);
+            }}
             disabled={shouldBeDisabled}
           >
             <div className="w-12 text-center">{getButtonValue()}</div>
@@ -102,14 +104,16 @@ export function Question(props: Props) {
         );
       })}
 
-      <Section
-        title="Explanation"
-        className={`${showAnswerKey ? "block" : "hidden"} my-4 animate-fade`}
-      >
-        <MDRenderer language={question!.language!}>
-          {question!.explanation!}
-        </MDRenderer>
-      </Section>
+      {question?.explanation && question?.explanation.length > 1 && (
+        <Section
+          title="Explanation"
+          className={`${showAnswerKey ? "block" : "hidden"} my-4 animate-fade`}
+        >
+          <MDRenderer language={question.language}>
+            {question.explanation}
+          </MDRenderer>
+        </Section>
+      )}
     </div>
   );
 }
