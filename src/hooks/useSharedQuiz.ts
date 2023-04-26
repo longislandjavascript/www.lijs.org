@@ -181,11 +181,12 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
         }
       }
     },
-    setInitialState(quiz!)
+    {}
+    // setInitialState(quiz!)
   );
 
   useEffect(() => {
-    if (sharedState?.quiz?.id || !isAdmin) {
+    if (!isAdmin) {
       // dispatch({ type: "set-status", payload: "ready" });
       return;
     }
