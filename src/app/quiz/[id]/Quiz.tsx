@@ -68,7 +68,7 @@ export function Quiz(props: Props) {
     );
   }
 
-  if (!user?.name && !is_admin) {
+  if (!user?.name && !isAdmin) {
     return (
       <div className="space-y-6">
         <ConnectionStatus connected={status.connected} />
