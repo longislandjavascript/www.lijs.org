@@ -41,7 +41,7 @@ export function Quiz(props: Props) {
     return null;
   }
 
-  if (!is_in_progress && is_admin) {
+  if (!is_in_progress && isAdmin) {
     return (
       <div>
         <div className="space-y-6">
