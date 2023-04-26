@@ -46,7 +46,7 @@ export function Question(props: Props) {
       <h2 className="inline-block surface-alt px-2 py-1 font-bold text-sm rounded-full text-primary mb-1">
         {title}
       </h2>
-      <MDRenderer language={question!.language!}>
+      <MDRenderer language={question?.language!}>
         {question!.question!}
       </MDRenderer>
 
@@ -97,7 +97,7 @@ export function Question(props: Props) {
           >
             <div className="w-12 text-center">{getButtonValue()}</div>
 
-            <MDRenderer size="small" language={question!.language!}>
+            <MDRenderer size="small" language={question?.language!}>
               {opt.value}
             </MDRenderer>
           </button>
@@ -109,7 +109,7 @@ export function Question(props: Props) {
           title="Explanation"
           className={`${showAnswerKey ? "block" : "hidden"} my-4 animate-fade`}
         >
-          <MDRenderer language={question.language}>
+          <MDRenderer language={question?.language}>
             {question.explanation}
           </MDRenderer>
         </Section>
