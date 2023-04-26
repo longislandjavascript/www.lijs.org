@@ -49,6 +49,7 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
           return setDefaultState({ state, action });
         }
         case "set-status": {
+          console.info("SET STATUS");
           return { ...state, status: action.payload };
         }
 
@@ -186,7 +187,7 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
   );
 
   useEffect(() => {
-    if (!isAdmin) {
+    if (!isAdmin && sharedState.quiz?.id) {
       // dispatch({ type: "set-status", payload: "ready" });
       return;
     }
@@ -350,7 +351,7 @@ function setDefaultState(args: {
 
   return {
     ...args?.state,
-    status: "loading" as const,
+    // status: "loading" as const,
     quiz: args?.state?.quiz || args?.action?.payload,
     question: quest as QuizQuestion,
     showLeaderBoard: false,

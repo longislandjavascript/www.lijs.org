@@ -41,20 +41,22 @@ export function Question(props: Props) {
     }
   });
 
+  if (!question || !question.options?.length) return null;
+
   return (
     <div>
       <h2 className="inline-block surface-alt px-2 py-1 font-bold text-sm rounded-full text-primary mb-1">
         {title}
       </h2>
       <MDRenderer language={question?.language!}>
-        {question!.question!}
+        {question?.question!}
       </MDRenderer>
 
       <div className="border-b-2 border-color my-4"></div>
 
-      {question!.options!.map((opt) => {
+      {question?.options.map((opt) => {
         function getBorderColor() {
-          if (showAnswerKey && opt.key === question!.answer) {
+          if (showAnswerKey && opt.key === question?.answer) {
             return "border-emerald-500";
           } else if (answer?.key === opt.key) {
             return showAnswerKey ? "border-red-500" : "border-primary";
