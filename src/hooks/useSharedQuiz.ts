@@ -181,7 +181,7 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
         }
       }
     },
-    setInitialState(quiz!)
+    isAdmin ? setInitialState(quiz!) : setDefaultState()
   );
 
   useEffect(() => {
@@ -361,7 +361,11 @@ function setDefaultState(args: {
 }
 
 function setInitialState(quiz: QuizRecord) {
+  if (!quiz) {
+    return null;
+  }
   const firstQuestion = { ...quiz?.questions?.[0], index: 0 };
+  console.log("SETINITIALSTATE", quiz);
   return {
     quiz,
     question: firstQuestion,

@@ -1,6 +1,6 @@
 "use client";
 
-import { FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import useKeypress from "react-use-keypress";
 
 import { Section } from "components/Section";
@@ -82,9 +82,7 @@ export function Question(props: Props) {
               <FaCheckCircle className="text-green-500 mx-auto text-3xl" />
             );
           } else if (!answer.isCorrect && opt.key === answer?.key) {
-            return (
-              <FaExclamationCircle className="text-red-500 mx-auto text-3xl" />
-            );
+            return <FaTimesCircle className="text-red-500 mx-auto text-3xl" />;
           }
         }
 
