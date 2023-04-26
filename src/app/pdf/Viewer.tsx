@@ -1,5 +1,5 @@
-/* eslint-disable jsx-a11y/alt-text */
 "use client";
+/* eslint-disable jsx-a11y/alt-text */
 
 import {
   Document,
@@ -11,7 +11,7 @@ import {
   StyleSheet,
   Text,
   View,
-} from "@react-pdf/renderer/lib/react-pdf.browser.cjs.js";
+} from "@react-pdf/renderer/lib/react-pdf.es.js";
 import { format } from "date-fns";
 import chunk from "lodash/chunk";
 
