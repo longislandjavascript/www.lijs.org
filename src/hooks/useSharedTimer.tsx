@@ -15,10 +15,18 @@ export function useSharedTimer() {
     "shared-timer-state",
     (state, action) => {
       switch (action.type) {
-        case "set-duration": {
+        case "reset-timer": {
+          return {
+            ...state,
+            status: "idle",
+            secondsRemaining: action.payload || state.duration,
+            duration: action.payload || state.duration,
+          };
+        }
+        case "set-timer-duration": {
           return { ...state, duration: action.payload };
         }
-        case "set-status": {
+        case "set-timer-status": {
           return { ...state, status: action.payload };
         }
         case "set-seconds-remaining": {
@@ -49,55 +57,51 @@ export function useSharedTimer() {
         type: "countdown",
       });
     }, 1000);
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (sharedTimerState.secondsRemaining < 1) {
       handleClearInterval();
-      dispatch({ type: "set-status", payload: "finished" });
+      dispatch({ type: "set-timer-status", payload: "finished" });
     }
-  }, [dispatch, handleClearInterval, sharedTimerState.secondsRemaining]);
+  }, [handleClearInterval, sharedTimerState.secondsRemaining]);
 
   const start = useCallback(() => {
     startInterval();
-    dispatch({ type: "set-status", payload: "running" });
-  }, [dispatch, startInterval]);
+    dispatch({ type: "set-timer-status", payload: "running" });
+  }, [startInterval]);
 
   const pause = useCallback(() => {
     handleClearInterval();
-    dispatch({ type: "set-status", payload: "paused" });
+    dispatch({ type: "set-timer-status", payload: "paused" });
   }, [dispatch, handleClearInterval]);
 
   const stop = useCallback(() => {
     handleClearInterval();
 
-    dispatch({ type: "set-status", payload: "stopped" });
+    dispatch({ type: "set-timer-status", payload: "stopped" });
     dispatch({ type: "set-seconds-remaining", payload: 0 });
   }, [dispatch, handleClearInterval]);
 
-  const reset = useCallback(() => {
-    handleClearInterval();
-    dispatch({ type: "set-status", payload: "idle" });
+  const reset = useCallback(
+    (duration?: number) => {
+      handleClearInterval();
+      dispatch({ type: "reset-timer", payload: duration });
+    },
+    [handleClearInterval]
+  );
+
+  const setDuration = useCallback((value: number) => {
+    dispatch({
+      type: "set-timer-duration",
+      payload: value,
+    });
     dispatch({
       type: "set-seconds-remaining",
-      payload: sharedTimerState.duration,
+      payload: value,
     });
-  }, [dispatch, handleClearInterval, sharedTimerState.duration]);
-
-  const setDuration = useCallback(
-    (value: number) => {
-      dispatch({
-        type: "set-duration",
-        payload: value,
-      });
-      dispatch({
-        type: "set-seconds-remaining",
-        payload: value,
-      });
-      dispatch({ type: "set-status", payload: "idle" });
-    },
-    [dispatch]
-  );
+    dispatch({ type: "set-status", payload: "idle" });
+  }, []);
 
   return {
     ...sharedTimerState,

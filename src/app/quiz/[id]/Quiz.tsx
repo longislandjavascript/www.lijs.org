@@ -3,6 +3,7 @@
 // import Loader from "react-spinners/ClockLoader";
 
 import { useSharedQuiz } from "hooks/useSharedQuiz";
+import { useSharedTimer } from "hooks/useSharedTimer";
 import { QuizRecord } from "utils/types";
 
 import { AdminTools } from "./AdminTools";
@@ -23,6 +24,8 @@ type Props = {
 export function Quiz(props: Props) {
   const { isAdmin } = props;
 
+  const timer = useSharedTimer();
+
   const {
     status,
     question,
@@ -31,8 +34,13 @@ export function Quiz(props: Props) {
     user_actions,
     participants,
     quiz,
+    answered_count,
+  } = useSharedQuiz(isAdmin, props.quiz, timer);
+
+  console.log({
+    status,
     timer,
-  } = useSharedQuiz(isAdmin, props.quiz);
+  });
 
   const is_admin = user?.isAdmin;
   const is_in_progress = status.status === "in-progress";
@@ -43,19 +51,15 @@ export function Quiz(props: Props) {
 
   if (!is_in_progress && isAdmin) {
     return (
-      <div>
-        <div className="space-y-6">
-          <ConnectionStatus connected={status.connected} />
-
-          <JoinInfo code={quiz.participant_code} />
-          <div className="relative">
-            <ParticipantList
-              participants={participants}
-              isAdmin={is_admin}
-              onRequestRemoveParticipant={admin_actions.removeParticipant}
-              onRequestBanParticipant={admin_actions.banParticipant}
-            />
-          </div>
+      <Wrapper title={quiz.name} connected={status.connected}>
+        <JoinInfo code={quiz.participant_code} />
+        <div className="relative">
+          <ParticipantList
+            participants={participants}
+            isAdmin={is_admin}
+            onRequestRemoveParticipant={admin_actions.removeParticipant}
+            onRequestBanParticipant={admin_actions.banParticipant}
+          />
         </div>
 
         <div className="mt-12 flex justify-center">
@@ -64,37 +68,34 @@ export function Quiz(props: Props) {
             inProgress={question?.index ? question?.index > 0 : false}
           />
         </div>
-      </div>
+      </Wrapper>
     );
   }
 
   if (!user?.name && !isAdmin) {
     return (
-      <div className="space-y-6">
-        <ConnectionStatus connected={status.connected} />
+      <Wrapper title={quiz.name} connected={status.connected}>
         <ParticipantJoinForm
           onSubmit={user_actions.joinQuiz}
           userName={user?.name}
         />
         <ParticipantList participants={participants} />
-      </div>
+      </Wrapper>
     );
   }
 
   if (status.status === "ready") {
     return (
-      <div>
-        <ConnectionStatus connected={status.connected} />
-        <p className="text-3xl font-bold my-4 text-primary">{quiz.name}</p>
+      <Wrapper title={quiz.name} connected={status.connected}>
         <ParticipantList participants={participants} />
         <p>We will get started shortly.</p>
-      </div>
+      </Wrapper>
     );
   }
 
   return (
     <div>
-      <div className="sticky top-0">
+      <div className="sticky top-24 md:top-0">
         {(!admin_actions.showLeaderboard || is_admin) && timer && (
           <Timer
             secondsRemaining={timer.secondsRemaining}
@@ -103,7 +104,7 @@ export function Quiz(props: Props) {
         )}
 
         {is_admin && (
-          <div className="z-[8] mb-12 backdrop-blur-xl bg-black/10 p-4 rounded-xl border-2 border-color">
+          <div className="z-[8] mb-12 backdrop-blur-xl bg-black/10 p-4 rounded-xl border-2 border-color-1">
             <AdminTools
               question={question}
               admin_actions={admin_actions}
@@ -111,6 +112,7 @@ export function Quiz(props: Props) {
               quiz={quiz}
               user={user}
               participants={participants}
+              answered_count={answered_count}
             />
           </div>
         )}
@@ -138,3 +140,25 @@ export function Quiz(props: Props) {
     </div>
   );
 }
+
+type WrapperProps = {
+  title: string;
+  connected: boolean;
+  children: React.ReactNode;
+};
+
+const Wrapper = (props: WrapperProps) => {
+  const { title, connected, children } = props;
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center flex-wrap gap-2">
+        <h1 className="text-4xl font-semibold font-display text-color-theme">
+          {title}
+        </h1>
+        <ConnectionStatus connected={connected} />
+      </div>
+
+      {children}
+    </div>
+  );
+};

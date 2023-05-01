@@ -4,10 +4,10 @@ import shuffle from "lodash/shuffle";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import {
+  AirtableQuizEventRecord,
   AirtableQuizQuestionRecord,
-  AirtableQuizRecord,
+  QuizEventRecord,
   QuizQuestion,
-  QuizRecord,
   RecordID,
 } from "./types";
 
@@ -84,16 +84,18 @@ export async function retrieveAirtableEvents(): Promise<EventRecord[]> {
 
 // QUIZ
 
-export async function fetchQuiz(recordId: string): Promise<QuizRecord> {
-  const values = (await base("Quizzes").find(
+export async function fetchQuizEvent(
+  recordId: string
+): Promise<QuizEventRecord> {
+  const values = (await base("Quiz Events").find(
     recordId
-  )) as unknown as AirtableQuizRecord;
+  )) as unknown as AirtableQuizEventRecord;
   const { fields } = values;
 
-  const formattedQuiz = {
+  const formattedQuizEvent = {
     id: values.id,
     name: fields.Name,
-    timer: fields["Timer Duration"],
+    default_timer_duration: fields["Timer Duration"],
     admin_client_id: fields["Admin Client ID"],
     participant_code: fields["Participant Code"],
   };
@@ -148,13 +150,14 @@ export async function fetchQuiz(recordId: string): Promise<QuizRecord> {
   });
 
   return {
-    ...formattedQuiz,
+    ...formattedQuizEvent,
+    answered_count: 0,
     questions: fields["Random Order"] ? shuffle(questions) : questions,
   };
 }
 
 export async function findQuizByCode(code: string) {
-  return base("Quizzes")
+  return base("Quiz Events")
     .select({
       view: "Grid view",
       filterByFormula: `OR({Participant Code} = "${code}", {Admin Code} = "${code}")`,
@@ -165,18 +168,20 @@ export async function findQuizByCode(code: string) {
 type Args = {
   id: RecordID;
   admin_client_id: string;
+  participantCode: number;
 };
 
 export async function updateQuizStatusDetails(args: Args) {
-  const { id, admin_client_id } = args;
+  const { id, admin_client_id, participantCode } = args;
   const today = format(new Date(), "MM/dd/yyyy");
 
-  return base("Quizzes").update([
+  return base("Quiz Events").update([
     {
       id: id,
       fields: {
         "Admin Client ID": admin_client_id,
         Status: "In Progress",
+        "Participant Code": participantCode,
         Date: today,
       },
     },

@@ -21,7 +21,7 @@ export function createMetadata(args: Args): Metadata {
   const url = `${baseUrl}${args.path}`;
 
   return {
-    metadataBase: new URL(url),
+    metadataBase: new URL(baseUrl),
     title,
     description,
     // Open Graph

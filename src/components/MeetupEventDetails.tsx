@@ -43,31 +43,31 @@ export function MeetupEventDetails(props: Props) {
   const formattedEndTime = format(eventEndTime, "h:mm a");
   return (
     <div className="@container">
-      <h2 className="text-3xl @md:text-4xl text-center @md:text-left font-display font-black text-primary">
+      <h2 className="text-3xl @md:text-4xl text-center @md:text-left font-display font-black text-color-theme">
         {event.name}
       </h2>
 
-      <section className="font-display font-bold text-lg @md:text-xl flex gap-6 flex-col-reverse @md:flex-row justify-between items-center @md:items-start  @md:surface  p-4 rounded-xl my-6 @md:my-12">
+      <section className="font-display font-bold text-lg @md:text-xl flex gap-6 flex-col-reverse @md:flex-row justify-between items-center @md:items-start  @md:bg-color-1  p-4 rounded-xl my-6 @md:my-12">
         <div>
           <p className="flex items-center gap-2">
             {event.is_online_event ? (
-              <FaGlobe className="text-primary" />
+              <FaGlobe className="text-color-theme" />
             ) : (
-              <FaBuilding className="text-primary" />
+              <FaBuilding className="text-color-theme" />
             )}
 
             {event?.is_online_event ? "Online Event" : "LaunchPad Huntington"}
           </p>
           <p className="flex items-center gap-2">
-            <FaCalendarDay className="text-primary" />
+            <FaCalendarDay className="text-color-theme" />
             {formattedDate}
           </p>
           <p className="flex items-center gap-2">
-            <FaClock className="text-primary" />
+            <FaClock className="text-color-theme" />
             {formattedStartTime} - {formattedEndTime}
           </p>
           <p className="flex items-center gap-2">
-            <FaUsers className="text-primary" />
+            <FaUsers className="text-color-theme" />
             {event.yes_rsvp_count} RSVPs
           </p>
         </div>

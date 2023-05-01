@@ -37,8 +37,9 @@ export function MDRenderer(props: Props) {
   }, [resolvedTheme]);
 
   return (
-    <div className="prose-lg md:prose-xl dark:prose-invert prose-pre:p-0 prose-code:m-0 prose-code:p-0 prose-pre:m-0 prose-pre:bg-transparent">
+    <div className="prose-lg md:prose-xl dark:prose-invert prose-pre:p-0 prose-code:m-0 prose-code:p-0 prose-pre:m-0 prose-pre:bg-transparent select-none">
       <ReactMarkdown
+        className="select-none"
         components={{
           code: ({ node, inline, ...rest }) => {
             return (

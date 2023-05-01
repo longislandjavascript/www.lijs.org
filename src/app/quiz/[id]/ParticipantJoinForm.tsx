@@ -13,7 +13,7 @@ export function ParticipantJoinForm(props: Props) {
       <div className="h-48 flex flex-col">
         {userName ? (
           <div className="space-y-4 mt-4">
-            <p className="text-3xl md:text-5xl text-primary font-bold font-display">
+            <p className="text-3xl md:text-5xl text-color-theme font-bold font-display">
               Welcome, {userName}!
             </p>
             <p>Please hang tight while we give others a chance to join.</p>

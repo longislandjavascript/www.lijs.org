@@ -16,10 +16,10 @@ export const BaseForm = (props: Props) => {
   return (
     <>
       <section className="mb-8 max-w-md">
-        <p className="text-2xl text-primary my-4 font-display font-bold">
+        <p className="text-2xl text-color-theme my-4 font-display font-bold">
           {message}
         </p>
-        <div className="border-2 border-color border-dashed rounded-lg p-3">
+        <div className="border-2 border-color-1 border-dashed rounded-lg p-3">
           {instructions}
         </div>
       </section>

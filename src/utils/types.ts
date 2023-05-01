@@ -154,15 +154,15 @@ export type AirtableRecord<Fields> = {
   fields: Fields;
 };
 
-export type AirtableQuizRecord = AirtableRecord<{
+export type AirtableQuizEventRecord = AirtableRecord<{
   "Auto ID": number;
   Name: string;
-  "Timer Duration": number;
+  "Default Timer Duration": number;
   Questions: string[];
-  "Participant Code": number;
+  "Participant Code"?: number;
   "Admin Code": number;
-  "Room ID": string;
-  Status: "In Progress" | "Ended";
+  "Admin Client ID"?: string;
+  Status: "New" | "In Progress" | "Ended";
   Date: Date;
 }>;
 
@@ -193,10 +193,10 @@ export type QuizQuestion = {
   index?: number;
 };
 
-export type QuizRecord = {
+export type QuizEventRecord = {
   id: string;
   name: string;
-  timer: number;
+  default_timer_duration: number;
   admin_client_id?: string;
   participant_code: number;
   questions: QuizQuestion[];
@@ -224,13 +224,15 @@ type LeaderBoardItem = {
   name: string;
   clientID: string;
   correctAnswers: number;
+  totalTime: number;
   totalAnswers: number;
   score: number;
 };
 
 export type SharedState = {
   status: "loading" | "ready" | "in-progress" | "ended";
-  quiz: QuizRecord;
+  answered_count: number;
+  quiz: QuizEventRecord;
   question: QuizQuestion;
   showAnswerKey: boolean;
   answerKey?: QuizQuestion["answer"] | null;

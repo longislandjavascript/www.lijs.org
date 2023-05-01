@@ -43,7 +43,7 @@ export const PassForm = (props: Props) => {
           O'Reilly Online Learning.."
         />
 
-        <div className="border-2 border-dashed border-color my-4 rounded-xl p-2">
+        <div className="border-2 border-dashed border-color-1 my-4 rounded-xl p-2">
           <ExternalLink className="anchor text-xl mb-4" href={link}>
             {link}
           </ExternalLink>

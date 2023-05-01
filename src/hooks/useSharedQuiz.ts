@@ -1,26 +1,27 @@
 import { useCallback, useEffect, useMemo } from "react"; //441
-
 import {
   useConnectionStatus,
   useSharedReducer,
   useUniqueClientId,
 } from "driftdb-react";
-import { useSharedTimer } from "hooks/useSharedTimer";
 import isEmpty from "lodash/isEmpty";
 import { useRouter } from "next/navigation";
 
 import {
   Action,
   QuizQuestion,
-  QuizRecord,
+  QuizEventRecord,
   SharedState,
   User,
 } from "utils/types";
 
 import { useLocalStorage } from "./useLocalStorage";
 
-export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
-  const timer = useSharedTimer();
+export function useSharedQuiz(
+  isAdmin: boolean,
+  quiz: QuizEventRecord,
+  timer: any
+) {
   const clientID = useUniqueClientId();
   const router = useRouter();
   const { connected } = useConnectionStatus();
@@ -49,8 +50,17 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
           return setDefaultState({ state, action });
         }
         case "set-status": {
-          console.info("SET STATUS");
           return { ...state, status: action.payload };
+        }
+        case "update-quiz-status": {
+          return {
+            ...state,
+            status: "ready",
+            quiz: {
+              ...state.quiz,
+              participant_code: action.payload.participant_code,
+            },
+          };
         }
 
         case "toggle-leaderboard": {
@@ -87,6 +97,13 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
           };
         }
 
+        case "reset-answered-count": {
+          return {
+            ...state,
+            answered_count: 0,
+          };
+        }
+
         case "toggle-answer-key": {
           return {
             ...state,
@@ -100,6 +117,7 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
           const existingCount = state?.scores?.[clientID]?.count || 0;
           const wasAlreadyAnswered =
             !!state?.scores?.[clientID]?.[questionID]?.key;
+          const secondsToAnswer = timer?.duration - timer?.secondsRemaining;
 
           const updatedScores = {
             ...state?.scores,
@@ -108,10 +126,15 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
               [questionID]: {
                 key: selectedOptionKey,
                 isCorrect,
+                time: secondsToAnswer,
               },
               count: wasAlreadyAnswered ? existingCount : existingCount + 1,
             },
           };
+
+          const answered_count = wasAlreadyAnswered
+            ? state?.answered_count
+            : (state?.answered_count || 0) + 1;
 
           const leaderboard = Object.keys(updatedScores)
             .reduce((acc, client_id) => {
@@ -126,6 +149,10 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
                 0
               );
 
+              const totalTime = Object.keys(userAnswers).reduce((acc, key) => {
+                return acc + userAnswers[key].time;
+              }, 0);
+
               const getName = state?.participants?.find(
                 (v) => v.clientID === client_id
               )?.name;
@@ -137,6 +164,7 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
                   clientID,
                   correctAnswers,
                   totalAnswers: answerCount,
+                  totalTime,
                   score: Math.round((correctAnswers / answerCount) * 100),
                 },
               ];
@@ -147,6 +175,7 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
             ...state,
             leaderboard,
             scores: updatedScores,
+            answered_count,
           };
         }
 
@@ -182,13 +211,27 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
         }
       }
     },
-    {}
-    // setInitialState(quiz!)
+    // INITIAL STATE
+    {
+      quiz,
+      question: { ...quiz?.questions?.[0], index: 0 },
+      answered_count: 0,
+      showLeaderBoard: false,
+      participants: undefined,
+      leaderboard: undefined,
+      scores: undefined,
+      showAnswerKey: false,
+    }
   );
 
   useEffect(() => {
-    if (!isAdmin && sharedState.quiz?.id) {
-      // dispatch({ type: "set-status", payload: "ready" });
+    if (!isAdmin) {
+      return;
+    }
+
+    if (sharedState?.quiz?.participant_code) {
+      console.log("here");
+      dispatch({ type: "set-status", payload: "ready" });
       return;
     }
 
@@ -198,16 +241,20 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
       const body = await res.json();
       if (body?.success) {
         setUser({ isAdmin: true, clientID, name: "" });
-        dispatch({ type: "set-quiz", payload: quiz });
-        dispatch({ type: "set-status", payload: "ready" });
+        dispatch({
+          type: "update-quiz-status",
+          payload: {
+            participant_code: body?.participant_code,
+          },
+        });
       }
     });
-  }, [isAdmin, quiz, sharedState?.quiz]);
+  }, [isAdmin, quiz]);
 
   useEffect(() => {
-    if (sharedState?.question && timer.status !== "running") {
-      timer.setDuration(sharedState?.question?.timer_duration);
-      timer.reset();
+    if (sharedState?.question && sharedState?.status === "in-progress") {
+      timer.reset(sharedState?.question?.timer_duration);
+      dispatch({ type: "reset-answered-count" });
     }
   }, [sharedState?.question]);
 
@@ -251,7 +298,6 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
   const submitAnswer = useCallback(
     (value) => {
       const correctAnswer = sharedState?.question?.answer;
-
       const payload = {
         userName: user?.name,
         clientID: user?.clientID,
@@ -328,7 +374,7 @@ export function useSharedQuiz(isAdmin: boolean, quiz: QuizRecord | null) {
   return {
     quiz: sharedState?.quiz,
     status,
-    timer,
+    // answeredCount: sharedState?.scores
     question: sharedState?.question,
     admin_actions,
     user,
@@ -351,26 +397,13 @@ function setDefaultState(args: {
 
   return {
     ...args?.state,
-    // status: "loading" as const,
+    status: "loading" as const,
     quiz: args?.state?.quiz || args?.action?.payload,
     question: quest as QuizQuestion,
     showLeaderBoard: false,
     participants: isReset ? args?.state?.participants : [],
     leaderboard: isReset ? undefined : args?.state?.leaderboard,
     scores: isReset ? undefined : args?.state?.scores,
-    showAnswerKey: false,
-  };
-}
-
-function setInitialState(quiz: QuizRecord) {
-  const firstQuestion = { ...quiz?.questions?.[0], index: 0 };
-  return {
-    quiz,
-    question: firstQuestion,
-    showLeaderBoard: false,
-    participants: undefined,
-    leaderboard: undefined,
-    scores: undefined,
     showAnswerKey: false,
   };
 }

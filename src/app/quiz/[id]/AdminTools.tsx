@@ -23,19 +23,28 @@ type Props = {
   admin_actions: SharedQuiz["admin_actions"];
   question: SharedQuiz["question"];
   quiz: SharedQuiz["quiz"];
-  timer: SharedQuiz["timer"];
   user?: SharedQuiz["user"];
   participants: SharedQuiz["participants"];
+  answered_count: number;
+  timer: any;
 };
 
 export function AdminTools(props: Props) {
-  const { admin_actions, question, quiz, timer, user, participants } = props;
+  const {
+    admin_actions,
+    question,
+    quiz,
+    timer,
+    user,
+    participants,
+    answered_count,
+  } = props;
 
   return (
     <div>
       <div className="flex items-center flex-col md:flex-row flex-wrap justify-around gap-2 md:gap-4">
         <ButtonSection title="Timer">
-          <IconButton onClick={timer.reset} label="Rest Timer">
+          <IconButton onClick={() => timer.reset()} label="Rest Timer">
             <BiReset className="text-xl" />
           </IconButton>
 
@@ -44,9 +53,10 @@ export function AdminTools(props: Props) {
           </IconButton>
           <IconButton
             disabled={timer?.secondsRemaining === 0}
-            onClick={() =>
-              timer?.status === "running" ? timer.pause() : timer.start()
-            }
+            onClick={() => {
+              timer.start();
+              // timer?.status === "running" ? timer.pause() : timer.start();
+            }}
             label={timer?.status === "running" ? "Pause timer" : "Stop timer"}
           >
             {timer?.status === "running" ? <FaPause /> : <FaPlay />}
@@ -82,25 +92,28 @@ export function AdminTools(props: Props) {
             onClick={admin_actions.toggleLeaderboard}
             label="Toggle leaderboard"
           >
-            <AiOutlineTrophy className="text-xl" />
+            <AiOutlineTrophy />
           </IconButton>
           <IconButton onClick={admin_actions.resetQuiz} label="Reset quiz">
-            <MdOutlineRestartAlt className="text-xl" />
+            <MdOutlineRestartAlt />
           </IconButton>
           <IconButton onClick={admin_actions.resetQuiz} label="Finish quiz">
-            <MdDoneAll className="text-xl" />
+            <MdDoneAll />
           </IconButton>
+        </ButtonSection>
+        <ButtonSection title="Answered">
+          <p className="font-mono py-1">{answered_count || 0}</p>
         </ButtonSection>
       </div>
       <Disclosure as="div" className="mt-6">
         {({ open }) => (
           <>
-            <Disclosure.Button className="flex w-full justify-between rounded-lg px-4 py-2 text-left text-sm font-medium surface ">
+            <Disclosure.Button className="flex w-full justify-between rounded-lg px-4 py-2 text-left text-sm font-medium bg-color-1 ">
               <span className="inline-flex items-center gap-2 uppercase">
                 <BsPeople />
                 Participants{" "}
                 <span className="bg-yellow-500 text-gray-800 px-2 rounded-full text-sm">
-                  {participants?.length}
+                  {participants?.length || 0}
                 </span>
               </span>
               <FaCaretDown
@@ -134,11 +147,13 @@ export function AdminTools(props: Props) {
 
 function ButtonSection(props: { title: string; children: React.ReactNode }) {
   return (
-    <div className="surface rounded-xl inline-flex flex-col items-center p-1 w-full md:w-40">
-      <p className="text-sm uppercase flex items-center gap-2 font-semibold text-gray-600 dark:text-gray-400 mb-2">
+    <div className="bg-color-1 rounded-xl inline-flex flex-row md:flex-col items-center justify-between p-1 px-4 w-full md:w-40">
+      <p className="text-sm uppercase flex items-center gap-2 font-semibold text-gray-600 dark:text-gray-400">
         {props.title}
       </p>
-      <div className="flex items-center gap-2">{props.children}</div>
+      <div className="flex items-center gap-2 flex-shrink-0">
+        {props.children}
+      </div>
     </div>
   );
 }
