@@ -198,7 +198,7 @@ export type QuizEventRecord = {
   name: string;
   default_timer_duration: number;
   admin_client_id?: string;
-  participant_code: number;
+  participant_code?: number;
   questions: QuizQuestion[];
 };
 

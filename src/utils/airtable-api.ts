@@ -151,7 +151,6 @@ export async function fetchQuizEvent(
 
   return {
     ...formattedQuizEvent,
-    answered_count: 0,
     questions: fields["Random Order"] ? shuffle(questions) : questions,
   };
 }
@@ -162,7 +161,7 @@ export async function findQuizByCode(code: string) {
       view: "Grid view",
       filterByFormula: `OR({Participant Code} = "${code}", {Admin Code} = "${code}")`,
     })
-    .firstPage() as unknown as AirtableQuizRecord[];
+    .firstPage() as unknown as AirtableQuizEventRecord[];
 }
 
 type Args = {

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo } from "react"; //441
+
 import {
   useConnectionStatus,
   useSharedReducer,
@@ -9,8 +10,8 @@ import { useRouter } from "next/navigation";
 
 import {
   Action,
-  QuizQuestion,
   QuizEventRecord,
+  QuizQuestion,
   SharedState,
   User,
 } from "utils/types";
@@ -230,7 +231,6 @@ export function useSharedQuiz(
     }
 
     if (sharedState?.quiz?.participant_code) {
-      console.log("here");
       dispatch({ type: "set-status", payload: "ready" });
       return;
     }
@@ -291,7 +291,7 @@ export function useSharedQuiz(
     if (isUserRemoved) {
       router.replace("/quiz");
     }
-  }, [sharedState?.removedParticipants]);
+  }, [clientID, router, sharedState?.removedParticipants]);
 
   // Participant Methods
 
@@ -308,7 +308,7 @@ export function useSharedQuiz(
 
       dispatch({ type: "submit-answer", payload });
     },
-    [sharedState?.question?.id!, user?.name]
+    [sharedState?.question?.id, user?.name]
   );
 
   const joinQuiz = useCallback(
@@ -405,6 +405,7 @@ function setDefaultState(args: {
     leaderboard: isReset ? undefined : args?.state?.leaderboard,
     scores: isReset ? undefined : args?.state?.scores,
     showAnswerKey: false,
+    answered_count: 0,
   };
 }
 

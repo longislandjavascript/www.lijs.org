@@ -2,12 +2,12 @@
 
 import { DriftDBProvider } from "driftdb-react";
 
-import { QuizRecord } from "utils/types";
+import { QuizEventRecord } from "utils/types";
 
 import { Quiz } from "./Quiz";
 
 type Props = {
-  quiz: QuizRecord | null;
+  quiz: QuizEventRecord | null;
   quiz_id: string;
   isAdmin: boolean;
 };

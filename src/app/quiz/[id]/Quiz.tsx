@@ -4,7 +4,7 @@
 
 import { useSharedQuiz } from "hooks/useSharedQuiz";
 import { useSharedTimer } from "hooks/useSharedTimer";
-import { QuizRecord } from "utils/types";
+import { QuizEventRecord } from "utils/types";
 
 import { AdminTools } from "./AdminTools";
 import { ConnectionStatus } from "./ConnectionStatus";
@@ -17,7 +17,7 @@ import { StartQuizButton } from "./StartQuizButton";
 import { Timer } from "./Timer";
 
 type Props = {
-  quiz: QuizRecord | null;
+  quiz: QuizEventRecord | null;
   isAdmin: boolean;
 };
 
@@ -36,11 +36,6 @@ export function Quiz(props: Props) {
     quiz,
     answered_count,
   } = useSharedQuiz(isAdmin, props.quiz, timer);
-
-  console.log({
-    status,
-    timer,
-  });
 
   const is_admin = user?.isAdmin;
   const is_in_progress = status.status === "in-progress";
