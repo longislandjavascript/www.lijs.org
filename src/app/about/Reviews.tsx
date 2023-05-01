@@ -27,7 +27,7 @@ export const Reviews = () => {
         <ImQuotesLeft className="absolute top-8 flex-shrink-0 text-[80px] text-yellow-500 opacity-20" />
         <div className="animate-fade space-y-6" key={currentIndex}>
           <blockquote>
-            <p className="text-2xl text-primary font-display font-bold">
+            <p className="text-2xl text-color-theme font-display font-bold">
               {name}
             </p>
           </blockquote>
