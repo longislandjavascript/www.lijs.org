@@ -35,6 +35,32 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpolygon fill-rule='evenodd' points='8 4 12 6 8 8 6 12 4 8 0 6 4 4 6 0 8 4'/%3E%3C/g%3E%3C/svg%3E");
   }
 
+  /* COLORS */
+
+  .bg-color-1 {
+    @apply bg-white dark:bg-gray-800;
+  }
+
+  .bg-color-2 {
+    @apply bg-gray-100 dark:bg-gray-900;
+  }
+
+  .text-color-1 {
+    @apply text-gray-800 dark:text-gray-100 text-lg;
+  }
+
+  .text-color-theme {
+    @apply text-blue-600 dark:text-yellow-500;
+  }
+
+  .border-color-1 {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+
+  .border-color-theme {
+    @apply border-blue-600 dark:border-yellow-500;
+  }
+
   /* STYLES */
 
   .anchor {
@@ -61,35 +87,12 @@
     @apply btn-base border-blue-500 text-blue-600 dark:text-blue-300  hover:bg-blue-500/10 focus:bg-blue-500/20;
   }
 
-  .surface {
-    @apply bg-white dark:bg-gray-800;
-  }
-
-  .surface-alt {
-    @apply bg-gray-100 dark:bg-gray-900;
-  }
-
   .cta {
     @apply btn-base text-white border-blue-600  bg-gradient-to-br hover:bg-gradient-to-bl hover:bg-opacity-90 from-blue-500 to-blue-700 hover:to-blue-700 focus:to-blue-700;
   }
 
-  .text {
-    @apply text-gray-800 dark:text-gray-100 text-lg;
-  }
-
-  .border-color {
-    @apply border-gray-200 dark:border-gray-700;
-  }
-
-  .border-primary {
-    @apply border-blue-600 dark:border-yellow-500;
-  }
-  .text-primary {
-    @apply text-blue-600 dark:text-yellow-500;
-  }
-
   .card {
-    @apply texture flex-1 p-4 surface-alt rounded-xl border-2 border-color;
+    @apply texture flex-1 p-4 bg-color-2 rounded-xl border-2 border-color-1;
   }
 
   .link {
@@ -97,11 +100,12 @@
   }
 
   .input {
-    @apply p-2 border-2 border-color rounded-lg mb-8 surface-alt;
+    @apply p-2 border-2 border-color-1 rounded-lg mb-8 bg-color-2;
   }
 
+  /* PROSE */
   .lijs-prose p {
-    @apply text-lg my-4 text;
+    @apply text-lg my-4 text-color-1;
   }
   .lijs-prose li {
     @apply ml-8;

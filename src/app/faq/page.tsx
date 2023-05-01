@@ -11,7 +11,7 @@ export const metadata = createMetadata({
 
 export default function FAQPage() {
   const questionClassNames =
-    "text-2xl font-display font-bold text-primary py-2";
+    "text-2xl font-display font-bold text-color-theme py-2";
   const answerClassNames = "";
   return (
     <div>
@@ -20,7 +20,7 @@ export default function FAQPage() {
       <ul>
         {faqs.map((faq) => {
           return (
-            <li key={faq.question} className="border-b border-color py-4">
+            <li key={faq.question} className="border-b border-color-1 py-4">
               <p className={questionClassNames}>{faq.question}</p>
               <p className={answerClassNames}>{faq.answer}</p>
             </li>

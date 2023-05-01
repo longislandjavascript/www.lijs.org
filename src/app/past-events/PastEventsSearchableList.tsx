@@ -30,7 +30,7 @@ export const PastEventsSearchableList = ({ events }: Props) => {
         type="Search"
         placeholder="🔍 Search"
         aria-label="Search for a past event"
-        className="py-3 px-8 surface-alt text-alt block w-full rounded-full my-6 border-2 border-color"
+        className="py-3 px-8 bg-color-2 text-alt block w-full rounded-full my-6 border-2 border-color-1"
       />
 
       {filteredEvents.length > 0 ? (
@@ -39,7 +39,7 @@ export const PastEventsSearchableList = ({ events }: Props) => {
         </p>
       ) : (
         <p>
-          No results matching <b className="text-primary">{query}</b>
+          No results matching <b className="text-color-theme">{query}</b>
         </p>
       )}
 

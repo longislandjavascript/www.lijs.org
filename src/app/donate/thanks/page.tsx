@@ -11,7 +11,7 @@ export default function ThanksPage() {
     <div>
       <PageTitle>Thanks for the donation!</PageTitle>
 
-      <p className="text-xl font-medium text-primary my-8">
+      <p className="text-xl font-medium text-color-theme my-8">
         Thank you for supporting Long Island JavaScript and we hope to see you
         at one of our upcoming events! Make sure and get a free sticker while
         you are there.

@@ -27,7 +27,7 @@ export default function RootLayout({ children }: Props) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning={true}>
       <body
-        className={`${inter.variable} ${overlock.variable} font-sans surface text`}
+        className={`${inter.variable} ${overlock.variable} font-sans bg-color-1 text`}
       >
         <ThemeProvider>
           <div className="flex flex-col min-h-screen">

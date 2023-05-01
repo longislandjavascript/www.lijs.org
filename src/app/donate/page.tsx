@@ -21,11 +21,12 @@ export default function DonatePage() {
     <div>
       <PageTitle>Donate</PageTitle>
       <section className="p-2 space-y-6 mb-6">
-        <p className="border-l-4 border-blue-500 text-xl text-gray-800 dark:text-white font-medium surface-alt p-4">
+        <p className="border-l-4 border-blue-500 text-xl text-gray-800 dark:text-white font-medium bg-color-2 p-4">
           Long Island JavaScript will always be{" "}
-          <span className="font-[700] text-primary">free to attend</span> and
-          the operating costs will{" "}
-          <span className="font-[700] text-primary">always be covered</span>.
+          <span className="font-[700] text-color-theme">free to attend</span>{" "}
+          and the operating costs will{" "}
+          <span className="font-[700] text-color-theme">always be covered</span>
+          .
         </p>
         <p>
           If you would like to chip in to cover some of the operation costs, or
@@ -67,7 +68,9 @@ export default function DonatePage() {
               href="https://www.coinster.tools/qr-code-generator"
               className="hover:bg-gray-500/10 focus:bg-gray-500/10 transition-colors ease-in-out p-2 rounded-lg"
             >
-              <span className="text-lg font-bold text-primary">Coinster</span>{" "}
+              <span className="text-lg font-bold text-color-theme">
+                Coinster
+              </span>{" "}
               <Image
                 src="/coinster.svg"
                 height={20}

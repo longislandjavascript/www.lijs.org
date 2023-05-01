@@ -20,7 +20,7 @@ export default function CodeOfConductPage() {
         <Section title="Please Read" className="mt-12">
           <p>
             Long Island JavaScript is dedicated to providing a{" "}
-            <b className="text-primary">
+            <b className="text-color-theme">
               harassment-free experience for everyone
             </b>
             .
@@ -49,7 +49,7 @@ export default function CodeOfConductPage() {
           </p>
           <p>
             We ask that you respect these{" "}
-            <b className="text-primary">
+            <b className="text-color-theme">
               <i>6 simple rules:</i>
             </b>
           </p>
