@@ -34,6 +34,7 @@ export function Quiz(props: Props) {
     user_actions,
     participants,
     quiz,
+    // @ts-ignore
     answered_count,
   } = useSharedQuiz(isAdmin, props.quiz, timer);
 
@@ -47,7 +48,7 @@ export function Quiz(props: Props) {
   if (!is_in_progress && isAdmin) {
     return (
       <Wrapper title={quiz.name} connected={status.connected}>
-        <JoinInfo code={quiz.participant_code} />
+        <JoinInfo code={quiz.participant_code as number} />
         <div className="relative">
           <ParticipantList
             participants={participants}

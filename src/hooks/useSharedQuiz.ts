@@ -20,7 +20,7 @@ import { useLocalStorage } from "./useLocalStorage";
 
 export function useSharedQuiz(
   isAdmin: boolean,
-  quiz: QuizEventRecord,
+  quiz: QuizEventRecord | null,
   timer: any
 ) {
   const clientID = useUniqueClientId();
@@ -222,7 +222,7 @@ export function useSharedQuiz(
       leaderboard: undefined,
       scores: undefined,
       showAnswerKey: false,
-    }
+    } as any
   );
 
   useEffect(() => {
