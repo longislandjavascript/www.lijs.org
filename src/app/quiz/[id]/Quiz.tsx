@@ -34,7 +34,7 @@ export function Quiz(props: Props) {
     user_actions,
     participants,
     quiz,
-    // @ts-ignore
+    // @ts-expect-error: TODO: fix this
     answered_count,
   } = useSharedQuiz(isAdmin, props.quiz, timer);
 
