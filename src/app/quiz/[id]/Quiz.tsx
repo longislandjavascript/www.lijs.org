@@ -38,8 +38,6 @@ export function Quiz(props: Props) {
     answered_count,
   } = useSharedQuiz(isAdmin, props.quiz, timer);
 
-  console.log(timer);
-
   const is_admin = user?.isAdmin;
   const is_in_progress = status.status === "in-progress";
 
@@ -94,8 +92,6 @@ export function Quiz(props: Props) {
   if (!quiz.id) {
     return null;
   }
-
-  console.log(isAdmin, is_admin);
 
   return (
     <div>
