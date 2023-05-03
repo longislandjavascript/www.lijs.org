@@ -67,9 +67,9 @@ export function useSharedTimer() {
   }, [handleClearInterval, sharedTimerState.secondsRemaining]);
 
   const start = useCallback(() => {
-    startInterval();
     dispatch({ type: "set-timer-status", payload: "running" });
-  }, [startInterval]);
+    startInterval();
+  }, []);
 
   const pause = useCallback(() => {
     handleClearInterval();

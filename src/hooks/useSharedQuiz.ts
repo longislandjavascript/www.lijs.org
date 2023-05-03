@@ -251,19 +251,16 @@ export function useSharedQuiz(
     });
   }, [isAdmin, quiz]);
 
-  useEffect(() => {
-    if (sharedState?.question && sharedState?.status === "in-progress") {
-      timer.reset(sharedState?.question?.timer_duration);
-      dispatch({ type: "reset-answered-count" });
-    }
-  }, [sharedState?.question]);
-
   const goToPreviousQuestion = useCallback(() => {
     dispatch({ type: "previous-question" });
+    timer.reset(sharedState?.question?.timer_duration);
+    dispatch({ type: "reset-answered-count" });
   }, []);
 
   const goToNextQuestion = useCallback(() => {
     dispatch({ type: "next-question" });
+    timer.reset(sharedState?.question?.timer_duration);
+    dispatch({ type: "reset-answered-count" });
   }, []);
 
   const resetQuiz = useCallback(() => {

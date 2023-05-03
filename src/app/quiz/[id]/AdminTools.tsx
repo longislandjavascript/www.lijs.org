@@ -54,8 +54,8 @@ export function AdminTools(props: Props) {
           <IconButton
             disabled={timer?.secondsRemaining === 0}
             onClick={() => {
-              timer.start();
-              // timer?.status === "running" ? timer.pause() : timer.start();
+              console.log(timer);
+              timer?.status === "running" ? timer.pause() : timer.start();
             }}
             label={timer?.status === "running" ? "Pause timer" : "Stop timer"}
           >
