@@ -10,11 +10,10 @@ import { IconButton } from "components/IconButton";
 
 import { HeaderLogo } from "./HeaderLogo";
 import { NavigationMenu } from "./NavigationMenu";
-import ThemeSwitch from "./ThemeSwitch";
 
 export const MobileNavigation = () => {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  var [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
@@ -30,10 +29,8 @@ export const MobileNavigation = () => {
 
   return (
     <>
-      <div className="md:hidden p-4 sticky top-0 z-10 border-b-2 border-color-1 flex items-center justify-between surface">
+      <div className="md:hidden p-4 sticky top-0 z-10 border-b-2 border-color-1 flex items-center justify-between bg-color-1">
         <HeaderLogo />
-
-        <ThemeSwitch />
 
         <IconButton
           label="Menu"
