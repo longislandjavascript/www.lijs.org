@@ -19,6 +19,7 @@ export async function GET(request: Request) {
       });
     }
     const { id, fields } = results[0];
+    // eslint-disable-next-line eqeqeq
     const isAdmin = fields["Admin Code"] == +code;
     if (fields["Status"] === "Ended") {
       return NextResponse.json({

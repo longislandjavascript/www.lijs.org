@@ -24,10 +24,15 @@ export async function fetchNextEvent(): Promise<MeetupEvent | null> {
     const matchingAirtableEvent = await retrieveMatchingAirtableEvent(
       nextEvent.id
     );
-    return {
-      ...nextEvent,
-      ...matchingAirtableEvent,
-    };
+
+    if (matchingAirtableEvent) {
+      return {
+        ...nextEvent,
+        ...matchingAirtableEvent,
+      };
+    } else {
+      return nextEvent;
+    }
   } catch (error) {
     return null;
   }
