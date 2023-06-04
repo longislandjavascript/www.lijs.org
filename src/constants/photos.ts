@@ -210,6 +210,36 @@ export const images = [
     width: 1306,
   },
   {
+    src: "https://res.cloudinary.com/just214/image/upload/v1685840381/Long%20Island%20JavaScript/website-photos/IMG_5417.jpg",
+    height: 3024,
+    width: 4032,
+  },
+  {
+    src: "https://res.cloudinary.com/just214/image/upload/v1685840382/Long%20Island%20JavaScript/website-photos/IMG_5418.jpg",
+    height: 3024,
+    width: 4032,
+  },
+  {
+    src: "https://res.cloudinary.com/just214/image/upload/v1685840381/Long%20Island%20JavaScript/website-photos/IMG_5419.jpg",
+    height: 3024,
+    width: 4032,
+  },
+  {
+    src: "https://res.cloudinary.com/just214/image/upload/v1685840382/Long%20Island%20JavaScript/website-photos/IMG_5420.jpg",
+    height: 3024,
+    width: 4032,
+  },
+  {
+    src: "https://res.cloudinary.com/just214/image/upload/v1685840382/Long%20Island%20JavaScript/website-photos/IMG_5421.jpg",
+    height: 3024,
+    width: 4032,
+  },
+  {
+    src: "https://res.cloudinary.com/just214/image/upload/v1685840381/Long%20Island%20JavaScript/website-photos/IMG_5422.jpg",
+    height: 3024,
+    width: 4032,
+  },
+  {
     src: "https://res.cloudinary.com/just214/image/upload/v1682899051/Long%20Island%20JavaScript/website-photos/IMG_5540.jpg",
     height: 1560,
     width: 2472,
