@@ -11,7 +11,7 @@
     "lint:fix": "next lint --fix",
     "typecheck": "tsc --noEmit",
     "fetch:cloudinary": "npx ts-node  ./src/scripts/fetch-cloudinary-resources.ts && prettier --write ./src/constants/photos.ts",
-    "prepare": "npm run lint:fix && npm run typecheck && npm run fetch:cloudinary"
+    "prep": "npm run lint:fix && npm run typecheck && npm run fetch:cloudinary"
   },
   "commitlint": {
     "extends": [
