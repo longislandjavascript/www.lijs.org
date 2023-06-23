@@ -1,4 +1,5 @@
 const fs = require("fs");
+
 const cloudinary = require("cloudinary");
 require("dotenv").config();
 
@@ -61,15 +62,18 @@ async function listResources(args: AArgs) {
   const { options, settings, temp } = args;
   const _result = [...temp.values];
   if (temp.nextCursor) {
+    // eslint-disable-next-line functional/immutable-data
     options["next_cursor"] = temp.nextCursor;
   }
   await cloudinary.v2.api.resources(options, async function (_, res) {
     const more = res?.next_cursor;
     const resources = res?.resources;
 
-    for (let _res in resources) {
+    // eslint-disable-next-line functional/no-loop-statements
+    for (const _res in resources) {
       res = resources[_res];
       const resultTemp: any = [];
+      // eslint-disable-next-line functional/immutable-data
       resultTemp.push({
         src: settings.height
           ? res.secure_url.replace("/upload/", `/upload/h_${settings.height}/`)
@@ -79,6 +83,7 @@ async function listResources(args: AArgs) {
           ? +(res.width * (settings.height / res.height)).toFixed(0)
           : res.width,
       });
+      // eslint-disable-next-line functional/immutable-data
       _result.push(resultTemp);
     }
 
@@ -97,9 +102,9 @@ async function listResources(args: AArgs) {
         )};`,
         function (err) {
           if (err) {
-            return console.log(err);
+            return console.error(err);
           }
-          console.log("The file was saved!");
+          console.info("The file was saved!");
         }
       );
     }

@@ -11,7 +11,7 @@ const config = {
 
 const options = {
   type: "upload",
-  max_results: 200,
+  max_results: 300,
 };
 
 v.fetchCloudinaryAssets(
@@ -21,7 +21,7 @@ v.fetchCloudinaryAssets(
     prefix: "Long Island JavaScript/website-photos",
   },
   {
-    savePath: "./src/constants/photos.ts",
-    // height: 350,
+    savePath: "./src/cloudinary/output/photos.ts",
+    height: 800,
   }
 );
