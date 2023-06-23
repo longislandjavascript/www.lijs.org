@@ -1,11 +1,10 @@
-import { meetupLink } from "constants/links";
-import { showcaseItems } from "constants/showcase";
-
 import { ExternalLink } from "components/ExternalLink";
 import { GettingHere } from "components/GettingHere";
 import { MeetupEventDetails } from "components/MeetupEventDetails";
 import { Section } from "components/Section";
 import { ShowcaseCard } from "components/ShowcaseCard";
+import { meetupLink } from "constants/links";
+import { showcaseItems } from "constants/showcase";
 import { createMetadata } from "utils/createMetadata";
 import { fetchNextEvent } from "utils/meetup-api";
 
