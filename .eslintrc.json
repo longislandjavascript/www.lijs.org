@@ -1,6 +1,5 @@
 {
   "extends": [
-    "next/core-web-vitals",
-    "@just214"
+    "next/core-web-vitals"
   ]
 }
