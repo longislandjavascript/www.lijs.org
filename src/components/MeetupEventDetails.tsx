@@ -47,7 +47,7 @@ export function MeetupEventDetails(props: Props) {
         {event.name}
       </h2>
 
-      <section className="font-display font-bold text-lg @md:text-xl flex gap-6 flex-col-reverse @md:flex-row justify-between items-center @md:items-start  @md:bg-color-1  p-4 rounded-xl my-6 @md:my-12">
+      <section className="font-display font-bold text-lg @md:text-xl flex gap-6 flex-col-reverse @md:flex-row justify-between items-center @md:items-start  @md:bg-color-1  p-4 rounded-xl my-2 @md:my-12">
         <div>
           <p className="flex items-center gap-2">
             {event.is_online_event ? (

@@ -58,12 +58,5 @@ export function createMetadata(args: Args): Metadata {
       description,
       images: [image],
     },
-
-    // Viewport
-    viewport: {
-      width: "device-width",
-      initialScale: 1,
-      maximumScale: 5,
-    },
   };
 }

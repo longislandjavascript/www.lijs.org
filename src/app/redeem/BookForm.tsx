@@ -58,7 +58,6 @@ export const BookForm = (props: Props) => {
       onCancel={onReset}
       instructions={
         <>
-          {" "}
           <p className="font-medium mb-4">How to claim your book:</p>
           <ol className="list-decimal ml-8">
             <>
@@ -66,10 +65,16 @@ export const BookForm = (props: Props) => {
                 <p>
                   Find the book you want and note the title and ISBN number.
                 </p>
+
+                <p>
+                  Please note that your selection must be a book that is
+                  published by O&apos;Reilly as they carry titles from other
+                  publishers as well.
+                </p>
                 <p>
                   <ExternalLink
                     className="link mt-2"
-                    href="https://www.oreilly.com/search/?q=*&type=book"
+                    href="https://www.oreilly.com/search/?q=*&type=book&rows=10&order_by=_oreilly_popularity&publishers=O%27Reilly%20Media%2C%20Inc&publishers=O%27Reilly%20Media%2C%20Inc."
                   >
                     Search the O&apos;Reilly Catalog
                   </ExternalLink>
